@@ -11,7 +11,8 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 export default defineConfig(async ({ mode, command }) => {
   const env = loadEnv(mode, __dirname, '');
   generateSeoFiles(env);
-  if (command === 'build') {
+  const isCi = process.env.CF_PAGES === '1' || process.env.CI === 'true';
+  if (command === 'build' && !isCi) {
     await optimizeHeroMedia();
     await syncGalleryMedia();
   }
