@@ -21,7 +21,20 @@ export default defineConfig(async ({ mode, command }) => {
     root: 'src',
     publicDir: '../public',
     envDir: __dirname,
-    plugins: [tailwindcss()],
+    plugins: [
+      tailwindcss(),
+      {
+        name: 'inject-google-site-verification',
+        transformIndexHtml(html) {
+          const token = env.VITE_GOOGLE_SITE_VERIFICATION?.trim();
+          if (!token) return html;
+          return html.replace(
+            '<!-- google-site-verification -->',
+            `<meta name="google-site-verification" content="${token}" />`
+          );
+        },
+      },
+    ],
     resolve: {
       alias: {
         '@lib': path.resolve(__dirname, 'lib'),

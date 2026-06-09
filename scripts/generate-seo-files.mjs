@@ -83,7 +83,7 @@ ${sitemapEntries}
     path.join(publicDir, 'llms.txt'),
     `# Catamaran Cruises · Nha Trang
 
-> Catamaran cruises in Nha Trang, Vietnam (group, private, VIP). Languages: ru, en, ko, kk.
+> Catamaran cruises in Nha Trang, Vietnam (group, private, Premium). Languages: ru, en, ko, kk.
 
 - [Home](${url}/)
 - [Private cruise](${url}/private-cruise-nha-trang/)
@@ -105,7 +105,7 @@ Contact: WhatsApp +${contacts.whatsapp}, Telegram @${contacts.telegram}, ${conta
     $schema: 'https://modelcontextprotocol.io/schemas/2025-03/website-manifest.json',
     name: 'Catamaran Cruises · Nha Trang',
     description:
-      'Group, private and VIP catamaran cruises in Nha Trang — snorkelling, SUP, fishing, meals and sunset tours.',
+      'Group, private and Premium catamaran cruises in Nha Trang — snorkelling, SUP, fishing, meals and sunset tours.',
     homepage: url,
     version: '1.1.0',
     publisher: { name: 'Catamaran Cruises Nha Trang', url, country: 'VN' },
@@ -155,7 +155,7 @@ Contact: WhatsApp +${contacts.whatsapp}, Telegram @${contacts.telegram}, ${conta
       },
       {
         name: 'book_vip_cruise',
-        description: 'Redirect with pre-filled VIP cruise message.',
+        description: 'Redirect with pre-filled Premium cruise message.',
         endpoint: book({ type: 'vip', lang: 'ru', channel: 'whatsapp' }),
         method: 'GET',
         inputSchema: {

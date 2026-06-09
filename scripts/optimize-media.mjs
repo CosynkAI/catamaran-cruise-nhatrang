@@ -9,6 +9,7 @@ const ROOT = path.resolve(__dirname, '..');
 const SRC = path.resolve(ROOT, '..', 'images and videos');
 const HERO_SRC = path.join(SRC, 'фоновое видео.mp4');
 const HERO_OUT = path.join(ROOT, 'public', 'videos', 'hero.mp4');
+const HERO_MOBILE_OUT = path.join(ROOT, 'public', 'videos', 'hero-mobile.mp4');
 const POSTER_JPG = path.join(ROOT, 'public', 'images', 'hero-poster.jpg');
 const POSTER_WEBP = path.join(ROOT, 'public', 'images', 'hero-poster.webp');
 
@@ -76,6 +77,37 @@ export async function optimizeHeroMedia() {
     console.log(`[hero] compressed video → ${HERO_OUT} (${sizeMb} MB)`);
   } else {
     console.log('[hero] video up to date');
+  }
+
+  const mobileInput = fs.existsSync(HERO_OUT) ? HERO_OUT : input;
+  if (needsRebuild(HERO_MOBILE_OUT, mobileInput, 2.5 * 1024 * 1024)) {
+    const tmpMobile = `${HERO_MOBILE_OUT}.tmp.mp4`;
+    if (
+      runFfmpeg([
+        '-i',
+        mobileInput,
+        '-an',
+        '-vf',
+        'scale=720:-2',
+        '-c:v',
+        'libx264',
+        '-crf',
+        '33',
+        '-preset',
+        'medium',
+        '-movflags',
+        '+faststart',
+        '-pix_fmt',
+        'yuv420p',
+        tmpMobile,
+      ])
+    ) {
+      fs.renameSync(tmpMobile, HERO_MOBILE_OUT);
+      const sizeMb = (fs.statSync(HERO_MOBILE_OUT).size / 1024 / 1024).toFixed(2);
+      console.log(`[hero] mobile video → ${HERO_MOBILE_OUT} (${sizeMb} MB)`);
+    }
+  } else {
+    console.log('[hero] mobile video up to date');
   }
 
   const posterSource = fs.existsSync(HERO_OUT) ? HERO_OUT : input;

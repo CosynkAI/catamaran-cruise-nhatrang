@@ -1,6 +1,6 @@
 export default {
   "meta.title": "Catamaran Cruise Nha Trang | Private & Group Boat Tours",
-  "meta.description": "Catamaran cruise Nha Trang: private boat tour, sunset cruise, snorkeling. Group $80, private from $1000, VIP from $1500.",
+  "meta.description": "Catamaran cruise Nha Trang: private boat tour, sunset cruise, snorkeling. Group $80, private from $1000, Premium from $1500.",
   "meta.ogTitle": "Private & group catamaran cruises in Nha Trang",
   "meta.ogDescription": "Sunset tours, snorkeling, SUP, food and a celebration day on a catamaran in Nha Trang.",
   "meta.ogLocale": "en_US",

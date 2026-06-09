@@ -1,8 +1,8 @@
 export default {
   "meta.title": "Нячангта катамаран круиздері | Жеке және топтық теңіз турлары",
-  "meta.description": "Catamaran cruise Nha Trang: private boat tour, sunset cruise, snorkeling tour. Топтық $80, жеке $1000 бастап, VIP $1500 бастап.",
+  "meta.description": "Catamaran cruise Nha Trang: private boat tour, sunset cruise, snorkeling tour. Топтық $80, жеке $1000 бастап, Premium $1500 бастап.",
   "meta.ogTitle": "Нячангта жеке және топтық катамаран круиздері",
-  "meta.ogDescription": "Sunset cruise, снорклинг, SUP — турист топтарынсыз премиум демалыс. Топтық, жеке және VIP.",
+  "meta.ogDescription": "Sunset cruise, снорклинг, SUP — турист топтарынсыз премиум демалыс. Топтық, жеке және Premium.",
   "meta.ogLocale": "kk_KZ",
   "meta.schemaName": "Нячангта катамаранмен теңіз круиздері",
   "meta.schemaDescription": "Күндізгі круиздер, снорклинг, сапборд және Sunset-турлар. Жаңа тамақ пен сусындар қосылған.",

@@ -57,3 +57,21 @@ npx wrangler pages dev dist
 ## 5. Почта (опционально)
 
 `info@seatrips-nhatrang.com` — **Email Routing** в Cloudflare.
+
+## 6. Google Search Console (индексация)
+
+1. Откройте [search.google.com/search-console](https://search.google.com/search-console)
+2. **Добавить ресурс** → **Домен** `seatrips-nhatrang.com` (предпочтительно)  
+   или **Префикс URL** `https://seatrips-nhatrang.com/`
+3. **Верификация домена:** DNS TXT-запись в Cloudflare (рекомендуется — покрывает www и apex)
+4. **Верификация HTML-тега** (альтернатива):
+   - Search Console выдаст `content="XXXXXXXX"`
+   - Cloudflare Pages → **Environment variables** → Build:
+     - `VITE_GOOGLE_SITE_VERIFICATION=XXXXXXXX`
+   - Redeploy (пересборка вставит meta-тег в `<head>`)
+5. После верификации → **Файлы Sitemap** → добавить:
+   - `https://seatrips-nhatrang.com/sitemap.xml`
+6. **Проверка URL** → запросить индексацию главной `https://seatrips-nhatrang.com/`
+7. `robots.txt` и `sitemap.xml` генерируются при `npm run build` из `scripts/generate-seo-files.mjs`
+
+> Sitemap уже указан в `robots.txt`: `Sitemap: https://seatrips-nhatrang.com/sitemap.xml`

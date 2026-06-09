@@ -1,8 +1,8 @@
 export default {
   "meta.title": "냐짱 캐터마란 크루즈 | 프라이빗·단체 보트 투어",
-  "meta.description": "Catamaran cruise Nha Trang: private boat tour, sunset cruise, snorkeling tour. 단체 $80, 프라이빗 $1000부터, VIP $1500부터.",
+  "meta.description": "Catamaran cruise Nha Trang: private boat tour, sunset cruise, snorkeling tour. 단체 $80, 프라이빗 $1000부터, Premium $1500부터.",
   "meta.ogTitle": "냐짱 프라이빗·단체 캐터마란 크루즈",
-  "meta.ogDescription": "Sunset cruise, 스노클링, SUP — 관광객 없이 프리미엄 바다 휴식. 단체·프라이빗·VIP.",
+  "meta.ogDescription": "Sunset cruise, 스노클링, SUP — 관광객 없이 프리미엄 바다 휴식. 단체·프라이빗·Premium.",
   "meta.ogLocale": "ko_KR",
   "meta.schemaName": "냐짱 캐터마란 크루즈",
   "meta.schemaDescription": "냐짱에서의 주간 크루즈, 스노클링, SUP, 선셋 투어. 신선한 음식과 음료 포함.",

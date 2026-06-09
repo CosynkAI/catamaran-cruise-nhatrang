@@ -839,10 +839,16 @@ function isMobileViewport() {
   return window.matchMedia('(max-width: 767px)').matches;
 }
 
+function getHeroVideoSrc(video) {
+  const desktop = video.dataset.src || '/videos/hero.mp4';
+  const mobile = video.dataset.srcMobile || '/videos/hero-mobile.mp4';
+  return isMobileViewport() ? mobile : desktop;
+}
+
 function loadHeroVideoSource(video) {
-  const src = video.dataset.src || video.querySelector('source')?.dataset.src || '/videos/hero.mp4';
+  const src = getHeroVideoSrc(video);
   const source = video.querySelector('source') || document.createElement('source');
-  if (!source.getAttribute('src')) {
+  if (source.getAttribute('src') !== src) {
     source.src = src;
     source.type = 'video/mp4';
     if (!source.parentElement) video.append(source);

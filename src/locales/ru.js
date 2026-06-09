@@ -1,6 +1,6 @@
 export default {
   "meta.title": "Катамаран-круизы в Нячанге | Частные и групповые морские туры",
-  "meta.description": "Catamaran cruise Nha Trang: частные и групповые туры, sunset cruise, снорклинг. Групповой $80, индивидуальный от $1000, VIP от $1500.",
+  "meta.description": "Catamaran cruise Nha Trang: частные и групповые туры, sunset cruise, снорклинг. Групповой $80, индивидуальный от $1000, Premium от $1500.",
   "meta.ogTitle": "Частные и групповые круизы на катамаране в Нячанге",
   "meta.ogDescription": "Sunset-туры, снорклинг, SUP, еда и праздничный день на катамаране в Нячанге.",
   "meta.ogLocale": "ru_RU",
