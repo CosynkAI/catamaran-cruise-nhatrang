@@ -697,37 +697,53 @@ function shouldLoadHeroVideo() {
   return !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 }
 
+function prepHeroVideoEl(video) {
+  video.muted = true;
+  video.defaultMuted = true;
+  video.playsInline = true;
+  video.setAttribute('playsinline', '');
+  video.setAttribute('webkit-playsinline', '');
+}
+
 function initPageVideo() {
   const video = document.getElementById('hero-video');
   const backdrop = document.querySelector('.page-backdrop');
-  if (!video || !backdrop) return;
+  if (!video || !backdrop || video.dataset.heroInit === '1') return;
+  video.dataset.heroInit = '1';
 
   if (!shouldLoadHeroVideo()) {
     backdrop.classList.add('is-video-disabled');
     return;
   }
 
+  prepHeroVideoEl(video);
+
   const markReady = () => backdrop.classList.add('is-video-ready');
 
   const tryPlay = () => {
-    const playAttempt = video.play();
-    if (!playAttempt) {
-      markReady();
-      return;
-    }
-    playAttempt.then(markReady).catch(() => {
-      if (!video.dataset.playRetry) {
-        video.dataset.playRetry = '1';
-        video.addEventListener('canplay', tryPlay, { once: true });
-        video.load();
-      } else {
-        backdrop.classList.add('is-video-disabled');
-      }
-    });
+    video.play().then(markReady).catch(() => {});
   };
 
+  video.addEventListener('playing', markReady, { once: true });
+  video.addEventListener('loadeddata', markReady, { once: true });
+
   if (video.readyState >= 2) tryPlay();
-  else video.addEventListener('loadeddata', tryPlay, { once: true });
+  else video.addEventListener('canplay', tryPlay, { once: true });
+
+  const unlock = () => {
+    tryPlay();
+    markReady();
+  };
+  document.addEventListener('touchstart', unlock, { once: true, capture: true });
+  document.addEventListener('click', unlock, { once: true, capture: true });
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible' && video.paused) tryPlay();
+  });
+
+  window.setTimeout(() => {
+    if (!video.paused) markReady();
+  }, 800);
 }
 
 function scheduleHeroVideo() {
@@ -737,6 +753,12 @@ function scheduleHeroVideo() {
     return;
   }
   initPageVideo();
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', scheduleHeroVideo, { once: true });
+} else {
+  scheduleHeroVideo();
 }
 
 function initLazyMap() {
@@ -808,7 +830,6 @@ function boot() {
   initMobileNav();
   initStickyCta();
   initLazyMap();
-  scheduleHeroVideo();
 }
 
 initFaq();

@@ -201,6 +201,10 @@
     z-index: 0;
     overflow: hidden;
     pointer-events: none;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
   }
 
   .page-backdrop__poster-wrap {
@@ -230,6 +234,14 @@
     opacity: 0;
     filter: saturate(1.02) contrast(1.06) brightness(0.96);
     transition: opacity 0.8s ease;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+  }
+
+  @supports (-webkit-touch-callout: none) {
+    .page-backdrop__video {
+      object-position: center;
+    }
   }
 
   .page-backdrop__shade {
