@@ -9,6 +9,7 @@ export const CONTACTS = SITE.contacts;
 const bookingState = { date: '', guests: '2', time: '', type: 'group' };
 const GALLERY_PER_PAGE = 6;
 const DATE_DISPLAY_LOCALES = { ru: 'ru-RU', en: 'en-US', ko: 'ko-KR', kk: 'ru-RU' };
+const SCROLL_RESTORE_KEY = 'site-scroll-restore';
 let highlightMessengerTimer;
 
 const TIME_OPTIONS = {
@@ -150,9 +151,87 @@ function scrollToActiveMessenger() {
 }
 
 function updateStickyCta() {
-  const link = document.querySelector('#sticky-cta a');
-  if (!link) return;
-  link.textContent = t(isBookingReady() ? 'sticky.ctaReady' : 'sticky.cta');
+  const browse = document.getElementById('sticky-cta-browse');
+  const ready = document.getElementById('sticky-cta-ready');
+  const readyState = isBookingReady();
+  browse?.toggleAttribute('hidden', readyState);
+  ready?.toggleAttribute('hidden', !readyState);
+}
+
+function hapticTap() {
+  navigator.vibrate?.(12);
+}
+
+function saveScrollForReturn() {
+  try {
+    sessionStorage.setItem(
+      SCROLL_RESTORE_KEY,
+      JSON.stringify({ y: window.scrollY, tab: bookingState.type })
+    );
+  } catch {
+    /* ignore */
+  }
+}
+
+function restoreScrollPosition() {
+  try {
+    const raw = sessionStorage.getItem(SCROLL_RESTORE_KEY);
+    if (!raw) return;
+    sessionStorage.removeItem(SCROLL_RESTORE_KEY);
+    const data = JSON.parse(raw);
+    if (data.tab && PANEL_IDS[data.tab]) showConfigTab(data.tab);
+    if (typeof data.y === 'number') {
+      requestAnimationFrame(() => window.scrollTo({ top: data.y, behavior: 'auto' }));
+    }
+  } catch {
+    /* ignore */
+  }
+}
+
+function ensureTourType(type) {
+  if (type && bookingState.type !== type) showConfigTab(type);
+}
+
+function promptBookingForm(type) {
+  ensureTourType(type);
+  const form = document.getElementById('booking-form');
+  form?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  if (type !== 'vip') {
+    setBookingDateError(true);
+    document.getElementById('booking-date')?.focus();
+  }
+}
+
+async function copyBookingMessage() {
+  syncBookingStateFromForm();
+  const text = getBookingMessage(currentLang, bookingState.type, {
+    date: bookingState.date || undefined,
+    guests: bookingState.guests || undefined,
+    time: bookingState.time || undefined,
+  });
+  const toast = document.getElementById('booking-copy-toast');
+  try {
+    await navigator.clipboard.writeText(text);
+    if (toast) {
+      toast.textContent = t('form.copyDone');
+      toast.hidden = false;
+      window.setTimeout(() => {
+        toast.hidden = true;
+      }, 2200);
+    }
+  } catch {
+    if (toast) {
+      toast.textContent = t('form.copyFail');
+      toast.hidden = false;
+    }
+  }
+}
+
+function scrollActiveTabIntoView() {
+  if (!isMobileViewport()) return;
+  document
+    .querySelector('.scroll-tabs .tab-btn.is-active')
+    ?.scrollIntoView({ inline: 'center', block: 'nearest', behavior: 'smooth' });
 }
 
 function updateBookingPreview() {
@@ -183,15 +262,14 @@ function openMessengerFromEl(el) {
   syncBookingStateFromForm();
   const type = resolveTourType(el);
   const channel = el.dataset.channel || 'whatsapp';
+  ensureTourType(type);
   if (type !== 'vip' && !bookingState.date) {
-    const dateEl = document.getElementById('booking-date');
-    setBookingDateError(true);
-    dateEl?.focus();
-    dateEl?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    promptBookingForm(type);
     return;
   }
   setBookingDateError(false);
   const url = messengerUrl(type, channel);
+  saveScrollForReturn();
   if (isMobileViewport()) {
     window.location.assign(url);
     return;
@@ -240,13 +318,17 @@ function initBookingForm() {
 
   document.getElementById('guests-minus')?.addEventListener('click', () => {
     if (!guestsEl) return;
+    hapticTap();
     setGuests(Number(guestsEl.value) - 1);
   });
 
   document.getElementById('guests-plus')?.addEventListener('click', () => {
     if (!guestsEl) return;
+    hapticTap();
     setGuests(Number(guestsEl.value) + 1);
   });
+
+  document.getElementById('booking-copy')?.addEventListener('click', copyBookingMessage);
 
   if (timeEl) {
     timeEl.addEventListener('change', () => {
@@ -288,17 +370,23 @@ function showConfigTab(tabId) {
 
   const guestsWrap = document.getElementById('field-guests-wrap');
   const timeWrap = document.getElementById('field-time-wrap');
+  const dateWrap = document.getElementById('field-date-wrap');
+  const vipHint = document.getElementById('booking-vip-hint');
 
   const dateEl = document.getElementById('booking-date');
   if (dateEl) dateEl.required = tabId !== 'vip';
 
   if (tabId === 'vip') {
+    dateWrap?.toggleAttribute('hidden', true);
     guestsWrap?.toggleAttribute('hidden', true);
     timeWrap?.toggleAttribute('hidden', true);
+    vipHint?.removeAttribute('hidden');
     bookingState.guests = '';
     bookingState.time = '';
     setBookingDateError(false);
   } else {
+    dateWrap?.toggleAttribute('hidden', false);
+    vipHint?.setAttribute('hidden', '');
     guestsWrap?.toggleAttribute('hidden', false);
     timeWrap?.toggleAttribute('hidden', false);
     const guestsEl = document.getElementById('booking-guests');
@@ -307,6 +395,7 @@ function showConfigTab(tabId) {
   }
 
   refreshBookingUi();
+  scrollActiveTabIntoView();
 }
 
 function initConfigurator() {
@@ -565,7 +654,7 @@ async function initGalleryCarousel() {
       img.className = 'gallery-carousel__img';
       img.src = item.src;
       if (item.srcset) img.srcset = item.srcset;
-      img.sizes = '(max-width: 640px) 44vw, (max-width: 1024px) 28vw, 220px';
+      img.sizes = '(max-width: 480px) 42vw, (max-width: 768px) 44vw, (max-width: 1024px) 28vw, 220px';
       if (item.width) img.width = item.width;
       if (item.height) img.height = item.height;
       img.alt = altText(globalIndex);
@@ -685,15 +774,6 @@ function initMessengerLinks() {
 function initScrollCta() {
   document.querySelectorAll('[data-scroll]').forEach((el) => {
     el.addEventListener('click', (e) => {
-      if (el.closest('#sticky-cta')) {
-        syncBookingStateFromForm();
-        if (isBookingReady()) {
-          e.preventDefault();
-          scrollToActiveMessenger();
-          closeMobileMenu();
-          return;
-        }
-      }
       const id = el.dataset.scroll;
       const target = document.getElementById(id);
       if (target) {
@@ -759,13 +839,24 @@ function isMobileViewport() {
   return window.matchMedia('(max-width: 767px)').matches;
 }
 
+function loadHeroVideoSource(video) {
+  const src = video.dataset.src || video.querySelector('source')?.dataset.src || '/videos/hero.mp4';
+  const source = video.querySelector('source') || document.createElement('source');
+  if (!source.getAttribute('src')) {
+    source.src = src;
+    source.type = 'video/mp4';
+    if (!source.parentElement) video.append(source);
+    video.load();
+  }
+}
+
 function prepHeroVideoEl(video) {
   video.muted = true;
   video.defaultMuted = true;
   video.playsInline = true;
   video.setAttribute('playsinline', '');
   video.setAttribute('webkit-playsinline', '');
-  video.preload = isMobileViewport() ? 'metadata' : 'auto';
+  video.preload = isMobileViewport() ? 'none' : 'metadata';
 }
 
 function initPageVideo() {
@@ -781,6 +872,7 @@ function initPageVideo() {
   }
 
   prepHeroVideoEl(video);
+  const deferSource = isMobileViewport();
 
   const markReady = () => {
     backdrop.classList.add('is-video-ready');
@@ -793,14 +885,20 @@ function initPageVideo() {
   };
 
   const tryPlay = () => {
+    if (!video.querySelector('source[src]')) loadHeroVideoSource(video);
     video.play().then(markReady).catch(showUnlock);
   };
 
   video.addEventListener('playing', markReady, { once: true });
   video.addEventListener('loadeddata', markReady, { once: true });
 
-  if (video.readyState >= 2) tryPlay();
-  else video.addEventListener('canplay', tryPlay, { once: true });
+  if (!deferSource) {
+    loadHeroVideoSource(video);
+    if (video.readyState >= 2) tryPlay();
+    else video.addEventListener('canplay', tryPlay, { once: true });
+  } else {
+    showUnlock();
+  }
 
   const unlock = () => {
     tryPlay();
@@ -851,11 +949,31 @@ function initMapClickLoad() {
   btn.addEventListener('click', load);
 }
 
-function initGalleryWhenVisible() {
-  initGalleryCarousel();
+function initWhenVisible(sectionId, initFn) {
+  const section = document.getElementById(sectionId);
+  if (!section) return;
+  if (!('IntersectionObserver' in window)) {
+    initFn();
+    return;
+  }
+  const io = new IntersectionObserver(
+    ([entry]) => {
+      if (!entry?.isIntersecting) return;
+      initFn();
+      io.disconnect();
+    },
+    { rootMargin: '240px' }
+  );
+  io.observe(section);
+}
+
+function registerServiceWorker() {
+  if (!('serviceWorker' in navigator)) return;
+  navigator.serviceWorker.register('/sw.js').catch(() => {});
 }
 
 function boot() {
+  restoreScrollPosition();
   initConfigurator();
 
   const tab = document.body.dataset.defaultTab;
@@ -864,13 +982,15 @@ function boot() {
   initLangDropdown();
   initBookingForm();
   updateBookingTimeOptions();
-  initReviewsCarousel();
-  initGalleryWhenVisible();
+  initWhenVisible('reviews', initReviewsCarousel);
+  initWhenVisible('gallery', initGalleryCarousel);
   refreshBookingUi();
   initScrollCta();
   initMobileNav();
   initStickyCta();
   initMapClickLoad();
+  scrollActiveTabIntoView();
+  registerServiceWorker();
 }
 
 initFaq();

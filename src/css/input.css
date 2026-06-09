@@ -25,6 +25,15 @@
     }
   }
 
+  @media (max-width: 767px) {
+    .logo-text,
+    .section-title,
+    .hero-title,
+    #social-title {
+      font-family: 'Manrope', system-ui, -apple-system, sans-serif;
+    }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     html {
       scroll-behavior: auto;
@@ -729,6 +738,17 @@
   .btn-messenger[data-channel="telegram"]:hover {
     background: linear-gradient(135deg, #006aa3 0%, #1d9ee0 52%, #7dd3fc 100%);
     box-shadow: 0 1rem 2.4rem rgba(34, 158, 217, 0.36), inset 0 1px 0 rgba(255, 255, 255, 0.34);
+    transform: translateY(-1px);
+  }
+
+  .btn-messenger[data-channel="zalo"] {
+    background: linear-gradient(135deg, #0056c8 0%, #0068ff 52%, #38a3ff 100%);
+    box-shadow: 0 0.9rem 2rem rgba(0, 104, 255, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  }
+
+  .btn-messenger[data-channel="zalo"]:hover {
+    background: linear-gradient(135deg, #004bb0 0%, #005ae6 52%, #7cc0ff 100%);
+    box-shadow: 0 1rem 2.4rem rgba(0, 104, 255, 0.36), inset 0 1px 0 rgba(255, 255, 255, 0.34);
     transform: translateY(-1px);
   }
 
@@ -1649,9 +1669,17 @@
       order: 0;
     }
 
-    #configurator > .scroll-tabs {
+    #configurator > .scroll-tabs,
+    #configurator > .scroll-tabs__hint {
       order: 1;
+    }
+
+    #configurator > .scroll-tabs {
       margin-top: 1.5rem;
+    }
+
+    #configurator > .scroll-tabs__hint {
+      margin-top: 0.35rem;
     }
 
     #configurator > #booking-form {
@@ -1805,6 +1833,60 @@
 
   .sticky-cta.is-visible {
     transform: translateY(0);
+  }
+
+  .sticky-cta__browse[hidden],
+  .sticky-cta__ready[hidden] {
+    display: none;
+  }
+
+  .messenger-row--sticky {
+    @apply grid grid-cols-3 gap-2;
+  }
+
+  .btn-messenger--sticky {
+    @apply min-h-11 px-2 py-2.5 text-xs font-extrabold;
+  }
+
+  .btn-messenger--sticky .btn-messenger__icon {
+    width: 1rem;
+    height: 1rem;
+  }
+
+  .scroll-tabs__hint {
+    @apply text-center text-xs font-semibold md:hidden;
+    color: rgba(8, 36, 51, 0.45);
+  }
+
+  .booking-form__optional {
+    @apply mt-3 text-sm font-medium;
+    color: rgba(255, 255, 255, 0.72);
+  }
+
+  .booking-form__copy {
+    @apply mt-3 w-full rounded-full border px-4 py-2.5 text-sm font-bold transition-colors;
+    border-color: rgba(255, 255, 255, 0.28);
+    background: rgba(255, 255, 255, 0.12);
+    color: rgba(255, 255, 255, 0.92);
+    touch-action: manipulation;
+  }
+
+  .booking-form__copy:hover {
+    background: rgba(255, 255, 255, 0.2);
+  }
+
+  .booking-form__copy-toast {
+    @apply mt-2 block text-center text-xs font-semibold;
+    color: #86efac;
+  }
+
+  .booking-form__copy-toast[hidden] {
+    display: none;
+  }
+
+  #reviews .review-card {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 12rem;
   }
 
   .menu-backdrop {
