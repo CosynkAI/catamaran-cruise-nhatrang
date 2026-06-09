@@ -142,6 +142,7 @@ export default {
   "footer.mapsLink": "Open in Google Maps",
   "footer.copyright": "© Catamaran Cruises · Nha Trang",
   "footer.credit": "Site crafted by <a class=\"footer-credit__link\" href=\"https://t.me/eviniko\" target=\"_blank\" rel=\"noopener noreferrer\">@eviniko</a>",
+  "footer.creditMsg": "Hi! I saw the site \"Catamaran Cruises · Nha Trang\" — I'd like you to build something similar for me. Can we discuss?",
   "sticky.cta": "Book a cruise",
   "sticky.ctaReady": "Open WhatsApp",
   "hero.videoTap": "Tap for video",

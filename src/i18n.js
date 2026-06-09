@@ -1,4 +1,4 @@
-import { getBookingMessage } from '@lib/booking-messages.js';
+import { getBookingMessage, resolveMessageLang } from '@lib/booking-messages.js';
 import { getCurrentPageSlug, getPageSeo } from '@lib/seo-pages.js';
 import { SITE } from './site.js';
 
@@ -39,6 +39,19 @@ export function t(key) {
   const dict = loadedLocales[currentLang] ?? loadedLocales.ru;
   if (!dict) return key;
   return dict[key] ?? loadedLocales.ru?.[key] ?? key;
+}
+
+/** Pre-filled messenger text lang: ru/kk → ru, en/ko → en */
+export function tMessenger(key) {
+  const msgLang = resolveMessageLang(currentLang);
+  const dict = loadedLocales[msgLang] ?? loadedLocales.ru;
+  if (!dict) return key;
+  return dict[key] ?? loadedLocales.ru?.[key] ?? key;
+}
+
+async function ensureMessengerLocale(lang) {
+  const msgLang = resolveMessageLang(lang);
+  if (msgLang !== 'ru') await ensureLocale(msgLang);
 }
 
 export function getMessage(type) {
@@ -263,6 +276,7 @@ export async function setLang(lang) {
   if (!SUPPORTED_LANGS.has(lang)) return;
   await ensureLocale(lang);
   if (!loadedLocales.ru) await ensureLocale('ru');
+  await ensureMessengerLocale(lang);
   currentLang = lang;
   localStorage.setItem(STORAGE_KEY, lang);
   applyTranslations({ animate: true });
@@ -274,6 +288,7 @@ export async function initI18n(onLangChange) {
 
   await ensureLocale('ru');
   if (currentLang !== 'ru') await ensureLocale(currentLang);
+  await ensureMessengerLocale(currentLang);
 
   applyTranslations();
 

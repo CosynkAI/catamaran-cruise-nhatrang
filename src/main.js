@@ -1,7 +1,7 @@
 import './css/input.css';
 import { buildMessengerUrl } from '@lib/booking-url.js';
 import { getBookingMessage } from '@lib/booking-messages.js';
-import { initI18n, currentLang, t } from './i18n.js';
+import { initI18n, currentLang, t, tMessenger } from './i18n.js';
 import { SITE } from './site.js';
 
 export const CONTACTS = SITE.contacts;
@@ -751,6 +751,17 @@ async function initGalleryCarousel() {
   updateCounter();
 }
 
+const FOOTER_CREDIT_TELEGRAM = 'eviniko';
+
+function updateFooterCreditLink() {
+  const text = tMessenger('footer.creditMsg');
+  document.querySelectorAll('.footer-credit__link').forEach((el) => {
+    el.href = `https://t.me/${FOOTER_CREDIT_TELEGRAM}?text=${encodeURIComponent(text)}`;
+    el.target = '_blank';
+    el.rel = 'noopener noreferrer';
+  });
+}
+
 function initMessengerLinks() {
   document.querySelectorAll('[data-messenger]').forEach((el) => {
     const type = resolveTourType(el);
@@ -998,6 +1009,7 @@ function boot() {
   initWhenVisible('reviews', initReviewsCarousel);
   initWhenVisible('gallery', initGalleryCarousel);
   refreshBookingUi();
+  updateFooterCreditLink();
   initScrollCta();
   initMobileNav();
   initStickyCta();
@@ -1010,6 +1022,7 @@ initFaq();
 initI18n(() => {
   updateBookingTimeOptions();
   refreshBookingUi();
+  updateFooterCreditLink();
   updateStickyCta();
   closeMobileMenu();
   window.refreshGalleryCarousel?.();

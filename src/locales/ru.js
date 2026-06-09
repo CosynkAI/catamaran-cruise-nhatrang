@@ -142,6 +142,7 @@ export default {
   "footer.mapsLink": "Открыть в Google Maps",
   "footer.copyright": "© Морские круизы · Нячанг",
   "footer.credit": "Сайт сделан руками <a class=\"footer-credit__link\" href=\"https://t.me/eviniko\" target=\"_blank\" rel=\"noopener noreferrer\">@eviniko</a>",
+  "footer.creditMsg": "Привет! Увидел сайт «Морские круизы · Нячанг» — хочу, чтобы вы сделали мне такой же. Можем обсудить?",
   "sticky.cta": "Забронировать круиз",
   "sticky.ctaReady": "Открыть WhatsApp",
   "hero.videoTap": "Нажмите для видео",
