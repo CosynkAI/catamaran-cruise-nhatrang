@@ -115,8 +115,6 @@
   /* ── Layout ── */
   .section-wrap {
     @apply mx-auto w-full min-w-0 max-w-6xl px-5 py-16 sm:px-6 md:px-10 md:py-24;
-    content-visibility: auto;
-    contain-intrinsic-size: auto 40rem;
   }
 
 
@@ -226,24 +224,6 @@
     height: 100%;
     object-fit: cover;
     object-position: center center;
-  }
-
-  @media (max-width: 767px) {
-    .page-backdrop__poster,
-    .page-backdrop__video {
-      left: 50%;
-      top: 50%;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center 42%;
-      transform: translate(-50%, -50%) scale(0.9);
-      transform-origin: center center;
-    }
-
-    .page-backdrop.is-video-ready .page-backdrop__video {
-      opacity: 0.62;
-    }
   }
 
   .page-backdrop__poster-wrap .page-backdrop__poster {
@@ -1199,19 +1179,20 @@
   }
 
   .gallery-carousel__viewport {
-    @apply relative min-w-0 w-full flex-1 overflow-hidden rounded-2xl sm:rounded-3xl;
+    @apply relative min-w-0 w-full flex-1 rounded-2xl sm:rounded-3xl;
     border: 1px solid rgba(255, 255, 255, 0.72);
     box-shadow: 0 1.2rem 3.2rem rgba(8, 36, 51, 0.14);
     background: rgba(6, 27, 39, 0.45);
-    touch-action: pan-y pinch-zoom;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
     overscroll-behavior-x: contain;
-    -webkit-user-select: none;
-    user-select: none;
+    scrollbar-width: none;
   }
 
-  .gallery-carousel__viewport.is-swiping,
-  .reviews-carousel__viewport.is-swiping {
-    touch-action: none;
+  .gallery-carousel__viewport::-webkit-scrollbar {
+    display: none;
   }
 
   #gallery.section-wrap,
@@ -1221,22 +1202,13 @@
 
   .gallery-carousel__track {
     display: flex;
-    will-change: transform;
-    transition: transform 0.85s cubic-bezier(0.33, 1, 0.48, 1);
-  }
-
-  .gallery-carousel__track.is-dragging {
-    transition: none;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .gallery-carousel__track {
-      transition-duration: 0.01ms;
-    }
+    min-width: min-content;
   }
 
   .gallery-carousel__page {
     flex: 0 0 100%;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     grid-template-rows: repeat(3, auto);
@@ -1268,14 +1240,12 @@
     background: rgba(255, 255, 255, 0.06);
     aspect-ratio: 1;
     min-height: 0;
-    pointer-events: none;
   }
 
   .gallery-carousel__img {
     @apply h-full w-full object-cover opacity-0 transition-opacity duration-500;
     filter: saturate(1.02) contrast(1.06);
     -webkit-user-drag: none;
-    pointer-events: none;
   }
 
   .gallery-carousel__img.is-loaded {

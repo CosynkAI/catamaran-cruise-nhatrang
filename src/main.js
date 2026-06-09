@@ -530,7 +530,6 @@ async function initGalleryCarousel() {
 
   const pages = chunkGalleryItems(items, GALLERY_PER_PAGE);
   let pageIndex = 0;
-  let isAnimating = false;
 
   const altText = (globalIndex) => `${t('gallery.altPhoto')} ${globalIndex + 1}`;
 
@@ -576,40 +575,37 @@ async function initGalleryCarousel() {
 
   const pageWidth = () => viewport.clientWidth;
 
-  const applyTransform = (dragPx = 0, animate = false) => {
-    const x = -pageIndex * pageWidth() + dragPx;
-    track.classList.toggle('is-dragging', !animate);
-    track.style.transform = `translate3d(${x}px, 0, 0)`;
+  const layoutPages = () => {
+    const w = pageWidth();
+    if (!w) return;
+    track.style.width = `${w * pages.length}px`;
+    track.querySelectorAll('.gallery-carousel__page').forEach((page) => {
+      page.style.flex = `0 0 ${w}px`;
+      page.style.width = `${w}px`;
+    });
   };
 
-  const finishTransition = () => {
-    isAnimating = false;
-  };
+  layoutPages();
 
-  const snapToPage = (animate = true) => {
-    if (!animate || prefersReducedMotion) {
-      applyTransform(0, false);
-      finishTransition();
-      return;
+  const syncIndexFromScroll = () => {
+    const w = pageWidth();
+    if (!w) return;
+    const next = Math.min(pages.length - 1, Math.max(0, Math.round(viewport.scrollLeft / w)));
+    if (next !== pageIndex) {
+      pageIndex = next;
+      updateCounter();
     }
-    isAnimating = true;
-    track.classList.remove('is-dragging');
-    requestAnimationFrame(() => applyTransform(0, true));
-    const onEnd = (e) => {
-      if (e.propertyName !== 'transform') return;
-      track.removeEventListener('transitionend', onEnd);
-      finishTransition();
-    };
-    track.addEventListener('transitionend', onEnd);
   };
 
-  const goToPage = (nextIndex, animate = true) => {
-    if (isAnimating && animate) return;
-    const newIndex = ((nextIndex % pages.length) + pages.length) % pages.length;
-    if (newIndex === pageIndex && animate) return;
-    pageIndex = newIndex;
+  const goToPage = (nextIndex) => {
+    const w = pageWidth();
+    if (!w) return;
+    pageIndex = ((nextIndex % pages.length) + pages.length) % pages.length;
+    viewport.scrollTo({
+      left: pageIndex * w,
+      behavior: prefersReducedMotion ? 'auto' : 'smooth',
+    });
     updateCounter();
-    snapToPage(animate);
   };
 
   const stepPage = (delta) => goToPage(pageIndex + delta);
@@ -617,52 +613,12 @@ async function initGalleryCarousel() {
   prevBtn?.addEventListener('click', () => stepPage(-1));
   nextBtn?.addEventListener('click', () => stepPage(1));
 
-  const releaseSwipe = (offset) => {
-    const w = pageWidth();
-    const threshold = w * 0.12;
-    if (offset < -threshold) goToPage(pageIndex + 1);
-    else if (offset > threshold) goToPage(pageIndex - 1);
-    else snapToPage(true);
-  };
+  viewport.addEventListener('scroll', () => requestAnimationFrame(syncIndexFromScroll), { passive: true });
 
-  bindCarouselTouchSwipe(viewport, {
-    isBlocked: () => isAnimating,
-    onDrag: (offset) => applyTransform(offset, false),
-    onRelease: releaseSwipe,
+  window.addEventListener('resize', () => {
+    layoutPages();
+    viewport.scrollTo({ left: pageIndex * pageWidth(), behavior: 'auto' });
   });
-
-  let dragStartX = 0;
-  let dragOffset = 0;
-  let isDragging = false;
-
-  viewport.addEventListener('pointerdown', (e) => {
-    if (e.pointerType === 'touch' || isAnimating) return;
-    isDragging = true;
-    dragStartX = e.clientX;
-    dragOffset = 0;
-    viewport.setPointerCapture(e.pointerId);
-  });
-
-  viewport.addEventListener('pointermove', (e) => {
-    if (!isDragging || e.pointerType === 'touch') return;
-    dragOffset = e.clientX - dragStartX;
-    applyTransform(dragOffset, false);
-  });
-
-  viewport.addEventListener('pointerup', (e) => {
-    if (e.pointerType === 'touch') return;
-    if (isDragging) viewport.releasePointerCapture(e.pointerId);
-    if (isDragging) releaseSwipe(dragOffset);
-    isDragging = false;
-    dragOffset = 0;
-  });
-
-  viewport.addEventListener('pointercancel', () => {
-    isDragging = false;
-    snapToPage(true);
-  });
-
-  window.addEventListener('resize', () => applyTransform(0, false));
 
   root.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowLeft') {
@@ -682,7 +638,7 @@ async function initGalleryCarousel() {
     });
   };
 
-  applyTransform(0, false);
+  viewport.scrollTo({ left: 0, behavior: 'auto' });
   updateCounter();
 }
 
@@ -861,30 +817,7 @@ function initLazyMap() {
 }
 
 function initGalleryWhenVisible() {
-  const section = document.getElementById('gallery');
-  if (!section) return;
-
-  let started = false;
-  const start = () => {
-    if (started) return;
-    started = true;
-    initGalleryCarousel();
-  };
-
-  if (!('IntersectionObserver' in window)) {
-    start();
-    return;
-  }
-
-  const io = new IntersectionObserver(
-    ([entry]) => {
-      if (!entry?.isIntersecting) return;
-      start();
-      io.disconnect();
-    },
-    { rootMargin: '500px' }
-  );
-  io.observe(section);
+  initGalleryCarousel();
 }
 
 function boot() {
