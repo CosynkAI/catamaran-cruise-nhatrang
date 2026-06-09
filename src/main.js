@@ -462,7 +462,7 @@ async function initGalleryCarousel() {
       img.className = 'gallery-carousel__img';
       img.src = item.src;
       if (item.srcset) img.srcset = item.srcset;
-      img.sizes = '(max-width: 640px) 46vw, (max-width: 1024px) 28vw, 220px';
+      img.sizes = '(max-width: 640px) 44vw, (max-width: 1024px) 28vw, 220px';
       if (item.width) img.width = item.width;
       if (item.height) img.height = item.height;
       img.alt = altText(globalIndex);
@@ -697,12 +697,17 @@ function shouldLoadHeroVideo() {
   return !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 }
 
+function isMobileViewport() {
+  return window.matchMedia('(max-width: 767px)').matches;
+}
+
 function prepHeroVideoEl(video) {
   video.muted = true;
   video.defaultMuted = true;
   video.playsInline = true;
   video.setAttribute('playsinline', '');
   video.setAttribute('webkit-playsinline', '');
+  video.preload = isMobileViewport() ? 'metadata' : 'auto';
 }
 
 function initPageVideo() {
