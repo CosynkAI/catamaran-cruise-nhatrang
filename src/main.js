@@ -239,16 +239,84 @@ function bindCarouselTouchSwipe(viewport, { isBlocked, onDrag, onRelease }) {
   let dragOffset = 0;
   let isDragging = false;
   let axis = null;
+  let pointerId = null;
+  let usePointer = false;
+
+  const setSwiping = (active) => {
+    viewport.classList.toggle('is-swiping', active);
+  };
+
+  const start = (x, y, id = null) => {
+    if (isBlocked()) return;
+    isDragging = true;
+    axis = null;
+    dragStartX = x;
+    dragStartY = y;
+    dragOffset = 0;
+    pointerId = id;
+  };
+
+  const move = (x, y, e) => {
+    if (!isDragging || isBlocked()) return;
+    const dx = x - dragStartX;
+    const dy = y - dragStartY;
+    if (axis === null && (Math.abs(dx) > 6 || Math.abs(dy) > 6)) {
+      axis = Math.abs(dx) >= Math.abs(dy) ? 'x' : 'y';
+    }
+    if (axis === 'y') {
+      setSwiping(false);
+      return;
+    }
+    if (axis === 'x') {
+      if (e?.cancelable) e.preventDefault();
+      setSwiping(true);
+      dragOffset = dx;
+      onDrag(dragOffset);
+    }
+  };
+
+  const finish = () => {
+    if (!isDragging) return;
+    const offset = dragOffset;
+    isDragging = false;
+    axis = null;
+    dragOffset = 0;
+    pointerId = null;
+    usePointer = false;
+    setSwiping(false);
+    onRelease(offset);
+  };
+
+  if (window.PointerEvent) {
+    viewport.addEventListener('pointerdown', (e) => {
+      if (e.pointerType !== 'touch' && e.pointerType !== 'pen') return;
+      usePointer = true;
+      start(e.clientX, e.clientY, e.pointerId);
+      viewport.setPointerCapture(e.pointerId);
+    });
+
+    viewport.addEventListener('pointermove', (e) => {
+      if (!usePointer || e.pointerId !== pointerId) return;
+      move(e.clientX, e.clientY, e);
+    });
+
+    viewport.addEventListener('pointerup', (e) => {
+      if (!usePointer || e.pointerId !== pointerId) return;
+      viewport.releasePointerCapture(e.pointerId);
+      finish();
+    });
+
+    viewport.addEventListener('pointercancel', (e) => {
+      if (e.pointerId !== pointerId) return;
+      finish();
+    });
+  }
 
   viewport.addEventListener(
     'touchstart',
     (e) => {
-      if (isBlocked()) return;
-      isDragging = true;
-      axis = null;
-      dragStartX = e.touches[0].clientX;
-      dragStartY = e.touches[0].clientY;
-      dragOffset = 0;
+      if (usePointer || isBlocked()) return;
+      start(e.touches[0].clientX, e.touches[0].clientY);
     },
     { passive: true }
   );
@@ -256,32 +324,29 @@ function bindCarouselTouchSwipe(viewport, { isBlocked, onDrag, onRelease }) {
   viewport.addEventListener(
     'touchmove',
     (e) => {
-      if (!isDragging || isBlocked()) return;
-      const dx = e.touches[0].clientX - dragStartX;
-      const dy = e.touches[0].clientY - dragStartY;
-      if (axis === null && (Math.abs(dx) > 8 || Math.abs(dy) > 8)) {
-        axis = Math.abs(dx) >= Math.abs(dy) ? 'x' : 'y';
-      }
-      if (axis === 'y') return;
-      if (axis === 'x') {
-        e.preventDefault();
-        dragOffset = dx;
-        onDrag(dragOffset);
-      }
+      if (usePointer || !isDragging) return;
+      move(e.touches[0].clientX, e.touches[0].clientY, e);
     },
     { passive: false }
   );
 
-  const finish = () => {
-    if (!isDragging) return;
-    isDragging = false;
-    onRelease(dragOffset);
-    dragOffset = 0;
-    axis = null;
-  };
+  viewport.addEventListener(
+    'touchend',
+    () => {
+      if (usePointer) return;
+      finish();
+    },
+    { passive: true }
+  );
 
-  viewport.addEventListener('touchend', finish, { passive: true });
-  viewport.addEventListener('touchcancel', finish, { passive: true });
+  viewport.addEventListener(
+    'touchcancel',
+    () => {
+      if (usePointer) return;
+      finish();
+    },
+    { passive: true }
+  );
 }
 
 function getReviewsPerPage() {

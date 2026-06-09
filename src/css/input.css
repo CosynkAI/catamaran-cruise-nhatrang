@@ -1204,11 +1204,18 @@
     box-shadow: 0 1.2rem 3.2rem rgba(8, 36, 51, 0.14);
     background: rgba(6, 27, 39, 0.45);
     touch-action: pan-y pinch-zoom;
+    overscroll-behavior-x: contain;
     -webkit-user-select: none;
     user-select: none;
   }
 
-  #gallery.section-wrap {
+  .gallery-carousel__viewport.is-swiping,
+  .reviews-carousel__viewport.is-swiping {
+    touch-action: none;
+  }
+
+  #gallery.section-wrap,
+  #reviews.section-wrap {
     content-visibility: visible;
   }
 
@@ -1261,6 +1268,7 @@
     background: rgba(255, 255, 255, 0.06);
     aspect-ratio: 1;
     min-height: 0;
+    pointer-events: none;
   }
 
   .gallery-carousel__img {
@@ -1444,6 +1452,7 @@
   .reviews-carousel__viewport {
     @apply relative min-w-0 flex-1 overflow-hidden;
     touch-action: pan-y pinch-zoom;
+    overscroll-behavior-x: contain;
     -webkit-user-select: none;
     user-select: none;
   }
