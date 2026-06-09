@@ -10,10 +10,14 @@
 
 | Поле | Значение |
 |------|----------|
+| Тип проекта | **Pages** (не Workers) |
 | Framework preset | None |
 | Build command | `npm run build` |
 | Build output directory | `dist` |
+| **Deploy command** | **пусто** (не `wrangler deploy`) |
 | Root directory | `/` |
+
+> Если в логе `main = "src/index.ts"` или `wrangler deploy` — в Settings → Builds очистите **Deploy command** и сохраните.
 
 4. **Environment variables** (Production + Preview) — из `.env.example`:
 
