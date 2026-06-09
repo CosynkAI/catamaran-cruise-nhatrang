@@ -694,12 +694,7 @@ function initStickyCta() {
 }
 
 function shouldLoadHeroVideo() {
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return false;
-  if (window.matchMedia('(prefers-reduced-data: reduce)').matches) return false;
-  const conn = navigator.connection ?? navigator.mozConnection ?? navigator.webkitConnection;
-  if (conn?.saveData) return false;
-  if (conn?.effectiveType && /(?:^|-)2g$/.test(conn.effectiveType)) return false;
-  return true;
+  return !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 }
 
 function initPageVideo() {
@@ -712,34 +707,36 @@ function initPageVideo() {
     return;
   }
 
-  const source = video.querySelector('source[data-src]');
-  const src = source?.dataset.src;
-  if (!src) return;
+  const markReady = () => backdrop.classList.add('is-video-ready');
 
-  source.src = src;
-  video.load();
-  video
-    .play()
-    .then(() => backdrop.classList.add('is-video-ready'))
-    .catch(() => backdrop.classList.add('is-video-disabled'));
+  const tryPlay = () => {
+    const playAttempt = video.play();
+    if (!playAttempt) {
+      markReady();
+      return;
+    }
+    playAttempt.then(markReady).catch(() => {
+      if (!video.dataset.playRetry) {
+        video.dataset.playRetry = '1';
+        video.addEventListener('canplay', tryPlay, { once: true });
+        video.load();
+      } else {
+        backdrop.classList.add('is-video-disabled');
+      }
+    });
+  };
+
+  if (video.readyState >= 2) tryPlay();
+  else video.addEventListener('loadeddata', tryPlay, { once: true });
 }
 
 function scheduleHeroVideo() {
-  const video = document.getElementById('hero-video');
   const backdrop = document.querySelector('.page-backdrop');
-  if (!video || !backdrop) return;
-
   if (!shouldLoadHeroVideo()) {
-    backdrop.classList.add('is-video-disabled');
+    backdrop?.classList.add('is-video-disabled');
     return;
   }
-
-  const run = () => initPageVideo();
-  if ('requestIdleCallback' in window) {
-    requestIdleCallback(run, { timeout: 5000 });
-  } else {
-    window.addEventListener('load', () => setTimeout(run, 2000), { once: true });
-  }
+  initPageVideo();
 }
 
 function initLazyMap() {
