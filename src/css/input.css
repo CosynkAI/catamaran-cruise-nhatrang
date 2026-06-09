@@ -1420,31 +1420,28 @@
   }
 
   .reviews-carousel__viewport {
-    @apply relative min-w-0 flex-1 overflow-hidden;
-    touch-action: pan-y pinch-zoom;
+    @apply relative min-w-0 flex-1;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
     overscroll-behavior-x: contain;
-    -webkit-user-select: none;
-    user-select: none;
+    scrollbar-width: none;
+  }
+
+  .reviews-carousel__viewport::-webkit-scrollbar {
+    display: none;
   }
 
   .reviews-carousel__track {
     display: flex;
-    will-change: transform;
-    transition: transform 0.85s cubic-bezier(0.33, 1, 0.48, 1);
-  }
-
-  .reviews-carousel__track.is-dragging {
-    transition: none;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .reviews-carousel__track {
-      transition-duration: 0.01ms;
-    }
+    min-width: min-content;
   }
 
   .reviews-carousel__page {
     flex: 0 0 100%;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
     display: grid;
     gap: 1.25rem;
     grid-template-columns: minmax(0, 1fr);

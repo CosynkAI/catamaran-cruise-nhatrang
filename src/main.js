@@ -233,122 +233,6 @@ function chunkGalleryItems(items, size) {
   return pages;
 }
 
-function bindCarouselTouchSwipe(viewport, { isBlocked, onDrag, onRelease }) {
-  let dragStartX = 0;
-  let dragStartY = 0;
-  let dragOffset = 0;
-  let isDragging = false;
-  let axis = null;
-  let pointerId = null;
-  let usePointer = false;
-
-  const setSwiping = (active) => {
-    viewport.classList.toggle('is-swiping', active);
-  };
-
-  const start = (x, y, id = null) => {
-    if (isBlocked()) return;
-    isDragging = true;
-    axis = null;
-    dragStartX = x;
-    dragStartY = y;
-    dragOffset = 0;
-    pointerId = id;
-  };
-
-  const move = (x, y, e) => {
-    if (!isDragging || isBlocked()) return;
-    const dx = x - dragStartX;
-    const dy = y - dragStartY;
-    if (axis === null && (Math.abs(dx) > 6 || Math.abs(dy) > 6)) {
-      axis = Math.abs(dx) >= Math.abs(dy) ? 'x' : 'y';
-    }
-    if (axis === 'y') {
-      setSwiping(false);
-      return;
-    }
-    if (axis === 'x') {
-      if (e?.cancelable) e.preventDefault();
-      setSwiping(true);
-      dragOffset = dx;
-      onDrag(dragOffset);
-    }
-  };
-
-  const finish = () => {
-    if (!isDragging) return;
-    const offset = dragOffset;
-    isDragging = false;
-    axis = null;
-    dragOffset = 0;
-    pointerId = null;
-    usePointer = false;
-    setSwiping(false);
-    onRelease(offset);
-  };
-
-  if (window.PointerEvent) {
-    viewport.addEventListener('pointerdown', (e) => {
-      if (e.pointerType !== 'touch' && e.pointerType !== 'pen') return;
-      usePointer = true;
-      start(e.clientX, e.clientY, e.pointerId);
-      viewport.setPointerCapture(e.pointerId);
-    });
-
-    viewport.addEventListener('pointermove', (e) => {
-      if (!usePointer || e.pointerId !== pointerId) return;
-      move(e.clientX, e.clientY, e);
-    });
-
-    viewport.addEventListener('pointerup', (e) => {
-      if (!usePointer || e.pointerId !== pointerId) return;
-      viewport.releasePointerCapture(e.pointerId);
-      finish();
-    });
-
-    viewport.addEventListener('pointercancel', (e) => {
-      if (e.pointerId !== pointerId) return;
-      finish();
-    });
-  }
-
-  viewport.addEventListener(
-    'touchstart',
-    (e) => {
-      if (usePointer || isBlocked()) return;
-      start(e.touches[0].clientX, e.touches[0].clientY);
-    },
-    { passive: true }
-  );
-
-  viewport.addEventListener(
-    'touchmove',
-    (e) => {
-      if (usePointer || !isDragging) return;
-      move(e.touches[0].clientX, e.touches[0].clientY, e);
-    },
-    { passive: false }
-  );
-
-  viewport.addEventListener(
-    'touchend',
-    () => {
-      if (usePointer) return;
-      finish();
-    },
-    { passive: true }
-  );
-
-  viewport.addEventListener(
-    'touchcancel',
-    () => {
-      if (usePointer) return;
-      finish();
-    },
-    { passive: true }
-  );
-}
-
 function getReviewsPerPage() {
   if (window.innerWidth >= 1024) return 3;
   if (window.innerWidth >= 640) return 2;
@@ -369,8 +253,40 @@ function initReviewsCarousel() {
 
   let pageIndex = 0;
   let pageCount = 1;
-  let isAnimating = false;
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const pageWidth = () => viewport.clientWidth;
+
+  const layoutPages = () => {
+    const w = pageWidth();
+    if (!w) return;
+    track.style.width = `${w * pageCount}px`;
+    track.querySelectorAll('.reviews-carousel__page').forEach((page) => {
+      page.style.flex = `0 0 ${w}px`;
+      page.style.width = `${w}px`;
+    });
+  };
+
+  const updateCounter = () => {
+    if (!counter) return;
+    counter.textContent = t('gallery.counter')
+      .replace('{current}', String(pageIndex + 1))
+      .replace('{total}', String(pageCount));
+  };
+
+  const syncIndexFromScroll = () => {
+    const w = pageWidth();
+    if (!w) return;
+    const next = Math.min(pageCount - 1, Math.max(0, Math.round(viewport.scrollLeft / w)));
+    if (next !== pageIndex) {
+      pageIndex = next;
+      updateCounter();
+    }
+  };
+
+  const scrollToPage = (behavior = 'auto') => {
+    viewport.scrollTo({ left: pageIndex * pageWidth(), behavior });
+  };
 
   const rebuildPages = () => {
     const chunks = chunkGalleryItems(sourceCards, getReviewsPerPage());
@@ -383,51 +299,14 @@ function initReviewsCarousel() {
       cards.forEach((card) => page.append(card));
       track.append(page);
     });
+    layoutPages();
+    scrollToPage('auto');
   };
 
-  const updateCounter = () => {
-    if (!counter) return;
-    counter.textContent = t('gallery.counter')
-      .replace('{current}', String(pageIndex + 1))
-      .replace('{total}', String(pageCount));
-  };
-
-  const pageWidth = () => viewport.clientWidth;
-
-  const applyTransform = (dragPx = 0, animate = false) => {
-    const x = -pageIndex * pageWidth() + dragPx;
-    track.classList.toggle('is-dragging', !animate);
-    track.style.transform = `translate3d(${x}px, 0, 0)`;
-  };
-
-  const finishTransition = () => {
-    isAnimating = false;
-  };
-
-  const snapToPage = (animate = true) => {
-    if (!animate || prefersReducedMotion) {
-      applyTransform(0, false);
-      finishTransition();
-      return;
-    }
-    isAnimating = true;
-    track.classList.remove('is-dragging');
-    requestAnimationFrame(() => applyTransform(0, true));
-    const onEnd = (e) => {
-      if (e.propertyName !== 'transform') return;
-      track.removeEventListener('transitionend', onEnd);
-      finishTransition();
-    };
-    track.addEventListener('transitionend', onEnd);
-  };
-
-  const goToPage = (nextIndex, animate = true) => {
-    if (isAnimating && animate) return;
-    const newIndex = ((nextIndex % pageCount) + pageCount) % pageCount;
-    if (newIndex === pageIndex && animate) return;
-    pageIndex = newIndex;
+  const goToPage = (nextIndex) => {
+    pageIndex = ((nextIndex % pageCount) + pageCount) % pageCount;
+    scrollToPage(prefersReducedMotion ? 'auto' : 'smooth');
     updateCounter();
-    snapToPage(animate);
   };
 
   const stepPage = (delta) => goToPage(pageIndex + delta);
@@ -435,59 +314,12 @@ function initReviewsCarousel() {
   prevBtn?.addEventListener('click', () => stepPage(-1));
   nextBtn?.addEventListener('click', () => stepPage(1));
 
-  const releaseSwipe = (offset) => {
-    const w = pageWidth();
-    const threshold = w * 0.12;
-    if (offset < -threshold) goToPage(pageIndex + 1);
-    else if (offset > threshold) goToPage(pageIndex - 1);
-    else snapToPage(true);
-  };
-
-  bindCarouselTouchSwipe(viewport, {
-    isBlocked: () => isAnimating,
-    onDrag: (offset) => applyTransform(offset, false),
-    onRelease: releaseSwipe,
-  });
-
-  let dragStartX = 0;
-  let dragOffset = 0;
-  let isDragging = false;
-
-  viewport.addEventListener('pointerdown', (e) => {
-    if (e.pointerType === 'touch' || isAnimating) return;
-    isDragging = true;
-    dragStartX = e.clientX;
-    dragOffset = 0;
-    viewport.setPointerCapture(e.pointerId);
-  });
-
-  viewport.addEventListener('pointermove', (e) => {
-    if (!isDragging || e.pointerType === 'touch') return;
-    dragOffset = e.clientX - dragStartX;
-    applyTransform(dragOffset, false);
-  });
-
-  viewport.addEventListener('pointerup', (e) => {
-    if (e.pointerType === 'touch') return;
-    if (isDragging) viewport.releasePointerCapture(e.pointerId);
-    if (isDragging) releaseSwipe(dragOffset);
-    isDragging = false;
-    dragOffset = 0;
-  });
-
-  viewport.addEventListener('pointercancel', () => {
-    isDragging = false;
-    snapToPage(true);
-  });
+  viewport.addEventListener('scroll', () => requestAnimationFrame(syncIndexFromScroll), { passive: true });
 
   let resizeTimer;
   window.addEventListener('resize', () => {
     clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(() => {
-      rebuildPages();
-      applyTransform(0, false);
-      updateCounter();
-    }, 150);
+    resizeTimer = setTimeout(() => rebuildPages(), 150);
   });
 
   root.addEventListener('keydown', (e) => {
@@ -501,10 +333,15 @@ function initReviewsCarousel() {
     }
   });
 
-  window.refreshReviewsCarousel = () => updateCounter();
+  window.refreshReviewsCarousel = () => {
+    requestAnimationFrame(() => {
+      layoutPages();
+      scrollToPage('auto');
+      updateCounter();
+    });
+  };
 
   rebuildPages();
-  applyTransform(0, false);
   updateCounter();
 }
 
