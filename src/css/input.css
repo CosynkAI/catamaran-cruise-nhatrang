@@ -741,17 +741,6 @@
     transform: translateY(-1px);
   }
 
-  .btn-messenger[data-channel="zalo"] {
-    background: linear-gradient(135deg, #0056c8 0%, #0068ff 52%, #38a3ff 100%);
-    box-shadow: 0 0.9rem 2rem rgba(0, 104, 255, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.3);
-  }
-
-  .btn-messenger[data-channel="zalo"]:hover {
-    background: linear-gradient(135deg, #004bb0 0%, #005ae6 52%, #7cc0ff 100%);
-    box-shadow: 0 1rem 2.4rem rgba(0, 104, 255, 0.36), inset 0 1px 0 rgba(255, 255, 255, 0.34);
-    transform: translateY(-1px);
-  }
-
   .btn-messenger__icon {
     width: 1.2rem;
     height: 1.2rem;

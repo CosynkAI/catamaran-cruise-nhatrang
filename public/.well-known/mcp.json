@@ -41,7 +41,7 @@
   "tools": [
     {
       "name": "book_group_cruise",
-      "description": "Redirect to WhatsApp/Telegram/Zalo with a pre-filled group-tour booking message. Query: type, lang, channel, date, guests.",
+      "description": "Redirect to WhatsApp/Telegram with a pre-filled group-tour booking message. Query: type, lang, channel, date, guests.",
       "endpoint": "https://seatrips-nhatrang.com/api/book?type=group&lang=ru&channel=whatsapp",
       "method": "GET",
       "inputSchema": {
@@ -61,8 +61,7 @@
             "type": "string",
             "enum": [
               "whatsapp",
-              "telegram",
-              "zalo"
+              "telegram"
             ],
             "default": "whatsapp"
           },
@@ -97,8 +96,7 @@
             "type": "string",
             "enum": [
               "whatsapp",
-              "telegram",
-              "zalo"
+              "telegram"
             ]
           },
           "date": {
@@ -132,8 +130,7 @@
             "type": "string",
             "enum": [
               "whatsapp",
-              "telegram",
-              "zalo"
+              "telegram"
             ]
           }
         }
@@ -151,7 +148,6 @@
     "phone": "+84364389764",
     "whatsapp": "https://wa.me/84364389764",
     "telegram": "https://t.me/Nastasia8963",
-    "zalo": "https://zalo.me/0364389764",
     "instagram": "https://www.instagram.com/redfoxproduction89?igsh=MzU5NHIwa3EzbWtq&utm_source=q"
   },
   "license": {

@@ -46,7 +46,6 @@ Catamaran Cruises operates sea excursions from Nha Trang, Khanh Hoa Province, Vi
 
 - WhatsApp: +84 901 234 567 → https://wa.me/84901234567
 - Telegram: @Nastasia8963 → https://t.me/Nastasia8963
-- Zalo: https://zalo.me/0901234567 (listed in site config)
 - Instagram: https://www.instagram.com/redfoxproduction89
 
 Pre-filled booking messages are generated per tour type and language when user clicks messenger buttons.

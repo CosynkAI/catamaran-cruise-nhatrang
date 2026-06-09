@@ -27,11 +27,10 @@ npm run dev
 | `VITE_SITE_URL` | Canonical, sitemap, Open Graph |
 | `VITE_WHATSAPP_NUMBER` | WhatsApp (только цифры) |
 | `VITE_TELEGRAM_USERNAME` | Telegram без @ |
-| `VITE_ZALO_PHONE` / `VITE_ZALO_URL` | Zalo |
 | `VITE_INSTAGRAM_URL` | Instagram |
 | `VITE_CONTACT_EMAIL` | Email в Schema.org / MCP |
 
-**API для AI:** `GET /api/book?type=group|individual|vip&lang=ru|en|ko|kk&channel=whatsapp|telegram|zalo` → редирект в мессенджер с готовым текстом (Vercel: `api/book.js`).
+**API для AI:** `GET /api/book?type=group|individual|vip&lang=ru|en|ko|kk&channel=whatsapp|telegram` → редирект в мессенджер с готовым текстом (Cloudflare: `functions/api/book.js`).
 
 ## Контакты
 

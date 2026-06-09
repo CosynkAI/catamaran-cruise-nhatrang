@@ -125,14 +125,14 @@ Contact: WhatsApp +${contacts.whatsapp}, Telegram @${contacts.telegram}, ${conta
       {
         name: 'book_group_cruise',
         description:
-          'Redirect to WhatsApp/Telegram/Zalo with a pre-filled group-tour booking message. Query: type, lang, channel, date, guests.',
+          'Redirect to WhatsApp/Telegram with a pre-filled group-tour booking message. Query: type, lang, channel, date, guests.',
         endpoint: book({ type: 'group', lang: 'ru', channel: 'whatsapp' }),
         method: 'GET',
         inputSchema: {
           type: 'object',
           properties: {
             lang: { type: 'string', enum: ['ru', 'en', 'ko', 'kk'], default: 'ru' },
-            channel: { type: 'string', enum: ['whatsapp', 'telegram', 'zalo'], default: 'whatsapp' },
+            channel: { type: 'string', enum: ['whatsapp', 'telegram'], default: 'whatsapp' },
             date: { type: 'string' },
             guests: { type: 'integer', minimum: 1 },
           },
@@ -147,7 +147,7 @@ Contact: WhatsApp +${contacts.whatsapp}, Telegram @${contacts.telegram}, ${conta
           type: 'object',
           properties: {
             lang: { type: 'string', enum: ['ru', 'en', 'ko', 'kk'] },
-            channel: { type: 'string', enum: ['whatsapp', 'telegram', 'zalo'] },
+            channel: { type: 'string', enum: ['whatsapp', 'telegram'] },
             date: { type: 'string' },
             guests: { type: 'integer', minimum: 1 },
           },
@@ -162,7 +162,7 @@ Contact: WhatsApp +${contacts.whatsapp}, Telegram @${contacts.telegram}, ${conta
           type: 'object',
           properties: {
             lang: { type: 'string', enum: ['ru', 'en', 'ko', 'kk'] },
-            channel: { type: 'string', enum: ['whatsapp', 'telegram', 'zalo'] },
+            channel: { type: 'string', enum: ['whatsapp', 'telegram'] },
           },
         },
       },
@@ -178,7 +178,6 @@ Contact: WhatsApp +${contacts.whatsapp}, Telegram @${contacts.telegram}, ${conta
       phone: `+${contacts.whatsapp}`,
       whatsapp: `https://wa.me/${contacts.whatsapp}`,
       telegram: `https://t.me/${contacts.telegram}`,
-      zalo: contacts.zaloUrl || `https://zalo.me/${contacts.zaloPhone}`,
       instagram: contacts.instagram,
     },
     license: {

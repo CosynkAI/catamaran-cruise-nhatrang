@@ -2,7 +2,7 @@ import { buildMessengerUrl } from '../../lib/booking-url.js';
 import { getSiteConfig } from '../../lib/site-config.js';
 
 const ALLOWED_TYPES = new Set(['group', 'individual', 'vip']);
-const ALLOWED_CHANNELS = new Set(['whatsapp', 'telegram', 'zalo']);
+const ALLOWED_CHANNELS = new Set(['whatsapp', 'telegram']);
 const ALLOWED_LANGS = new Set(['ru', 'en', 'ko', 'kk']);
 
 export async function onRequestGet(context) {
