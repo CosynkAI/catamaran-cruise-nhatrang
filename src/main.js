@@ -233,6 +233,57 @@ function chunkGalleryItems(items, size) {
   return pages;
 }
 
+function bindCarouselTouchSwipe(viewport, { isBlocked, onDrag, onRelease }) {
+  let dragStartX = 0;
+  let dragStartY = 0;
+  let dragOffset = 0;
+  let isDragging = false;
+  let axis = null;
+
+  viewport.addEventListener(
+    'touchstart',
+    (e) => {
+      if (isBlocked()) return;
+      isDragging = true;
+      axis = null;
+      dragStartX = e.touches[0].clientX;
+      dragStartY = e.touches[0].clientY;
+      dragOffset = 0;
+    },
+    { passive: true }
+  );
+
+  viewport.addEventListener(
+    'touchmove',
+    (e) => {
+      if (!isDragging || isBlocked()) return;
+      const dx = e.touches[0].clientX - dragStartX;
+      const dy = e.touches[0].clientY - dragStartY;
+      if (axis === null && (Math.abs(dx) > 8 || Math.abs(dy) > 8)) {
+        axis = Math.abs(dx) >= Math.abs(dy) ? 'x' : 'y';
+      }
+      if (axis === 'y') return;
+      if (axis === 'x') {
+        e.preventDefault();
+        dragOffset = dx;
+        onDrag(dragOffset);
+      }
+    },
+    { passive: false }
+  );
+
+  const finish = () => {
+    if (!isDragging) return;
+    isDragging = false;
+    onRelease(dragOffset);
+    dragOffset = 0;
+    axis = null;
+  };
+
+  viewport.addEventListener('touchend', finish, { passive: true });
+  viewport.addEventListener('touchcancel', finish, { passive: true });
+}
+
 function getReviewsPerPage() {
   if (window.innerWidth >= 1024) return 3;
   if (window.innerWidth >= 640) return 2;
@@ -319,49 +370,23 @@ function initReviewsCarousel() {
   prevBtn?.addEventListener('click', () => stepPage(-1));
   nextBtn?.addEventListener('click', () => stepPage(1));
 
-  let dragStartX = 0;
-  let dragStartY = 0;
-  let dragOffset = 0;
-  let isDragging = false;
-
-  const endDrag = () => {
-    if (!isDragging) return;
-    isDragging = false;
+  const releaseSwipe = (offset) => {
     const w = pageWidth();
-    const threshold = w * 0.16;
-    if (dragOffset < -threshold) goToPage(pageIndex + 1);
-    else if (dragOffset > threshold) goToPage(pageIndex - 1);
+    const threshold = w * 0.12;
+    if (offset < -threshold) goToPage(pageIndex + 1);
+    else if (offset > threshold) goToPage(pageIndex - 1);
     else snapToPage(true);
-    dragOffset = 0;
   };
 
-  viewport.addEventListener(
-    'touchstart',
-    (e) => {
-      if (isAnimating) return;
-      isDragging = true;
-      dragStartX = e.touches[0].clientX;
-      dragStartY = e.touches[0].clientY;
-      dragOffset = 0;
-    },
-    { passive: true }
-  );
+  bindCarouselTouchSwipe(viewport, {
+    isBlocked: () => isAnimating,
+    onDrag: (offset) => applyTransform(offset, false),
+    onRelease: releaseSwipe,
+  });
 
-  viewport.addEventListener(
-    'touchmove',
-    (e) => {
-      if (!isDragging) return;
-      const dx = e.touches[0].clientX - dragStartX;
-      const dy = e.touches[0].clientY - dragStartY;
-      if (Math.abs(dy) > Math.abs(dx)) return;
-      dragOffset = dx;
-      applyTransform(dragOffset, false);
-    },
-    { passive: true }
-  );
-
-  viewport.addEventListener('touchend', endDrag, { passive: true });
-  viewport.addEventListener('touchcancel', endDrag, { passive: true });
+  let dragStartX = 0;
+  let dragOffset = 0;
+  let isDragging = false;
 
   viewport.addEventListener('pointerdown', (e) => {
     if (e.pointerType === 'touch' || isAnimating) return;
@@ -380,7 +405,9 @@ function initReviewsCarousel() {
   viewport.addEventListener('pointerup', (e) => {
     if (e.pointerType === 'touch') return;
     if (isDragging) viewport.releasePointerCapture(e.pointerId);
-    endDrag();
+    if (isDragging) releaseSwipe(dragOffset);
+    isDragging = false;
+    dragOffset = 0;
   });
 
   viewport.addEventListener('pointercancel', () => {
@@ -525,49 +552,23 @@ async function initGalleryCarousel() {
   prevBtn?.addEventListener('click', () => stepPage(-1));
   nextBtn?.addEventListener('click', () => stepPage(1));
 
-  let dragStartX = 0;
-  let dragStartY = 0;
-  let dragOffset = 0;
-  let isDragging = false;
-
-  const endDrag = () => {
-    if (!isDragging) return;
-    isDragging = false;
+  const releaseSwipe = (offset) => {
     const w = pageWidth();
-    const threshold = w * 0.16;
-    if (dragOffset < -threshold) goToPage(pageIndex + 1);
-    else if (dragOffset > threshold) goToPage(pageIndex - 1);
+    const threshold = w * 0.12;
+    if (offset < -threshold) goToPage(pageIndex + 1);
+    else if (offset > threshold) goToPage(pageIndex - 1);
     else snapToPage(true);
-    dragOffset = 0;
   };
 
-  viewport.addEventListener(
-    'touchstart',
-    (e) => {
-      if (isAnimating) return;
-      isDragging = true;
-      dragStartX = e.touches[0].clientX;
-      dragStartY = e.touches[0].clientY;
-      dragOffset = 0;
-    },
-    { passive: true }
-  );
+  bindCarouselTouchSwipe(viewport, {
+    isBlocked: () => isAnimating,
+    onDrag: (offset) => applyTransform(offset, false),
+    onRelease: releaseSwipe,
+  });
 
-  viewport.addEventListener(
-    'touchmove',
-    (e) => {
-      if (!isDragging) return;
-      const dx = e.touches[0].clientX - dragStartX;
-      const dy = e.touches[0].clientY - dragStartY;
-      if (Math.abs(dy) > Math.abs(dx)) return;
-      dragOffset = dx;
-      applyTransform(dragOffset, false);
-    },
-    { passive: true }
-  );
-
-  viewport.addEventListener('touchend', endDrag, { passive: true });
-  viewport.addEventListener('touchcancel', endDrag, { passive: true });
+  let dragStartX = 0;
+  let dragOffset = 0;
+  let isDragging = false;
 
   viewport.addEventListener('pointerdown', (e) => {
     if (e.pointerType === 'touch' || isAnimating) return;
@@ -586,7 +587,9 @@ async function initGalleryCarousel() {
   viewport.addEventListener('pointerup', (e) => {
     if (e.pointerType === 'touch') return;
     if (isDragging) viewport.releasePointerCapture(e.pointerId);
-    endDrag();
+    if (isDragging) releaseSwipe(dragOffset);
+    isDragging = false;
+    dragOffset = 0;
   });
 
   viewport.addEventListener('pointercancel', () => {

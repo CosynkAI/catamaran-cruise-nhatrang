@@ -1203,7 +1203,13 @@
     border: 1px solid rgba(255, 255, 255, 0.72);
     box-shadow: 0 1.2rem 3.2rem rgba(8, 36, 51, 0.14);
     background: rgba(6, 27, 39, 0.45);
-    touch-action: pan-x;
+    touch-action: pan-y pinch-zoom;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  #gallery.section-wrap {
+    content-visibility: visible;
   }
 
   .gallery-carousel__track {
@@ -1260,6 +1266,8 @@
   .gallery-carousel__img {
     @apply h-full w-full object-cover opacity-0 transition-opacity duration-500;
     filter: saturate(1.02) contrast(1.06);
+    -webkit-user-drag: none;
+    pointer-events: none;
   }
 
   .gallery-carousel__img.is-loaded {
@@ -1435,7 +1443,9 @@
 
   .reviews-carousel__viewport {
     @apply relative min-w-0 flex-1 overflow-hidden;
-    touch-action: pan-x;
+    touch-action: pan-y pinch-zoom;
+    -webkit-user-select: none;
+    user-select: none;
   }
 
   .reviews-carousel__track {
