@@ -96,6 +96,7 @@ export default {
   "gallery.prev": "Предыдущее фото",
   "gallery.next": "Следующее фото",
   "gallery.counter": "{current} / {total}",
+  "gallery.swipeHint": "Листайте влево и вправо",
   "gallery.altPhoto": "Фото круиза",
   "gallery.altVideo": "Видео круиза",
   "gallery.alt1": "Круиз на катамаране",

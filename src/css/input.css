@@ -1172,17 +1172,17 @@
       linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
   }
 
-  /* ── Gallery carousel (2×3 grid per page) ── */
+  /* ── Gallery carousel (2×3 mobile, 3×2 desktop) ── */
   .gallery-carousel {
-    @apply mt-10;
+    @apply mt-8 sm:mt-10;
   }
 
   .gallery-carousel__main {
-    @apply relative flex items-stretch gap-2 sm:gap-4;
+    @apply relative flex items-stretch gap-0 sm:gap-4;
   }
 
   .gallery-carousel__viewport {
-    @apply relative min-w-0 flex-1 overflow-hidden rounded-3xl;
+    @apply relative min-w-0 w-full flex-1 overflow-hidden rounded-2xl sm:rounded-3xl;
     border: 1px solid rgba(255, 255, 255, 0.72);
     box-shadow: 0 1.2rem 3.2rem rgba(8, 36, 51, 0.14);
     background: rgba(6, 27, 39, 0.45);
@@ -1208,18 +1208,21 @@
   .gallery-carousel__page {
     flex: 0 0 100%;
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    grid-template-rows: repeat(2, minmax(0, 1fr));
-    gap: 0.5rem;
-    padding: 0.5rem;
-    min-height: min(88vw, 22rem);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: repeat(3, auto);
+    gap: 0.45rem;
+    padding: 0.45rem;
+    align-content: start;
   }
 
   @media (min-width: 640px) {
     .gallery-carousel__page {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-rows: repeat(2, minmax(0, 1fr));
       gap: 0.65rem;
       padding: 0.65rem;
       min-height: 20rem;
+      align-content: stretch;
     }
   }
 
@@ -1230,10 +1233,11 @@
   }
 
   .gallery-carousel__cell {
-    @apply overflow-hidden rounded-2xl;
+    @apply overflow-hidden rounded-xl sm:rounded-2xl;
     border: 1px solid rgba(255, 255, 255, 0.55);
     background: rgba(255, 255, 255, 0.06);
     aspect-ratio: 1;
+    min-height: 0;
   }
 
   .gallery-carousel__img {
@@ -1246,7 +1250,7 @@
   }
 
   .gallery-carousel__nav {
-    @apply flex shrink-0 items-center justify-center self-center rounded-full font-bold text-white transition-all duration-300;
+    @apply hidden sm:flex shrink-0 items-center justify-center self-center rounded-full font-bold text-white transition-all duration-300;
     width: 2.75rem;
     height: 2.75rem;
     font-size: 1.75rem;
@@ -1263,8 +1267,13 @@
   }
 
   .gallery-carousel__counter {
-    @apply mt-4 text-center text-sm font-semibold;
+    @apply mt-3 sm:mt-4 text-center text-sm font-semibold;
     color: rgba(255, 255, 255, 0.72);
+  }
+
+  .gallery-carousel__hint {
+    @apply mt-1 text-center text-xs font-medium sm:hidden;
+    color: rgba(255, 255, 255, 0.5);
   }
 
   /* ── Map ── */

@@ -96,6 +96,7 @@ export default {
   "gallery.prev": "이전",
   "gallery.next": "다음",
   "gallery.counter": "{current} / {total}",
+  "gallery.swipeHint": "좌우로 밀어서 보기",
   "gallery.altPhoto": "크루즈 사진",
   "gallery.altVideo": "크루즈 영상",
   "gallery.alt1": "캐터마란 크루즈",

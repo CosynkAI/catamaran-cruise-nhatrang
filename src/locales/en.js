@@ -96,6 +96,7 @@ export default {
   "gallery.prev": "Previous slide",
   "gallery.next": "Next slide",
   "gallery.counter": "{current} / {total}",
+  "gallery.swipeHint": "Swipe left or right",
   "gallery.altPhoto": "Cruise photo",
   "gallery.altVideo": "Cruise video",
   "gallery.alt1": "Catamaran cruise",

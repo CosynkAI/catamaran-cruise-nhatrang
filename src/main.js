@@ -462,7 +462,7 @@ async function initGalleryCarousel() {
       img.className = 'gallery-carousel__img';
       img.src = item.src;
       if (item.srcset) img.srcset = item.srcset;
-      img.sizes = '(max-width: 640px) 42vw, (max-width: 1024px) 28vw, 220px';
+      img.sizes = '(max-width: 640px) 46vw, (max-width: 1024px) 28vw, 220px';
       if (item.width) img.width = item.width;
       if (item.height) img.height = item.height;
       img.alt = altText(globalIndex);

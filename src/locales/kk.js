@@ -95,6 +95,7 @@ export default {
   "gallery.prev": "Алдыңғы",
   "gallery.next": "Келесі",
   "gallery.counter": "{current} / {total}",
+  "gallery.swipeHint": "Солға немесе оңға сырғытыңыз",
   "gallery.altPhoto": "Круиз фотосы",
   "gallery.altVideo": "Круиз видеосы",
   "gallery.subtitle": "Теріге күн, үстелде тамақ, мөлдір су және бейнеге түсіргіңіз келетін күн бату.",
