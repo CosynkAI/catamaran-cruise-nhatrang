@@ -179,9 +179,13 @@ function restoreScrollPosition() {
     if (!raw) return;
     sessionStorage.removeItem(SCROLL_RESTORE_KEY);
     const data = JSON.parse(raw);
-    if (data.tab && PANEL_IDS[data.tab]) showConfigTab(data.tab);
+    if (data.tab && PANEL_IDS[data.tab]) showConfigTab(data.tab, { scrollTab: false });
     if (typeof data.y === 'number') {
-      requestAnimationFrame(() => window.scrollTo({ top: data.y, behavior: 'auto' }));
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          window.scrollTo({ top: data.y, behavior: 'auto' });
+        });
+      });
     }
   } catch {
     /* ignore */
@@ -229,9 +233,11 @@ async function copyBookingMessage() {
 
 function scrollActiveTabIntoView() {
   if (!isMobileViewport()) return;
-  document
-    .querySelector('.scroll-tabs .tab-btn.is-active')
-    ?.scrollIntoView({ inline: 'center', block: 'nearest', behavior: 'smooth' });
+  const tabs = document.querySelector('.scroll-tabs');
+  const active = tabs?.querySelector('.tab-btn.is-active');
+  if (!tabs || !active) return;
+  const targetLeft = active.offsetLeft - (tabs.clientWidth - active.offsetWidth) / 2;
+  tabs.scrollTo({ left: Math.max(0, targetLeft), behavior: 'smooth' });
 }
 
 function updateBookingPreview() {
@@ -356,7 +362,7 @@ const PANEL_IDS = {
   vip: 'panel-vip',
 };
 
-function showConfigTab(tabId) {
+function showConfigTab(tabId, { scrollTab = true } = {}) {
   bookingState.type = tabId;
 
   Object.entries(PANEL_IDS).forEach(([id, panelId]) => {
@@ -395,7 +401,7 @@ function showConfigTab(tabId) {
   }
 
   refreshBookingUi();
-  scrollActiveTabIntoView();
+  if (scrollTab) scrollActiveTabIntoView();
 }
 
 function initConfigurator() {
@@ -979,6 +985,7 @@ function registerServiceWorker() {
 }
 
 function boot() {
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
   restoreScrollPosition();
   initConfigurator();
 
@@ -995,7 +1002,6 @@ function boot() {
   initMobileNav();
   initStickyCta();
   initMapClickLoad();
-  scrollActiveTabIntoView();
   registerServiceWorker();
 }
 
