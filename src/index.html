@@ -20,6 +20,12 @@
     <meta name="robots" content="index, follow, max-image-preview:large" />
     <meta name="googlebot" content="index, follow" />
     <meta name="theme-color" content="#082433" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="preconnect" href="https://wa.me" />
+    <link rel="preconnect" href="https://t.me" />
+    <link rel="preconnect" href="https://www.google.com" crossorigin />
     <link rel="canonical" href="https://seatrips-nhatrang.com/" />
     <link rel="alternate" hreflang="ru" href="https://seatrips-nhatrang.com/" />
     <link rel="alternate" hreflang="en" href="https://seatrips-nhatrang.com/" />
@@ -76,7 +82,7 @@
         <source srcset="/images/hero-poster.webp" type="image/webp" />
         <img class="page-backdrop__poster" src="/images/hero-poster.jpg" alt="" width="1920" height="1080" fetchpriority="high" decoding="async" />
       </picture>
-      <video id="hero-video" class="page-backdrop__video" autoplay muted loop playsinline webkit-playsinline preload="metadata" poster="/images/hero-poster.webp" width="1280" height="720">
+      <video id="hero-video" class="page-backdrop__video" autoplay muted loop playsinline webkit-playsinline preload="metadata" poster="/images/hero-poster.webp" width="1280" height="720" data-src="/videos/hero.mp4">
         <source src="/videos/hero.mp4" type="video/mp4" />
       </video>
       <div class="page-backdrop__shade"></div>
@@ -127,6 +133,9 @@
     </nav>
 
     <section id="hero" class="hero-section relative flex min-h-[100dvh] flex-col items-center justify-center px-4 py-20 text-center sm:py-24 md:py-28" aria-labelledby="hero-title">
+      <button type="button" id="hero-video-unlock" class="hero-video-unlock" hidden>
+        <span data-i18n="hero.videoTap">Нажмите для видео</span>
+      </button>
       <div class="hero-inner relative z-10 mx-auto">
         <span class="hero-badge" data-i18n="hero.badge">Sunset vibes · sea · music · food</span>
         <h1 id="hero-title" class="hero-title" data-i18n-html="hero.title">Частные и групповые круизы на&nbsp;катамаране в&nbsp;Нячанге</h1>
@@ -293,15 +302,25 @@
       <h2 id="config-title" class="section-title" data-i18n="config.title">Выберите свой день на море</h2>
       <p class="section-subtitle" data-i18n="config.subtitle">Романтические свидания, дни рождения, свадьбы, частные мероприятия и незабываемые встречи с близкими.</p>
       <div id="booking-form" class="booking-form">
+        <ol class="booking-steps" aria-label="Шаги бронирования">
+          <li class="booking-steps__item is-active" data-step="tour" data-i18n="form.step1">1. Тур</li>
+          <li class="booking-steps__item" data-step="params" data-i18n="form.step2">2. Параметры</li>
+          <li class="booking-steps__item" data-step="send" data-i18n="form.step3">3. Отправить</li>
+        </ol>
         <p class="booking-form__title" data-i18n="form.title">Параметры бронирования</p>
         <div class="booking-form__fields">
           <label class="booking-form__field">
             <span class="booking-form__label" data-i18n="form.date">Дата тура</span>
             <input type="date" class="booking-form__input" id="booking-date" name="date" />
+            <span class="booking-form__date-display" id="booking-date-display" aria-live="polite"></span>
           </label>
           <label class="booking-form__field" id="field-guests-wrap">
             <span class="booking-form__label" data-i18n="form.guests">Гостей</span>
-            <input type="number" class="booking-form__input" id="booking-guests" name="guests" min="1" max="40" value="2" inputmode="numeric" />
+            <div class="guest-stepper">
+              <button type="button" class="guest-stepper__btn" id="guests-minus" data-i18n-aria="form.guestsDecrease" aria-label="Уменьшить">−</button>
+              <input type="number" class="booking-form__input guest-stepper__input" id="booking-guests" name="guests" min="1" max="40" value="2" inputmode="numeric" />
+              <button type="button" class="guest-stepper__btn" id="guests-plus" data-i18n-aria="form.guestsIncrease" aria-label="Увеличить">+</button>
+            </div>
           </label>
           <label class="booking-form__field" id="field-time-wrap">
             <span class="booking-form__label" data-i18n="form.time">Время</span>
@@ -367,6 +386,7 @@
           </div>
           <button type="button" class="gallery-carousel__nav gallery-carousel__nav--next" id="gallery-next" aria-controls="gallery-viewport" data-i18n-aria="gallery.next">›</button>
         </div>
+        <div class="carousel-dots" id="gallery-dots" role="tablist" aria-label="Gallery pages"></div>
         <p class="gallery-carousel__counter" id="gallery-counter"></p>
         <p class="gallery-carousel__hint" data-i18n="gallery.swipeHint">Листайте влево и вправо</p>
       </div>
@@ -583,7 +603,9 @@
           </div>
           <button type="button" class="reviews-carousel__nav reviews-carousel__nav--next" id="reviews-next" aria-controls="reviews-viewport" data-i18n-aria="gallery.next">›</button>
         </div>
+        <div class="carousel-dots" id="reviews-dots" role="tablist" aria-label="Review pages"></div>
         <p class="reviews-carousel__counter" id="reviews-counter"></p>
+        <p class="reviews-carousel__hint" data-i18n="gallery.swipeHint">Листайте влево и вправо</p>
       </div>
     </section>
 
@@ -696,8 +718,9 @@
         <p class="mt-2">
           <a class="footer-maps-link text-sm font-semibold opacity-80 transition-opacity hover:opacity-100" href="https://maps.app.goo.gl/i6bR4GQdWunXpdtT6" target="_blank" rel="noopener noreferrer" data-i18n="footer.mapsLink">Открыть в Google Maps</a>
         </p>
-        <div class="map-wrap">
-          <iframe id="map-frame" data-i18n-title="footer.mapTitle" title="Карта — Bến Tàu Du Lịch Nha Trang" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="about:blank" data-src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d778.77!2d109.1043328!3d12.2620948!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31706128699425c7%3A0xe6e90d3f6adbeb06!2zQsOqbiBUw6AuIER1IExp4bujaCBOaGEgVHJhbmc!5e0!3m2!1sru!2svn!4v1749480000000" allowfullscreen></iframe>
+        <div class="map-wrap" id="map-wrap">
+          <button type="button" class="map-placeholder" id="map-load-btn" data-i18n="footer.mapLoad">Показать карту</button>
+          <iframe id="map-frame" class="map-frame--hidden" data-i18n-title="footer.mapTitle" title="Карта — Bến Tàu Du Lịch Nha Trang" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="about:blank" data-src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d778.77!2d109.1043328!3d12.2620948!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31706128699425c7%3A0xe6e90d3f6adbeb06!2zQsOqbiBUw6AuIER1IExp4bujaCBOaGEgVHJhbmc!5e0!3m2!1sru!2svn!4v1749480000000" allowfullscreen></iframe>
         </div>
         <div class="messenger-row mt-8 max-w-lg">
           <a class="btn-messenger" data-messenger data-messenger-type="group" data-channel="whatsapp"><svg class="btn-messenger__icon" aria-hidden="true"><use href="#icon-whatsapp"/></svg>WhatsApp</a>

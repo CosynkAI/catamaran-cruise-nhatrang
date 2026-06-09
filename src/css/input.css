@@ -16,6 +16,13 @@
     overflow-x: clip;
     -webkit-text-size-adjust: 100%;
     scroll-padding-top: 4.5rem;
+    scroll-padding-bottom: calc(5rem + env(safe-area-inset-bottom, 0px));
+  }
+
+  @media (min-width: 768px) {
+    html {
+      scroll-padding-bottom: 0;
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -261,6 +268,24 @@
     display: none;
   }
 
+  .hero-section {
+    min-height: 100dvh;
+    min-height: 100svh;
+  }
+
+  .hero-video-unlock {
+    @apply absolute inset-x-4 top-1/2 z-20 mx-auto max-w-xs -translate-y-1/2 rounded-full border px-5 py-3 text-sm font-bold transition-opacity;
+    border-color: rgba(255, 255, 255, 0.35);
+    background: rgba(8, 36, 51, 0.55);
+    color: #fff;
+    backdrop-filter: blur(14px);
+    touch-action: manipulation;
+  }
+
+  .hero-video-unlock:not([hidden]) {
+    pointer-events: auto;
+  }
+
   /* ── Header ── */
   .site-header {
     background: rgba(8, 36, 51, 0.55);
@@ -326,7 +351,8 @@
   }
 
   .lang-dropdown__trigger {
-    @apply flex h-9 w-9 items-center justify-center rounded-full border transition-colors;
+    @apply flex h-11 w-11 min-h-[2.75rem] min-w-[2.75rem] items-center justify-center rounded-full border transition-colors;
+    touch-action: manipulation;
     border-color: rgba(8, 36, 51, 0.1);
     background: rgba(255, 255, 255, 0.65);
   }
@@ -747,8 +773,9 @@
   }
 
   .btn-menu-toggle {
-    @apply rounded-full border px-3 py-2 font-medium transition-colors;
+    @apply min-h-11 min-w-11 rounded-full border px-4 py-2.5 font-medium transition-colors;
     font-size: 0.875rem;
+    touch-action: manipulation;
     color: rgba(255, 255, 255, 0.9);
     border-color: rgba(255, 255, 255, 0.28);
     background: rgba(255, 255, 255, 0.1);
@@ -852,8 +879,10 @@
   }
 
   .tab-btn {
-    @apply max-w-[85vw] shrink-0 snap-center rounded-full px-5 py-2.5 font-bold transition-all duration-300 sm:px-7 sm:py-3;
+    @apply max-w-[85vw] shrink-0 snap-center rounded-full px-5 py-3 font-bold transition-all duration-300 sm:px-7 sm:py-3;
+    min-height: 2.75rem;
     font-size: 1rem;
+    touch-action: manipulation;
     color: var(--color-deep-earth);
     border: 1.5px solid rgba(244, 223, 194, 0.86);
     background: rgba(255, 255, 255, 0.62);
@@ -1461,7 +1490,7 @@
   }
 
   .reviews-carousel__nav {
-    @apply flex shrink-0 items-center justify-center self-center rounded-full font-bold text-white transition-all duration-300;
+    @apply hidden sm:flex shrink-0 items-center justify-center self-center rounded-full font-bold text-white transition-all duration-300;
     width: 2.75rem;
     height: 2.75rem;
     font-size: 1.75rem;
@@ -1593,6 +1622,174 @@
 
   .config-panel__actions .messenger-row--config > a {
     @apply flex-1;
+  }
+
+  .messenger-row--config.is-highlight {
+    animation: messenger-pulse 1.1s ease;
+  }
+
+  @keyframes messenger-pulse {
+    0%,
+    100% {
+      transform: scale(1);
+    }
+    40% {
+      transform: scale(1.02);
+    }
+  }
+
+  @media (max-width: 767px) {
+    #configurator {
+      display: flex;
+      flex-direction: column;
+    }
+
+    #configurator > .section-title,
+    #configurator > .section-subtitle {
+      order: 0;
+    }
+
+    #configurator > .scroll-tabs {
+      order: 1;
+      margin-top: 1.5rem;
+    }
+
+    #configurator > #booking-form {
+      order: 2;
+      margin-top: 1rem;
+    }
+
+    #configurator > .config-panel {
+      order: 3;
+    }
+  }
+
+  .booking-steps {
+    @apply mb-4 flex flex-wrap gap-2;
+    list-style: none;
+    padding: 0;
+  }
+
+  .booking-steps__item {
+    @apply rounded-full px-3 py-1.5 text-xs font-bold;
+    color: rgba(255, 255, 255, 0.55);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+  .booking-steps__item.is-active {
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.45);
+    background: rgba(255, 255, 255, 0.16);
+  }
+
+  .booking-steps__item.is-done {
+    color: rgba(255, 255, 255, 0.92);
+    border-color: rgba(74, 222, 128, 0.45);
+    background: rgba(74, 222, 128, 0.12);
+  }
+
+  .booking-form__date-display {
+    @apply text-sm font-semibold;
+    color: rgba(255, 255, 255, 0.75);
+  }
+
+  .guest-stepper {
+    @apply flex items-stretch gap-2;
+  }
+
+  .guest-stepper__btn {
+    @apply flex min-h-11 min-w-11 shrink-0 items-center justify-center rounded-2xl border text-xl font-bold transition-colors;
+    border-color: rgba(255, 255, 255, 0.25);
+    background: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    touch-action: manipulation;
+  }
+
+  .guest-stepper__btn:hover {
+    background: rgba(255, 255, 255, 0.32);
+  }
+
+  .guest-stepper__input {
+    @apply min-w-0 flex-1 text-center;
+    -moz-appearance: textfield;
+  }
+
+  .guest-stepper__input::-webkit-outer-spin-button,
+  .guest-stepper__input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  .booking-form__preview.is-ready {
+    animation: preview-glow 1s ease;
+    border-color: rgba(74, 222, 128, 0.45);
+  }
+
+  @keyframes preview-glow {
+    0% {
+      box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.35);
+    }
+    100% {
+      box-shadow: 0 0 0 0.65rem rgba(74, 222, 128, 0);
+    }
+  }
+
+  .carousel-dots {
+    @apply mt-3 flex items-center justify-center gap-2;
+  }
+
+  .carousel-dots__dot {
+    @apply h-2.5 w-2.5 rounded-full border-0 p-0 transition-all duration-300;
+    background: rgba(255, 255, 255, 0.28);
+    touch-action: manipulation;
+  }
+
+  .carousel-dots__dot.is-active {
+    @apply w-6;
+    background: var(--color-coral);
+  }
+
+  .reviews-carousel__hint {
+    @apply mt-1 text-center text-xs font-medium sm:hidden;
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  .map-placeholder {
+    @apply absolute inset-0 z-10 flex min-h-full w-full flex-col items-center justify-center gap-2 rounded-3xl border-0 px-6 text-center text-base font-bold text-white transition-colors;
+    background:
+      linear-gradient(145deg, rgba(8, 36, 51, 0.82), rgba(0, 109, 135, 0.72)),
+      url('/images/hero-poster.webp') center / cover no-repeat;
+    touch-action: manipulation;
+  }
+
+  .map-placeholder:hover {
+    filter: brightness(1.06);
+  }
+
+  .map-wrap.is-loaded .map-placeholder {
+    display: none;
+  }
+
+  .map-frame--hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .map-wrap.is-loaded .map-frame--hidden {
+    @apply h-full w-full border-0 opacity-100;
+    pointer-events: auto;
+  }
+
+  .btn-cta,
+  .btn-messenger,
+  .btn-ghost,
+  .faq-trigger {
+    touch-action: manipulation;
+  }
+
+  .faq-trigger {
+    min-height: 3rem;
   }
 
   .sticky-cta {

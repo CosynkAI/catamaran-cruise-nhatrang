@@ -8,6 +8,8 @@ export const CONTACTS = SITE.contacts;
 
 const bookingState = { date: '', guests: '2', time: '', type: 'group' };
 const GALLERY_PER_PAGE = 6;
+const DATE_DISPLAY_LOCALES = { ru: 'ru-RU', en: 'en-US', ko: 'ko-KR', kk: 'ru-RU' };
+let highlightMessengerTimer;
 
 const TIME_OPTIONS = {
   group: {
@@ -95,15 +97,79 @@ function syncBookingStateFromForm() {
   if (timeEl && bookingState.type !== 'vip') bookingState.time = timeEl.value;
 }
 
+function formatBookingDate(isoDate) {
+  if (!isoDate) return '';
+  const d = new Date(`${isoDate}T12:00:00`);
+  if (Number.isNaN(d.getTime())) return '';
+  const locale = DATE_DISPLAY_LOCALES[currentLang] ?? 'ru-RU';
+  return new Intl.DateTimeFormat(locale, { day: 'numeric', month: 'long', year: 'numeric' }).format(d);
+}
+
+function updateDateDisplay() {
+  const display = document.getElementById('booking-date-display');
+  if (!display) return;
+  display.textContent = formatBookingDate(bookingState.date);
+}
+
+function isBookingReady() {
+  return bookingState.type === 'vip' || Boolean(bookingState.date);
+}
+
+function updateBookingSteps() {
+  const paramsReady = isBookingReady();
+  document.querySelectorAll('.booking-steps__item').forEach((item) => {
+    const step = item.dataset.step;
+    item.classList.remove('is-active', 'is-done');
+    if (step === 'tour') {
+      item.classList.add('is-done');
+    } else if (step === 'params') {
+      item.classList.toggle('is-done', paramsReady);
+      item.classList.toggle('is-active', !paramsReady);
+    } else if (step === 'send') {
+      item.classList.toggle('is-done', paramsReady);
+      item.classList.toggle('is-active', paramsReady);
+    }
+  });
+}
+
+function highlightActiveMessenger() {
+  const row = document.querySelector('.config-panel:not([hidden]) .messenger-row--config');
+  if (!row) return;
+  row.classList.remove('is-highlight');
+  void row.offsetWidth;
+  row.classList.add('is-highlight');
+  clearTimeout(highlightMessengerTimer);
+  highlightMessengerTimer = window.setTimeout(() => row.classList.remove('is-highlight'), 1200);
+}
+
+function scrollToActiveMessenger() {
+  const row = document.querySelector('.config-panel:not([hidden]) .messenger-row--config');
+  if (!row) return;
+  row.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  highlightActiveMessenger();
+}
+
+function updateStickyCta() {
+  const link = document.querySelector('#sticky-cta a');
+  if (!link) return;
+  link.textContent = t(isBookingReady() ? 'sticky.ctaReady' : 'sticky.cta');
+}
+
 function updateBookingPreview() {
   const preview = document.getElementById('booking-preview');
+  const previewWrap = document.getElementById('booking-preview-wrap');
   if (!preview) return;
   syncBookingStateFromForm();
+  updateDateDisplay();
   preview.textContent = getBookingMessage(currentLang, bookingState.type, {
     date: bookingState.date || undefined,
     guests: bookingState.guests || undefined,
     time: bookingState.time || undefined,
   });
+  const ready = isBookingReady();
+  previewWrap?.classList.toggle('is-ready', ready);
+  updateBookingSteps();
+  updateStickyCta();
 }
 
 function setBookingDateError(show) {
@@ -125,7 +191,12 @@ function openMessengerFromEl(el) {
     return;
   }
   setBookingDateError(false);
-  window.open(messengerUrl(type, channel), '_blank', 'noopener,noreferrer');
+  const url = messengerUrl(type, channel);
+  if (isMobileViewport()) {
+    window.location.assign(url);
+    return;
+  }
+  window.open(url, '_blank', 'noopener,noreferrer');
 }
 
 function refreshBookingUi() {
@@ -143,18 +214,39 @@ function initBookingForm() {
     dateEl.required = bookingState.type !== 'vip';
     dateEl.addEventListener('change', () => {
       bookingState.date = dateEl.value;
-      if (bookingState.date) setBookingDateError(false);
+      if (bookingState.date) {
+        setBookingDateError(false);
+        highlightActiveMessenger();
+      }
       refreshBookingUi();
     });
   }
 
+  const clampGuests = (value) => Math.min(40, Math.max(1, Number(value) || 1));
+
+  const setGuests = (value) => {
+    if (!guestsEl) return;
+    const next = String(clampGuests(value));
+    guestsEl.value = next;
+    bookingState.guests = next;
+    refreshBookingUi();
+  };
+
   if (guestsEl) {
     bookingState.guests = guestsEl.value;
-    guestsEl.addEventListener('input', () => {
-      bookingState.guests = guestsEl.value;
-      refreshBookingUi();
-    });
+    guestsEl.addEventListener('input', () => setGuests(guestsEl.value));
+    guestsEl.addEventListener('change', () => setGuests(guestsEl.value));
   }
+
+  document.getElementById('guests-minus')?.addEventListener('click', () => {
+    if (!guestsEl) return;
+    setGuests(Number(guestsEl.value) - 1);
+  });
+
+  document.getElementById('guests-plus')?.addEventListener('click', () => {
+    if (!guestsEl) return;
+    setGuests(Number(guestsEl.value) + 1);
+  });
 
   if (timeEl) {
     timeEl.addEventListener('change', () => {
@@ -278,6 +370,27 @@ function initFaq() {
   });
 }
 
+function bindCarouselDots(dotsEl, pageCount, getIndex, setIndex) {
+  if (!dotsEl) return () => {};
+  dotsEl.replaceChildren();
+  for (let i = 0; i < pageCount; i += 1) {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'carousel-dots__dot';
+    btn.setAttribute('role', 'tab');
+    btn.setAttribute('aria-label', String(i + 1));
+    btn.addEventListener('click', () => setIndex(i));
+    dotsEl.append(btn);
+  }
+  return () => {
+    const idx = getIndex();
+    dotsEl.querySelectorAll('.carousel-dots__dot').forEach((dot, i) => {
+      dot.classList.toggle('is-active', i === idx);
+      dot.setAttribute('aria-selected', i === idx ? 'true' : 'false');
+    });
+  };
+}
+
 function chunkGalleryItems(items, size) {
   const pages = [];
   for (let i = 0; i < items.length; i += size) {
@@ -297,6 +410,7 @@ function initReviewsCarousel() {
   const viewport = document.getElementById('reviews-viewport');
   const track = document.getElementById('reviews-track');
   const counter = document.getElementById('reviews-counter');
+  const dotsEl = document.getElementById('reviews-dots');
   const prevBtn = document.getElementById('reviews-prev');
   const nextBtn = document.getElementById('reviews-next');
   if (!root || !viewport || !track) return;
@@ -306,6 +420,7 @@ function initReviewsCarousel() {
 
   let pageIndex = 0;
   let pageCount = 1;
+  let syncDots = () => {};
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   const pageWidth = () => viewport.clientWidth;
@@ -325,6 +440,7 @@ function initReviewsCarousel() {
     counter.textContent = t('gallery.counter')
       .replace('{current}', String(pageIndex + 1))
       .replace('{total}', String(pageCount));
+    syncDots();
   };
 
   const syncIndexFromScroll = () => {
@@ -341,6 +457,12 @@ function initReviewsCarousel() {
     viewport.scrollTo({ left: pageIndex * pageWidth(), behavior });
   };
 
+  const goToPage = (nextIndex) => {
+    pageIndex = ((nextIndex % pageCount) + pageCount) % pageCount;
+    scrollToPage(prefersReducedMotion ? 'auto' : 'smooth');
+    updateCounter();
+  };
+
   const rebuildPages = () => {
     const chunks = chunkGalleryItems(sourceCards, getReviewsPerPage());
     pageCount = chunks.length;
@@ -352,13 +474,9 @@ function initReviewsCarousel() {
       cards.forEach((card) => page.append(card));
       track.append(page);
     });
+    syncDots = bindCarouselDots(dotsEl, pageCount, () => pageIndex, goToPage);
     layoutPages();
     scrollToPage('auto');
-  };
-
-  const goToPage = (nextIndex) => {
-    pageIndex = ((nextIndex % pageCount) + pageCount) % pageCount;
-    scrollToPage(prefersReducedMotion ? 'auto' : 'smooth');
     updateCounter();
   };
 
@@ -403,6 +521,7 @@ async function initGalleryCarousel() {
   const viewport = document.getElementById('gallery-viewport');
   const track = document.getElementById('gallery-track');
   const counter = document.getElementById('gallery-counter');
+  const dotsEl = document.getElementById('gallery-dots');
   const prevBtn = document.getElementById('gallery-prev');
   const nextBtn = document.getElementById('gallery-next');
   if (!root || !viewport || !track) return;
@@ -423,11 +542,14 @@ async function initGalleryCarousel() {
 
   const altText = (globalIndex) => `${t('gallery.altPhoto')} ${globalIndex + 1}`;
 
+  let syncDots = () => {};
+
   const updateCounter = () => {
     if (!counter) return;
     counter.textContent = t('gallery.counter')
       .replace('{current}', String(pageIndex + 1))
       .replace('{total}', String(pages.length));
+    syncDots();
   };
 
   const buildPage = (pageItems, pageNum) => {
@@ -500,6 +622,8 @@ async function initGalleryCarousel() {
 
   const stepPage = (delta) => goToPage(pageIndex + delta);
 
+  syncDots = bindCarouselDots(dotsEl, pages.length, () => pageIndex, goToPage);
+
   prevBtn?.addEventListener('click', () => stepPage(-1));
   nextBtn?.addEventListener('click', () => stepPage(1));
 
@@ -561,6 +685,15 @@ function initMessengerLinks() {
 function initScrollCta() {
   document.querySelectorAll('[data-scroll]').forEach((el) => {
     el.addEventListener('click', (e) => {
+      if (el.closest('#sticky-cta')) {
+        syncBookingStateFromForm();
+        if (isBookingReady()) {
+          e.preventDefault();
+          scrollToActiveMessenger();
+          closeMobileMenu();
+          return;
+        }
+      }
       const id = el.dataset.scroll;
       const target = document.getElementById(id);
       if (target) {
@@ -615,7 +748,11 @@ function initStickyCta() {
 }
 
 function shouldLoadHeroVideo() {
-  return !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return false;
+  const conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+  if (conn?.saveData) return false;
+  if (conn?.effectiveType && ['slow-2g', '2g'].includes(conn.effectiveType)) return false;
+  return true;
 }
 
 function isMobileViewport() {
@@ -634,6 +771,7 @@ function prepHeroVideoEl(video) {
 function initPageVideo() {
   const video = document.getElementById('hero-video');
   const backdrop = document.querySelector('.page-backdrop');
+  const unlockBtn = document.getElementById('hero-video-unlock');
   if (!video || !backdrop || video.dataset.heroInit === '1') return;
   video.dataset.heroInit = '1';
 
@@ -644,10 +782,18 @@ function initPageVideo() {
 
   prepHeroVideoEl(video);
 
-  const markReady = () => backdrop.classList.add('is-video-ready');
+  const markReady = () => {
+    backdrop.classList.add('is-video-ready');
+    unlockBtn?.setAttribute('hidden', '');
+  };
+
+  const showUnlock = () => {
+    if (backdrop.classList.contains('is-video-ready')) return;
+    unlockBtn?.removeAttribute('hidden');
+  };
 
   const tryPlay = () => {
-    video.play().then(markReady).catch(() => {});
+    video.play().then(markReady).catch(showUnlock);
   };
 
   video.addEventListener('playing', markReady, { once: true });
@@ -658,8 +804,8 @@ function initPageVideo() {
 
   const unlock = () => {
     tryPlay();
-    markReady();
   };
+  unlockBtn?.addEventListener('click', unlock);
   document.addEventListener('touchstart', unlock, { once: true, capture: true });
   document.addEventListener('click', unlock, { once: true, capture: true });
 
@@ -669,7 +815,8 @@ function initPageVideo() {
 
   window.setTimeout(() => {
     if (!video.paused) markReady();
-  }, 800);
+    else showUnlock();
+  }, 1500);
 }
 
 function scheduleHeroVideo() {
@@ -687,30 +834,21 @@ if (document.readyState === 'loading') {
   scheduleHeroVideo();
 }
 
-function initLazyMap() {
+function initMapClickLoad() {
+  const wrap = document.getElementById('map-wrap');
   const frame = document.getElementById('map-frame');
-  if (!frame?.dataset.src) return;
+  const btn = document.getElementById('map-load-btn');
+  if (!wrap || !frame?.dataset.src || !btn) return;
 
   const load = () => {
     if (frame.dataset.loaded === 'true') return;
     frame.src = frame.dataset.src;
     frame.dataset.loaded = 'true';
+    wrap.classList.add('is-loaded');
+    frame.classList.remove('map-frame--hidden');
   };
 
-  if ('IntersectionObserver' in window) {
-    const io = new IntersectionObserver(
-      ([entry]) => {
-        if (!entry?.isIntersecting) return;
-        load();
-        io.disconnect();
-      },
-      { rootMargin: '300px' }
-    );
-    io.observe(frame);
-    return;
-  }
-
-  load();
+  btn.addEventListener('click', load);
 }
 
 function initGalleryWhenVisible() {
@@ -732,7 +870,7 @@ function boot() {
   initScrollCta();
   initMobileNav();
   initStickyCta();
-  initLazyMap();
+  initMapClickLoad();
 }
 
 initFaq();
@@ -740,6 +878,7 @@ initFaq();
 initI18n(() => {
   updateBookingTimeOptions();
   refreshBookingUi();
+  updateStickyCta();
   closeMobileMenu();
   window.refreshGalleryCarousel?.();
   window.refreshReviewsCarousel?.();
