@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "node scripts/optimize-media.mjs && node scripts/sync-gallery-media.mjs && vite build && node scripts/prerender-seo-pages.mjs",
+    "build": "vite build && node scripts/prerender-seo-pages.mjs",
     "media": "node scripts/optimize-media.mjs && node scripts/sync-gallery-media.mjs",
     "seo": "node scripts/generate-seo-files.mjs",
     "preview": "vite preview"

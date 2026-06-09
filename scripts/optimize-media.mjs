@@ -12,11 +12,22 @@ const HERO_OUT = path.join(ROOT, 'public', 'videos', 'hero.mp4');
 const POSTER_JPG = path.join(ROOT, 'public', 'images', 'hero-poster.jpg');
 const POSTER_WEBP = path.join(ROOT, 'public', 'images', 'hero-poster.webp');
 
+const IS_CI = process.env.CF_PAGES === '1' || process.env.CI === 'true';
+
+function hasFfmpeg() {
+  return spawnSync('ffmpeg', ['-version'], { encoding: 'utf8' }).status === 0;
+}
+
 function runFfmpeg(args) {
+  if (!hasFfmpeg()) {
+    console.warn('[hero] ffmpeg not available, skipping transcode');
+    return false;
+  }
   const result = spawnSync('ffmpeg', ['-y', ...args], { encoding: 'utf8' });
   if (result.status !== 0) {
     throw new Error(result.stderr?.trim().slice(-600) || 'ffmpeg failed');
   }
+  return true;
 }
 
 function needsRebuild(output, input, maxOutputBytes = 0) {
@@ -26,6 +37,11 @@ function needsRebuild(output, input, maxOutputBytes = 0) {
 }
 
 export async function optimizeHeroMedia() {
+  if (IS_CI) {
+    console.log('[hero] skip optimization in CI (prebuilt assets in repo)');
+    return;
+  }
+
   const input = fs.existsSync(HERO_SRC) ? HERO_SRC : HERO_OUT;
   if (!fs.existsSync(input)) {
     console.warn('[hero] source video not found');
@@ -66,9 +82,12 @@ export async function optimizeHeroMedia() {
   const posterTmp = `${POSTER_JPG}.tmp.jpg`;
 
   if (needsRebuild(POSTER_JPG, posterSource)) {
-    runFfmpeg(['-i', posterSource, '-frames:v', '1', '-q:v', '3', posterTmp]);
-    fs.renameSync(posterTmp, POSTER_JPG);
-    console.log(`[hero] poster jpg → ${POSTER_JPG}`);
+    if (runFfmpeg(['-i', posterSource, '-frames:v', '1', '-q:v', '3', posterTmp])) {
+      fs.renameSync(posterTmp, POSTER_JPG);
+      console.log(`[hero] poster jpg → ${POSTER_JPG}`);
+    } else if (fs.existsSync(POSTER_JPG)) {
+      console.log('[hero] poster jpg up to date (ffmpeg skipped)');
+    }
   }
 
   if (needsRebuild(POSTER_WEBP, POSTER_JPG)) {
