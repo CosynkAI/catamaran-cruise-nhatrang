@@ -308,7 +308,13 @@
             <select class="booking-form__input" id="booking-time" name="time"></select>
           </label>
         </div>
-        <p class="booking-form__hint" data-i18n="form.hint">Параметры тура подставятся в сообщение WhatsApp</p>
+        <p class="booking-form__hint" data-i18n="form.hint">Заполните дату и параметры — ниже появится текст сообщения</p>
+        <p class="booking-form__error" id="booking-date-error" hidden data-i18n="form.dateRequired">Укажите дату тура, чтобы сформировать заявку</p>
+        <div class="booking-form__preview" id="booking-preview-wrap">
+          <p class="booking-form__preview-label" data-i18n="form.previewLabel">Сообщение в чате:</p>
+          <p class="booking-form__preview-text" id="booking-preview"></p>
+          <p class="booking-form__next" data-i18n="form.nextStep">Нажмите WhatsApp или Telegram ниже — откроется чат с этим текстом, останется нажать «Отправить»</p>
+        </div>
       </div>
       <div class="scroll-tabs" role="tablist" data-i18n-aria="config.tabs" aria-label="Формат тура">
         <button type="button" id="tab-group" class="tab-btn is-active" data-tab="group" role="tab" aria-selected="true" aria-controls="panel-group"><span data-i18n="config.group">Групповой</span> <span class="tab-price" data-i18n="group.price">$80</span></button>
@@ -319,7 +325,10 @@
         <p class="config-panel__price" data-i18n="group.price">$80</p>
         <p class="config-panel__text" data-i18n="group.subtitle">Для тех, кто хочет увидеть острова Нячанга и провести день в море</p>
         <div class="config-panel__actions">
-          <a class="btn-cta" href="#" data-messenger data-messenger-type="group" data-channel="whatsapp" data-i18n="config.bookCta">Забронировать в WhatsApp</a>
+          <div class="messenger-row messenger-row--config">
+            <a class="btn-messenger" href="#" data-messenger data-messenger-type="group" data-channel="whatsapp"><svg class="btn-messenger__icon" aria-hidden="true"><use href="#icon-whatsapp"/></svg><span data-i18n="config.bookWhatsapp">WhatsApp</span></a>
+            <a class="btn-messenger" href="#" data-messenger data-messenger-type="group" data-channel="telegram"><svg class="btn-messenger__icon" aria-hidden="true"><use href="#icon-telegram"/></svg><span data-i18n="config.bookTelegram">Telegram</span></a>
+          </div>
           <a class="btn-ghost" href="#card-group" data-i18n="config.detailsCta">Подробнее о программе</a>
         </div>
       </div>
@@ -327,7 +336,10 @@
         <p class="config-panel__price" data-i18n="private.price">от $1000</p>
         <p class="config-panel__text" data-i18n="private.subtitle">Только ваша компания и никакой посторонней суеты</p>
         <div class="config-panel__actions">
-          <a class="btn-cta" href="#" data-messenger data-messenger-type="individual" data-channel="whatsapp" data-i18n="config.bookCta">Забронировать в WhatsApp</a>
+          <div class="messenger-row messenger-row--config">
+            <a class="btn-messenger" href="#" data-messenger data-messenger-type="individual" data-channel="whatsapp"><svg class="btn-messenger__icon" aria-hidden="true"><use href="#icon-whatsapp"/></svg><span data-i18n="config.bookWhatsapp">WhatsApp</span></a>
+            <a class="btn-messenger" href="#" data-messenger data-messenger-type="individual" data-channel="telegram"><svg class="btn-messenger__icon" aria-hidden="true"><use href="#icon-telegram"/></svg><span data-i18n="config.bookTelegram">Telegram</span></a>
+          </div>
           <a class="btn-ghost" href="#card-individual" data-i18n="config.detailsCta">Подробнее о программе</a>
         </div>
       </div>
@@ -335,7 +347,10 @@
         <p class="config-panel__price config-panel__price--vip" data-i18n="vip.price">от $1500</p>
         <p class="config-panel__text" data-i18n="vip.subtitle">Море. Острова. Только ваши правила.</p>
         <div class="config-panel__actions">
-          <a class="btn-cta btn-cta--gold" href="#" data-messenger data-messenger-type="vip" data-channel="whatsapp"><span class="vip-gold-text" data-i18n="config.bookCta">Забронировать в WhatsApp</span></a>
+          <div class="messenger-row messenger-row--config">
+            <a class="btn-messenger" href="#" data-messenger data-messenger-type="vip" data-channel="whatsapp"><svg class="btn-messenger__icon" aria-hidden="true"><use href="#icon-whatsapp"/></svg><span data-i18n="config.bookWhatsapp">WhatsApp</span></a>
+            <a class="btn-messenger" href="#" data-messenger data-messenger-type="vip" data-channel="telegram"><svg class="btn-messenger__icon" aria-hidden="true"><use href="#icon-telegram"/></svg><span data-i18n="config.bookTelegram">Telegram</span></a>
+          </div>
           <a class="btn-ghost" href="#card-vip" data-i18n="config.detailsCta">Подробнее о программе</a>
         </div>
       </div>

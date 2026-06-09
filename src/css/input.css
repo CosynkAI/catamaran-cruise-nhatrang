@@ -1552,6 +1552,49 @@
     color: rgba(255, 255, 255, 0.65);
   }
 
+  .booking-form__error {
+    @apply mt-2 text-sm font-semibold;
+    color: #fdba74;
+  }
+
+  .booking-form__error[hidden] {
+    display: none;
+  }
+
+  .booking-form.is-invalid #booking-date {
+    border-color: #fb923c;
+    box-shadow: 0 0 0 2px rgba(251, 146, 60, 0.35);
+  }
+
+  .booking-form__preview {
+    @apply mt-4 rounded-2xl p-4;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+  }
+
+  .booking-form__preview-label {
+    @apply text-xs font-bold uppercase tracking-wide;
+    color: rgba(255, 255, 255, 0.55);
+  }
+
+  .booking-form__preview-text {
+    @apply mt-2 whitespace-pre-wrap text-sm font-medium leading-relaxed;
+    color: rgba(255, 255, 255, 0.92);
+  }
+
+  .booking-form__next {
+    @apply mt-3 text-sm font-semibold;
+    color: rgba(255, 255, 255, 0.85);
+  }
+
+  .config-panel__actions .messenger-row--config {
+    @apply mt-0 w-full;
+  }
+
+  .config-panel__actions .messenger-row--config > a {
+    @apply flex-1;
+  }
+
   .sticky-cta {
     @apply fixed bottom-0 left-0 right-0 z-40 p-3 md:hidden;
     background: rgba(8, 36, 51, 0.82);

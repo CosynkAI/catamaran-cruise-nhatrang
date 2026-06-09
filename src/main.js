@@ -86,6 +86,53 @@ export function messengerUrl(type, channel = 'whatsapp', extras = {}) {
   });
 }
 
+function syncBookingStateFromForm() {
+  const dateEl = document.getElementById('booking-date');
+  const guestsEl = document.getElementById('booking-guests');
+  const timeEl = document.getElementById('booking-time');
+  if (dateEl) bookingState.date = dateEl.value;
+  if (guestsEl && bookingState.type !== 'vip') bookingState.guests = guestsEl.value;
+  if (timeEl && bookingState.type !== 'vip') bookingState.time = timeEl.value;
+}
+
+function updateBookingPreview() {
+  const preview = document.getElementById('booking-preview');
+  if (!preview) return;
+  syncBookingStateFromForm();
+  preview.textContent = getBookingMessage(currentLang, bookingState.type, {
+    date: bookingState.date || undefined,
+    guests: bookingState.guests || undefined,
+    time: bookingState.time || undefined,
+  });
+}
+
+function setBookingDateError(show) {
+  const form = document.getElementById('booking-form');
+  const err = document.getElementById('booking-date-error');
+  form?.classList.toggle('is-invalid', show);
+  if (err) err.hidden = !show;
+}
+
+function openMessengerFromEl(el) {
+  syncBookingStateFromForm();
+  const type = resolveTourType(el);
+  const channel = el.dataset.channel || 'whatsapp';
+  if (type !== 'vip' && !bookingState.date) {
+    const dateEl = document.getElementById('booking-date');
+    setBookingDateError(true);
+    dateEl?.focus();
+    dateEl?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    return;
+  }
+  setBookingDateError(false);
+  window.open(messengerUrl(type, channel), '_blank', 'noopener,noreferrer');
+}
+
+function refreshBookingUi() {
+  initMessengerLinks();
+  updateBookingPreview();
+}
+
 function initBookingForm() {
   const dateEl = document.getElementById('booking-date');
   const guestsEl = document.getElementById('booking-guests');
@@ -93,9 +140,11 @@ function initBookingForm() {
 
   if (dateEl) {
     dateEl.min = new Date().toISOString().slice(0, 10);
+    dateEl.required = bookingState.type !== 'vip';
     dateEl.addEventListener('change', () => {
       bookingState.date = dateEl.value;
-      initMessengerLinks();
+      if (bookingState.date) setBookingDateError(false);
+      refreshBookingUi();
     });
   }
 
@@ -103,14 +152,14 @@ function initBookingForm() {
     bookingState.guests = guestsEl.value;
     guestsEl.addEventListener('input', () => {
       bookingState.guests = guestsEl.value;
-      initMessengerLinks();
+      refreshBookingUi();
     });
   }
 
   if (timeEl) {
     timeEl.addEventListener('change', () => {
       bookingState.time = timeEl.value;
-      initMessengerLinks();
+      refreshBookingUi();
     });
   }
 }
@@ -148,11 +197,15 @@ function showConfigTab(tabId) {
   const guestsWrap = document.getElementById('field-guests-wrap');
   const timeWrap = document.getElementById('field-time-wrap');
 
+  const dateEl = document.getElementById('booking-date');
+  if (dateEl) dateEl.required = tabId !== 'vip';
+
   if (tabId === 'vip') {
     guestsWrap?.toggleAttribute('hidden', true);
     timeWrap?.toggleAttribute('hidden', true);
     bookingState.guests = '';
     bookingState.time = '';
+    setBookingDateError(false);
   } else {
     guestsWrap?.toggleAttribute('hidden', false);
     timeWrap?.toggleAttribute('hidden', false);
@@ -161,7 +214,7 @@ function showConfigTab(tabId) {
     updateBookingTimeOptions();
   }
 
-  initMessengerLinks();
+  refreshBookingUi();
 }
 
 function initConfigurator() {
@@ -486,6 +539,13 @@ function initMessengerLinks() {
     el.href = messengerUrl(type, channel);
     el.target = '_blank';
     el.rel = 'noopener noreferrer';
+    if (!el.dataset.messengerBound) {
+      el.dataset.messengerBound = '1';
+      el.addEventListener('click', (e) => {
+        e.preventDefault();
+        openMessengerFromEl(el);
+      });
+    }
   });
   document.querySelectorAll('[data-social]').forEach((el) => {
     const key = el.dataset.social;
@@ -668,7 +728,7 @@ function boot() {
   updateBookingTimeOptions();
   initReviewsCarousel();
   initGalleryWhenVisible();
-  initMessengerLinks();
+  refreshBookingUi();
   initScrollCta();
   initMobileNav();
   initStickyCta();
@@ -679,7 +739,7 @@ initFaq();
 
 initI18n(() => {
   updateBookingTimeOptions();
-  initMessengerLinks();
+  refreshBookingUi();
   closeMobileMenu();
   window.refreshGalleryCarousel?.();
   window.refreshReviewsCarousel?.();
