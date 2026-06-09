@@ -1,6 +1,14 @@
 {
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "www.seatrips-nhatrang.com" }],
+      "destination": "https://seatrips-nhatrang.com/:path*",
+      "permanent": true
+    }
+  ],
   "rewrites": [
     {
       "source": "/((?!api/|private-cruise-nha-trang|sunset-cruise-nha-trang|catamaran-tour-nha-trang|snorkeling-tour-nha-trang|birthday-on-yacht-nha-trang|assets/|images/|videos/|.*\\..+$).*)",

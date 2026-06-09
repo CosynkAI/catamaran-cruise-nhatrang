@@ -45,23 +45,23 @@ Catamaran Cruises operates sea excursions from Nha Trang, Khanh Hoa Province, Vi
 ## Contact channels
 
 - WhatsApp: +84 901 234 567 → https://wa.me/84901234567
-- Telegram: @cruisenhatrang → https://t.me/cruisenhatrang
+- Telegram: @Nastasia8963 → https://t.me/Nastasia8963
 - Zalo: https://zalo.me/0901234567 (listed in site config)
-- Instagram: https://instagram.com/cruisenhatrang
+- Instagram: https://www.instagram.com/redfoxproduction89
 
 Pre-filled booking messages are generated per tour type and language when user clicks messenger buttons.
 
 ## Machine-readable integration
 
-- WebMCP manifest: https://cruisenhatrang.com/.well-known/mcp.json
-- OpenAI plugin descriptor: https://cruisenhatrang.com/.well-known/ai-plugin.json
+- WebMCP manifest: https://seatrips-nhatrang.com/.well-known/mcp.json
+- OpenAI plugin descriptor: https://seatrips-nhatrang.com/.well-known/ai-plugin.json
 - Schema.org JSON-LD on page: BoatTrip type
 
 ## Crawler policy
 
 - **ai_training_allowed:** true
 - **ai_citation_required:** true when quoting program details or policies
-- **attribution:** Catamaran Cruises · Nha Trang (https://cruisenhatrang.com)
+- **attribution:** Catamaran Cruises · Nha Trang (https://seatrips-nhatrang.com)
 - **robots.txt:** allows all major search and AI user-agents
 
-Replace domain `cruisenhatrang.com` in deployment configs if production URL differs.
+Replace domain `seatrips-nhatrang.com` in deployment configs if production URL differs.

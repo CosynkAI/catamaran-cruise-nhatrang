@@ -5,7 +5,7 @@ import { fileURLToPath } from 'node:url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const distDir = path.resolve(__dirname, '../dist');
 const outputFilePath = path.resolve(__dirname, '../../cruise.html');
-const SITE_URL = 'https://cruisenhatrang.com';
+const SITE_URL = 'https://seatrips-nhatrang.com';
 
 function buildSinglePage() {
   console.log('Building single HTML page...');

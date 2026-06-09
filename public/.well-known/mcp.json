@@ -2,11 +2,11 @@
   "$schema": "https://modelcontextprotocol.io/schemas/2025-03/website-manifest.json",
   "name": "Catamaran Cruises · Nha Trang",
   "description": "Group, private and VIP catamaran cruises in Nha Trang — snorkelling, SUP, fishing, meals and sunset tours.",
-  "homepage": "https://cruisenhatrang.com",
+  "homepage": "https://seatrips-nhatrang.com",
   "version": "1.1.0",
   "publisher": {
     "name": "Catamaran Cruises Nha Trang",
-    "url": "https://cruisenhatrang.com",
+    "url": "https://seatrips-nhatrang.com",
     "country": "VN"
   },
   "language": "ru",
@@ -17,24 +17,24 @@
     "kk"
   ],
   "context": {
-    "summary": "https://cruisenhatrang.com/llms.txt",
-    "full": "https://cruisenhatrang.com/llms-full.txt",
-    "sitemap": "https://cruisenhatrang.com/sitemap.xml"
+    "summary": "https://seatrips-nhatrang.com/llms.txt",
+    "full": "https://seatrips-nhatrang.com/llms-full.txt",
+    "sitemap": "https://seatrips-nhatrang.com/sitemap.xml"
   },
   "resources": [
     {
       "name": "homepage",
-      "uri": "https://cruisenhatrang.com/",
+      "uri": "https://seatrips-nhatrang.com/",
       "mimeType": "text/html"
     },
     {
       "name": "programs",
-      "uri": "https://cruisenhatrang.com/#programs",
+      "uri": "https://seatrips-nhatrang.com/#programs",
       "mimeType": "text/html"
     },
     {
       "name": "faq",
-      "uri": "https://cruisenhatrang.com/#faq",
+      "uri": "https://seatrips-nhatrang.com/#faq",
       "mimeType": "text/html"
     }
   ],
@@ -42,7 +42,7 @@
     {
       "name": "book_group_cruise",
       "description": "Redirect to WhatsApp/Telegram/Zalo with a pre-filled group-tour booking message. Query: type, lang, channel, date, guests.",
-      "endpoint": "https://cruisenhatrang.com/api/book?type=group&lang=ru&channel=whatsapp",
+      "endpoint": "https://seatrips-nhatrang.com/api/book?type=group&lang=ru&channel=whatsapp",
       "method": "GET",
       "inputSchema": {
         "type": "object",
@@ -79,7 +79,7 @@
     {
       "name": "book_private_cruise",
       "description": "Redirect with pre-filled private charter message.",
-      "endpoint": "https://cruisenhatrang.com/api/book?type=individual&lang=ru&channel=whatsapp",
+      "endpoint": "https://seatrips-nhatrang.com/api/book?type=individual&lang=ru&channel=whatsapp",
       "method": "GET",
       "inputSchema": {
         "type": "object",
@@ -114,7 +114,7 @@
     {
       "name": "book_vip_cruise",
       "description": "Redirect with pre-filled VIP cruise message.",
-      "endpoint": "https://cruisenhatrang.com/api/book?type=vip&lang=ru&channel=whatsapp",
+      "endpoint": "https://seatrips-nhatrang.com/api/book?type=vip&lang=ru&channel=whatsapp",
       "method": "GET",
       "inputSchema": {
         "type": "object",
@@ -142,12 +142,12 @@
     {
       "name": "contact_telegram",
       "description": "Open Telegram chat.",
-      "endpoint": "https://cruisenhatrang.com/api/book?type=group&lang=ru&channel=telegram",
+      "endpoint": "https://seatrips-nhatrang.com/api/book?type=group&lang=ru&channel=telegram",
       "method": "GET"
     }
   ],
   "contact": {
-    "email": "info@cruisenhatrang.com",
+    "email": "info@seatrips-nhatrang.com",
     "phone": "+84364389764",
     "whatsapp": "https://wa.me/84364389764",
     "telegram": "https://t.me/Nastasia8963",
@@ -157,6 +157,6 @@
   "license": {
     "ai_training_allowed": true,
     "ai_citation_required": true,
-    "attribution": "Catamaran Cruises · Nha Trang (https://cruisenhatrang.com)"
+    "attribution": "Catamaran Cruises · Nha Trang (https://seatrips-nhatrang.com)"
   }
 }
