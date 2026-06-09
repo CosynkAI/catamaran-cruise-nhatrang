@@ -1,52 +1,55 @@
-# Деплой seatrips-nhatrang.com (Vercel + Cloudflare)
-
-## 1. GitHub
+# Деплой seatrips-nhatrang.com (Cloudflare Pages)
 
 Репозиторий: https://github.com/CosynkAI/catamaran-cruise-nhatrang
 
-После изменений домена:
+## 1. Cloudflare Pages
 
-```bash
-git add -A && git commit -m "chore: seatrips-nhatrang.com domain for production"
-git push origin main
-```
+1. [dash.cloudflare.com](https://dash.cloudflare.com) → **Workers & Pages** → **Create** → **Pages** → **Connect to Git**
+2. Репозиторий: **CosynkAI/catamaran-cruise-nhatrang**, ветка **main**
+3. Настройки сборки:
 
-## 2. Vercel
+| Поле | Значение |
+|------|----------|
+| Framework preset | None |
+| Build command | `npm run build` |
+| Build output directory | `dist` |
+| Root directory | `/` |
 
-1. [vercel.com/new](https://vercel.com/new) → Import **CosynkAI/catamaran-cruise-nhatrang**
-2. Framework: **Vite** (определится автоматически)
-3. Build: `npm run build`, Output: `dist` (уже в `vercel.json`)
-4. **Environment Variables** (Production) — скопировать из `.env.example`:
-   - `VITE_SITE_URL=https://seatrips-nhatrang.com`
-   - `VITE_WHATSAPP_NUMBER`, `VITE_TELEGRAM_USERNAME`, `VITE_ZALO_PHONE`, `VITE_INSTAGRAM_URL`, `VITE_CONTACT_EMAIL`
-   - Дубли без `VITE_` для `api/book` (см. `.env.example`)
-5. Deploy
-6. **Settings → Domains** → добавить:
-   - `seatrips-nhatrang.com` (primary)
-   - `www.seatrips-nhatrang.com` (редирект на apex в `vercel.json`)
+4. **Environment variables** (Production + Preview) — из `.env.example`:
 
-## 3. Cloudflare DNS
+**Build** (для Vite при сборке):
+- `VITE_SITE_URL=https://seatrips-nhatrang.com`
+- `VITE_WHATSAPP_NUMBER`, `VITE_TELEGRAM_USERNAME`, `VITE_ZALO_PHONE`, `VITE_INSTAGRAM_URL`, `VITE_CONTACT_EMAIL`, `VITE_OG_IMAGE_URL`
 
-В зоне **seatrips-nhatrang.com** → DNS:
+**Runtime** (для `/api/book`):
+- `SITE_URL`, `WHATSAPP_NUMBER`, `TELEGRAM_USERNAME`, `ZALO_PHONE`, `INSTAGRAM_URL`, `CONTACT_EMAIL`
 
-| Тип   | Имя | Значение              | Proxy |
-|-------|-----|------------------------|-------|
-| CNAME | `@` | `cname.vercel-dns.com` | DNS only (серое облако) * |
-| CNAME | `www` | `cname.vercel-dns.com` | DNS only |
+5. **Save and Deploy**
 
-\* Если Vercel покажет другие записи (A `76.76.21.21` для apex) — используйте их из панели Vercel → Domains.
+## 2. Домен (уже на Cloudflare)
 
-**SSL/TLS:** Full (strict) — если включите оранжевое облако (прокси).
+**Workers & Pages** → проект → **Custom domains** → **Set up a custom domain**:
+- `seatrips-nhatrang.com`
+- `www.seatrips-nhatrang.com`
 
-**Рекомендация:** для Vercel проще **DNS only** на записях домена, SSL выдаёт Vercel.
+DNS создастся автоматически (CNAME на `*.pages.dev`). Прокси (оранжевое облако) — можно оставить включённым.
 
-## 4. Проверка
+Редирект `www` → apex: `public/_redirects`.
+
+## 3. Проверка
 
 - https://seatrips-nhatrang.com/
 - https://seatrips-nhatrang.com/sitemap.xml
-- https://seatrips-nhatrang.com/api/book?type=group&lang=ru&channel=whatsapp → редирект в WhatsApp
-- www → редирект на apex
+- https://seatrips-nhatrang.com/api/book?type=group&lang=ru&channel=whatsapp
+- https://www.seatrips-nhatrang.com/ → редирект на apex
+
+## 4. Локальный preview (опционально)
+
+```bash
+npm run build
+npx wrangler pages dev dist
+```
 
 ## 5. Почта (опционально)
 
-`info@seatrips-nhatrang.com` — **Email Routing** в Cloudflare или переадресация на личный ящик.
+`info@seatrips-nhatrang.com` — **Email Routing** в Cloudflare.
