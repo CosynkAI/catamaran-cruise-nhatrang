@@ -1,0 +1,162 @@
+{
+  "$schema": "https://modelcontextprotocol.io/schemas/2025-03/website-manifest.json",
+  "name": "Catamaran Cruises · Nha Trang",
+  "description": "Group, private and VIP catamaran cruises in Nha Trang — snorkelling, SUP, fishing, meals and sunset tours.",
+  "homepage": "https://cruisenhatrang.com",
+  "version": "1.1.0",
+  "publisher": {
+    "name": "Catamaran Cruises Nha Trang",
+    "url": "https://cruisenhatrang.com",
+    "country": "VN"
+  },
+  "language": "ru",
+  "languages": [
+    "ru",
+    "en",
+    "ko",
+    "kk"
+  ],
+  "context": {
+    "summary": "https://cruisenhatrang.com/llms.txt",
+    "full": "https://cruisenhatrang.com/llms-full.txt",
+    "sitemap": "https://cruisenhatrang.com/sitemap.xml"
+  },
+  "resources": [
+    {
+      "name": "homepage",
+      "uri": "https://cruisenhatrang.com/",
+      "mimeType": "text/html"
+    },
+    {
+      "name": "programs",
+      "uri": "https://cruisenhatrang.com/#programs",
+      "mimeType": "text/html"
+    },
+    {
+      "name": "faq",
+      "uri": "https://cruisenhatrang.com/#faq",
+      "mimeType": "text/html"
+    }
+  ],
+  "tools": [
+    {
+      "name": "book_group_cruise",
+      "description": "Redirect to WhatsApp/Telegram/Zalo with a pre-filled group-tour booking message. Query: type, lang, channel, date, guests.",
+      "endpoint": "https://cruisenhatrang.com/api/book?type=group&lang=ru&channel=whatsapp",
+      "method": "GET",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "lang": {
+            "type": "string",
+            "enum": [
+              "ru",
+              "en",
+              "ko",
+              "kk"
+            ],
+            "default": "ru"
+          },
+          "channel": {
+            "type": "string",
+            "enum": [
+              "whatsapp",
+              "telegram",
+              "zalo"
+            ],
+            "default": "whatsapp"
+          },
+          "date": {
+            "type": "string"
+          },
+          "guests": {
+            "type": "integer",
+            "minimum": 1
+          }
+        }
+      }
+    },
+    {
+      "name": "book_private_cruise",
+      "description": "Redirect with pre-filled private charter message.",
+      "endpoint": "https://cruisenhatrang.com/api/book?type=individual&lang=ru&channel=whatsapp",
+      "method": "GET",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "lang": {
+            "type": "string",
+            "enum": [
+              "ru",
+              "en",
+              "ko",
+              "kk"
+            ]
+          },
+          "channel": {
+            "type": "string",
+            "enum": [
+              "whatsapp",
+              "telegram",
+              "zalo"
+            ]
+          },
+          "date": {
+            "type": "string"
+          },
+          "guests": {
+            "type": "integer",
+            "minimum": 1
+          }
+        }
+      }
+    },
+    {
+      "name": "book_vip_cruise",
+      "description": "Redirect with pre-filled VIP cruise message.",
+      "endpoint": "https://cruisenhatrang.com/api/book?type=vip&lang=ru&channel=whatsapp",
+      "method": "GET",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "lang": {
+            "type": "string",
+            "enum": [
+              "ru",
+              "en",
+              "ko",
+              "kk"
+            ]
+          },
+          "channel": {
+            "type": "string",
+            "enum": [
+              "whatsapp",
+              "telegram",
+              "zalo"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "contact_telegram",
+      "description": "Open Telegram chat.",
+      "endpoint": "https://cruisenhatrang.com/api/book?type=group&lang=ru&channel=telegram",
+      "method": "GET"
+    }
+  ],
+  "contact": {
+    "email": "info@cruisenhatrang.com",
+    "phone": "+84364389764",
+    "whatsapp": "https://wa.me/84364389764",
+    "telegram": "https://t.me/Nastasia8963",
+    "zalo": "https://zalo.me/0364389764",
+    "instagram": "https://www.instagram.com/redfoxproduction89?igsh=MzU5NHIwa3EzbWtq&utm_source=q"
+  },
+  "license": {
+    "ai_training_allowed": true,
+    "ai_citation_required": true,
+    "attribution": "Catamaran Cruises · Nha Trang (https://cruisenhatrang.com)"
+  }
+}

@@ -1,0 +1,67 @@
+# Catamaran Cruises · Nha Trang — Full LLM Context
+
+## Business summary
+
+Catamaran Cruises operates sea excursions from Nha Trang, Khanh Hoa Province, Vietnam. The brand offers three commercial formats: group day/sunset cruises, fully private charters, and VIP premium experiences. Activities include snorkelling, stand-up paddleboarding (SUP), fishing, island hopping in the Southern Islands area, and meals in a local fishing village. Fresh fruit, non-alcoholic drinks and welcome alcoholic beverages are included on group tours; private and VIP tiers expand bar and menu options.
+
+**Meeting point:** Vĩnh Trường yacht port (marina), Nha Trang, Vietnam.
+**Site languages:** Russian (default), English, Korean, Kazakh — switched client-side via flag controls; same URL for all locales.
+**Price positioning:** mid-to-premium (USD $$–$$$).
+
+## Site structure (single-page)
+
+| Section ID | Content |
+|------------|---------|
+| #hero | Value proposition, day tour 09:00, sunset cruise, fishing |
+| #configurator | Tabs: group / private / VIP |
+| #programs | Detailed cards for each format + messenger CTAs |
+| #gallery | Photo grid (snorkelling, sunset, food, SUP, beach) |
+| #faq | Booking deposit, weather, cancellation, what to bring |
+| footer | Map embed, WhatsApp/Telegram |
+
+## Programs (detailed)
+
+### Group cruise
+- **Schedule:** 09:00–13:30 (day) or 15:00–19:30 (sunset)
+- **Includes:** Southern Islands route, snorkelling, SUP, fishing; fruit & soft drinks & welcome alcohol; lunch or dinner in fishing village; crew + Russian-speaking manager
+- **Best for:** travellers who want islands and a social day at sea
+
+### Private cruise
+- **Schedule:** 09:00–14:00 or 15:00–20:00 (sunset)
+- **Includes:** private transfer to catamaran; unlimited bar (sparkling, beer, soft drinks); extended seafood menu; fishing/snorkelling/SUP for your party only; route can be customised
+- **Best for:** families, couples, birthdays, weddings, corporate groups
+
+### VIP Premium cruise
+- Personal route design, premium seafood, extended bar, drone video, extra sea time; fully tailored to guest request
+
+## Booking & payments (FAQ)
+
+1. **Confirmation:** 50% deposit required; catamaran and date reserved for the guest group; booking confirmed after deposit.
+2. **Balance:** remaining amount paid on cruise day.
+3. **Weather:** if port is closed or sailing prohibited, reschedule or full deposit refund.
+4. **Cancellation:** full deposit refund if cancelled ≥72 hours before start; medical proof for illness on cruise day; no refund within 72 hours without valid reason.
+5. **What to bring:** swimsuit, sunscreen, hat; towels, SUP, snorkelling gear on board and included.
+
+## Contact channels
+
+- WhatsApp: +84 901 234 567 → https://wa.me/84901234567
+- Telegram: @cruisenhatrang → https://t.me/cruisenhatrang
+- Zalo: https://zalo.me/0901234567 (listed in site config)
+- Instagram: https://instagram.com/cruisenhatrang
+
+Pre-filled booking messages are generated per tour type and language when user clicks messenger buttons.
+
+## Machine-readable integration
+
+- WebMCP manifest: https://cruisenhatrang.com/.well-known/mcp.json
+- OpenAI plugin descriptor: https://cruisenhatrang.com/.well-known/ai-plugin.json
+- Schema.org JSON-LD on page: BoatTrip type
+
+## Crawler policy
+
+- **ai_training_allowed:** true
+- **ai_citation_required:** true when quoting program details or policies
+- **attribution:** Catamaran Cruises · Nha Trang (https://cruisenhatrang.com)
+- **robots.txt:** allows all major search and AI user-agents
+
+Replace domain `cruisenhatrang.com` in deployment configs if production URL differs.

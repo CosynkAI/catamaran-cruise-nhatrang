@@ -1,0 +1,40 @@
+:root {
+  --color-amber-canvas: #fff6ea;
+  --color-pale-ochre: #ffffff;
+  --color-forest-shadow: #123044;
+  --color-deep-earth: #006d87;
+  --color-sunken-gold: #008fa8;
+  --color-midnight-truffle: #082433;
+  --color-coral: #ff6b45;
+  --color-sunset: #f28a3a;
+  --color-turquoise: #28c8b8;
+  --color-gold: #ffd166;
+  --color-sea-foam: #e4fbf6;
+  --color-sand: #f4dfc2;
+  --gradient-gradient-earth:
+    radial-gradient(circle at 20% 18%, rgba(255, 209, 102, 0.34) 0, transparent 28%),
+    radial-gradient(circle at 80% 76%, rgba(255, 107, 69, 0.34) 0, transparent 30%),
+    linear-gradient(145deg, rgba(8, 36, 51, 0.96) 0%, rgba(0, 109, 135, 0.9) 48%, rgba(40, 200, 184, 0.72) 100%);
+  --gradient-cta: linear-gradient(135deg, #ff6b45 0%, #f28a3a 60%, #ffd166 100%);
+  --gradient-ocean-card: linear-gradient(145deg, #006d87 0%, #008fa8 54%, #28c8b8 100%);
+  --gradient-sun-card: linear-gradient(135deg, rgba(255, 209, 102, 0.28), rgba(255, 107, 69, 0.12));
+  --font-pp-neue-montreal: 'Manrope', 'Outfit', ui-sans-serif, system-ui, sans-serif;
+  --text-caption: 15px;
+  --leading-caption: 1.45;
+  --text-body: 18px;
+  --leading-body: 1.6;
+  --text-subheading: 28px;
+  --leading-subheading: 1.25;
+  --text-heading: 48px;
+  --leading-heading: 1.12;
+  --text-heading-lg: 86px;
+  --leading-heading-lg: 1.05;
+  --tracking-heading-lg: -0.025em;
+  --text-display: clamp(3rem, 9vw, 6.25rem);
+  --leading-display: 1;
+  --tracking-display: -0.025em;
+  --section-gap: 32px;
+  --card-padding: 24px;
+  --radius-md: 18px;
+  --radius-full: 50px;
+}

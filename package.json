@@ -1,0 +1,22 @@
+{
+  "name": "catamaran-cruise-landing",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "node scripts/optimize-media.mjs && node scripts/sync-gallery-media.mjs && vite build && node scripts/prerender-seo-pages.mjs",
+    "media": "node scripts/optimize-media.mjs && node scripts/sync-gallery-media.mjs",
+    "seo": "node scripts/generate-seo-files.mjs",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.1.8",
+    "sharp": "^0.34.5",
+    "tailwindcss": "^4.1.8",
+    "vite": "^6.3.5"
+  },
+  "dependencies": {
+    "@fontsource/cormorant-garamond": "^5.2.11",
+    "@fontsource/manrope": "^5.2.8"
+  }
+}

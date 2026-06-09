@@ -1,0 +1,17 @@
+{
+  "schema_version": "v1",
+  "name_for_human": "Catamaran Cruises Nha Trang",
+  "name_for_model": "catamaran_cruises_nhatrang",
+  "description_for_human": "Book catamaran tours in Nha Trang.",
+  "description_for_model": "Use https://cruisenhatrang.com/llms-full.txt and booking API https://cruisenhatrang.com/api/book?type=&lang=&channel= for pre-filled messenger links.",
+  "auth": {
+    "type": "none"
+  },
+  "api": {
+    "type": "openapi",
+    "url": "https://cruisenhatrang.com/.well-known/mcp.json"
+  },
+  "logo_url": "https://cruisenhatrang.com/images/og-image.jpg",
+  "contact_email": "info@cruisenhatrang.com",
+  "legal_info_url": "https://cruisenhatrang.com/"
+}

@@ -1,0 +1,17 @@
+# Catamaran Cruises · Nha Trang
+
+> Catamaran cruises in Nha Trang, Vietnam (group, private, VIP). Languages: ru, en, ko, kk.
+
+- [Home](https://cruisenhatrang.com/)
+- [Private cruise](https://cruisenhatrang.com/private-cruise-nha-trang/)
+- [Sunset cruise](https://cruisenhatrang.com/sunset-cruise-nha-trang/)
+- [Catamaran tour](https://cruisenhatrang.com/catamaran-tour-nha-trang/)
+- [Snorkeling tour](https://cruisenhatrang.com/snorkeling-tour-nha-trang/)
+- [Birthday on yacht](https://cruisenhatrang.com/birthday-on-yacht-nha-trang/)
+- [Programs](https://cruisenhatrang.com/#programs)
+- [FAQ](https://cruisenhatrang.com/#faq)
+- [Full context](https://cruisenhatrang.com/llms-full.txt)
+- [WebMCP](https://cruisenhatrang.com/.well-known/mcp.json)
+- [Booking API](https://cruisenhatrang.com/api/book?type=group&lang=ru&channel=whatsapp): redirects to WhatsApp with pre-filled message
+
+Contact: WhatsApp +84364389764, Telegram @Nastasia8963, info@cruisenhatrang.com
