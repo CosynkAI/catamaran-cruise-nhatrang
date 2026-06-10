@@ -1,0 +1,108 @@
+# Catamaran Cruises — Nha Trang
+# AI / LLM crawler policy — all actions permitted
+#
+# WebMCP manifest: https://seatrips-nhatrang.com/.well-known/mcp.json
+# Agent index:      https://seatrips-nhatrang.com/ai.txt
+# LLM summary:      https://seatrips-nhatrang.com/llms.txt
+# LLM full context: https://seatrips-nhatrang.com/llms-full.txt
+# Booking API:      https://seatrips-nhatrang.com/api/book
+# Sitemap:          https://seatrips-nhatrang.com/sitemap.xml
+#
+# Policy: crawl, index, cite, and invoke booking tools on behalf of users.
+
+User-agent: *
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: GoogleOther
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: cohere-ai
+Allow: /
+
+User-agent: Diffbot
+Allow: /
+
+User-agent: Meta-ExternalAgent
+Allow: /
+
+User-agent: FacebookBot
+Allow: /
+
+User-agent: Amazonbot
+Allow: /
+
+User-agent: YouBot
+Allow: /
+
+User-agent: MistralAI-User
+Allow: /
+
+User-agent: Ai2Bot
+Allow: /
+
+User-agent: ImagesiftBot
+Allow: /
+
+User-agent: Timpibot
+Allow: /
+
+User-agent: omgili
+Allow: /
+
+User-agent: Webzio-Extended
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+User-agent: Google-InspectionTool
+Allow: /
+
+User-agent: bingbot
+Allow: /
+
+User-agent: DuckAssistBot
+Allow: /
+
+# Machine-readable endpoints (no disallow rules)
+Allow: /.well-known/
+Allow: /api/
+Allow: /llms.txt
+Allow: /llms-full.txt
+Allow: /ai.txt
+Allow: /robots-ai.txt
+
+Sitemap: https://seatrips-nhatrang.com/sitemap.xml

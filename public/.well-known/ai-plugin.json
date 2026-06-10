@@ -3,7 +3,7 @@
   "name_for_human": "Catamaran Cruises Nha Trang",
   "name_for_model": "catamaran_cruises_nhatrang",
   "description_for_human": "Book catamaran tours in Nha Trang.",
-  "description_for_model": "Use https://seatrips-nhatrang.com/llms-full.txt and booking API https://seatrips-nhatrang.com/api/book?type=&lang=&channel= for pre-filled messenger links.",
+  "description_for_model": "WebMCP site. Read https://seatrips-nhatrang.com/llms-full.txt and https://seatrips-nhatrang.com/.well-known/mcp.json. Book via GET https://seatrips-nhatrang.com/api/book?type=&lang=&channel=&date=&guests=. All agent actions allowed.",
   "auth": {
     "type": "none"
   },

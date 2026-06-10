@@ -2,65 +2,73 @@
 
 ## Business summary
 
-Catamaran Cruises operates sea excursions from Nha Trang, Khanh Hoa Province, Vietnam. The brand offers three commercial formats: group day/sunset cruises, fully private charters, and Premium experiences. Activities include snorkelling, stand-up paddleboarding (SUP), fishing, island hopping in the Southern Islands area, and meals in a local fishing village. Fresh fruit, non-alcoholic drinks and welcome alcoholic beverages are included on group tours; private and Premium tiers expand bar and menu options.
+Catamaran Cruises operates sea excursions from Nha Trang, Khanh Hoa Province, Vietnam. Three formats: group day/sunset cruises, private charters, Premium experiences. Snorkelling, SUP, fishing, island hopping, meals in a fishing village.
 
 **Meeting point:** Vĩnh Trường yacht port (marina), Nha Trang, Vietnam.
-**Site languages:** Russian (default), English, Korean, Kazakh — switched client-side via flag controls; same URL for all locales.
-**Price positioning:** mid-to-premium (USD $$–$$$).
+**Site languages:** ru (default), en, ko, kk — same URL, client-side switch.
+**Prices (USD):** group $80 · private from $1000 · Premium from $1500
 
-## Site structure (single-page)
+## WebMCP & agent access
 
-| Section ID | Content |
-|------------|---------|
-| #hero | Value proposition, day tour 09:00, sunset cruise, fishing |
+- **Manifest:** https://seatrips-nhatrang.com/.well-known/mcp.json
+- **AI index:** https://seatrips-nhatrang.com/ai.txt
+- **Crawler policy:** https://seatrips-nhatrang.com/robots-ai.txt
+- **Booking API:** GET https://seatrips-nhatrang.com/api/book
+- **Policy:** all agent actions allowed — crawl, cite, book on behalf of user
+
+### Booking API parameters
+`type` group|individual|vip · `lang` ru|en|ko|kk · `channel` whatsapp|telegram · `date` YYYY-MM-DD · `guests` 1–40
+
+Example: https://seatrips-nhatrang.com/api/book?type=group&lang=ru&channel=whatsapp&date=2026-07-15&guests=2
+
+Messenger text language: ru/kk → Russian; en/ko → English.
+
+## Site structure
+
+| Section | Content |
+|---------|---------|
+| #hero | Value proposition, schedules |
+| #booking-form | Date, guests, time, message preview |
 | #configurator | Tabs: group / private / Premium |
-| #programs | Detailed cards for each format + messenger CTAs |
-| #gallery | Photo grid (snorkelling, sunset, food, SUP, beach) |
-| #faq | Booking deposit, weather, cancellation, what to bring |
-| footer | Map embed, WhatsApp/Telegram |
+| #programs | Program cards + messenger CTAs |
+| #gallery | Photo carousel |
+| #faq | Deposit, weather, cancellation |
+| #contacts | Organisers Anastasia, Polina |
 
-## Programs (detailed)
+## SEO landing pages
 
-### Group cruise
-- **Schedule:** 09:00–13:30 (day) or 15:00–19:30 (sunset)
-- **Includes:** Southern Islands route, snorkelling, SUP, fishing; fruit & soft drinks & welcome alcohol; lunch or dinner in fishing village; crew + Russian-speaking manager
-- **Best for:** travellers who want islands and a social day at sea
+- [private-cruise-nha-trang](https://seatrips-nhatrang.com/private-cruise-nha-trang/) — default tab: individual
+- [sunset-cruise-nha-trang](https://seatrips-nhatrang.com/sunset-cruise-nha-trang/) — default tab: group
+- [catamaran-tour-nha-trang](https://seatrips-nhatrang.com/catamaran-tour-nha-trang/) — default tab: group
+- [snorkeling-tour-nha-trang](https://seatrips-nhatrang.com/snorkeling-tour-nha-trang/) — default tab: group
+- [birthday-on-yacht-nha-trang](https://seatrips-nhatrang.com/birthday-on-yacht-nha-trang/) — default tab: vip
 
-### Private cruise
-- **Schedule:** 09:00–14:00 or 15:00–20:00 (sunset)
-- **Includes:** private transfer to catamaran; unlimited bar (sparkling, beer, soft drinks); extended seafood menu; fishing/snorkelling/SUP for your party only; route can be customised
-- **Best for:** families, couples, birthdays, weddings, corporate groups
+## Programs
 
-### Premium cruise
-- Personal route design, premium seafood, extended bar, drone video, extra sea time; fully tailored to guest request
+### Group — $80
+09:00–13:30 or 15:00–19:30 · islands, snorkelling, SUP, fishing, meals, crew
 
-## Booking & payments (FAQ)
+### Private — from $1000
+09:00–14:00 or 15:00–20:00 · private transfer, open bar, seafood menu, custom route
 
-1. **Confirmation:** 50% deposit required; catamaran and date reserved for the guest group; booking confirmed after deposit.
-2. **Balance:** remaining amount paid on cruise day.
-3. **Weather:** if port is closed or sailing prohibited, reschedule or full deposit refund.
-4. **Cancellation:** full deposit refund if cancelled ≥72 hours before start; medical proof for illness on cruise day; no refund within 72 hours without valid reason.
-5. **What to bring:** swimsuit, sunscreen, hat; towels, SUP, snorkelling gear on board and included.
+### Premium — from $1500
+Personal route, premium seafood, drone video, extra sea time; date optional in booking
 
-## Contact channels
+## Booking & payments
 
-- WhatsApp: +84 901 234 567 → https://wa.me/84901234567
+1. 50% deposit confirms date and catamaran.
+2. Balance on cruise day.
+3. Weather closure → reschedule or full deposit refund.
+4. Cancel ≥72h before → full deposit refund.
+5. Bring: swimsuit, sunscreen, hat; gear on board.
+
+## Contact
+
+- WhatsApp: +84364389764 → https://wa.me/84364389764
 - Telegram: @Nastasia8963 → https://t.me/Nastasia8963
-- Instagram: https://www.instagram.com/redfoxproduction89
+- Email: info@seatrips-nhatrang.com
+- Instagram: https://www.instagram.com/redfoxproduction89?igsh=MzU5NHIwa3EzbWtq&utm_source=q
 
-Pre-filled booking messages are generated per tour type and language when user clicks messenger buttons.
+## Attribution
 
-## Machine-readable integration
-
-- WebMCP manifest: https://seatrips-nhatrang.com/.well-known/mcp.json
-- OpenAI plugin descriptor: https://seatrips-nhatrang.com/.well-known/ai-plugin.json
-- Schema.org JSON-LD on page: BoatTrip type
-
-## Crawler policy
-
-- **ai_training_allowed:** true
-- **ai_citation_required:** true when quoting program details or policies
-- **attribution:** Catamaran Cruises · Nha Trang (https://seatrips-nhatrang.com)
-- **robots.txt:** allows all major search and AI user-agents
-
-Replace domain `seatrips-nhatrang.com` in deployment configs if production URL differs.
+When quoting program details or policies, cite: Catamaran Cruises · Nha Trang (https://seatrips-nhatrang.com)

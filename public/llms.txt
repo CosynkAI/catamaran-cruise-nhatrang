@@ -1,7 +1,9 @@
 # Catamaran Cruises · Nha Trang
 
 > Catamaran cruises in Nha Trang, Vietnam (group, private, Premium). Languages: ru, en, ko, kk.
+> AI agents: all actions allowed — see WebMCP manifest.
 
+## Pages
 - [Home](https://seatrips-nhatrang.com/)
 - [Private cruise](https://seatrips-nhatrang.com/private-cruise-nha-trang/)
 - [Sunset cruise](https://seatrips-nhatrang.com/sunset-cruise-nha-trang/)
@@ -10,8 +12,18 @@
 - [Birthday on yacht](https://seatrips-nhatrang.com/birthday-on-yacht-nha-trang/)
 - [Programs](https://seatrips-nhatrang.com/#programs)
 - [FAQ](https://seatrips-nhatrang.com/#faq)
+
+## Machine-readable (WebMCP)
+- [WebMCP manifest](https://seatrips-nhatrang.com/.well-known/mcp.json)
+- [AI agent index](https://seatrips-nhatrang.com/ai.txt)
+- [AI crawler rules](https://seatrips-nhatrang.com/robots-ai.txt)
 - [Full context](https://seatrips-nhatrang.com/llms-full.txt)
-- [WebMCP](https://seatrips-nhatrang.com/.well-known/mcp.json)
-- [Booking API](https://seatrips-nhatrang.com/api/book?type=group&lang=ru&channel=whatsapp): redirects to WhatsApp with pre-filled message
+- [OpenAI plugin](https://seatrips-nhatrang.com/.well-known/ai-plugin.json)
+- [Booking API](https://seatrips-nhatrang.com/api/book?type=group&lang=ru&channel=whatsapp): GET → messenger redirect
+
+## Booking tools (for agents)
+- get_booking_url — type, lang, channel, date, guests
+- book_group_cruise · book_private_cruise · book_premium_cruise
+- contact_whatsapp · contact_telegram · get_site_context
 
 Contact: WhatsApp +84364389764, Telegram @Nastasia8963, info@seatrips-nhatrang.com

@@ -1,4 +1,6 @@
 # Catamaran Cruises — Nha Trang
+# Search engines & general crawlers
+
 User-agent: *
 Allow: /
 
@@ -8,19 +10,8 @@ Allow: /
 User-agent: YandexBot
 Allow: /
 
-User-agent: GPTBot
-Allow: /
-
-User-agent: ChatGPT-User
-Allow: /
-
-User-agent: ClaudeBot
-Allow: /
-
-User-agent: PerplexityBot
-Allow: /
-
-User-agent: Google-Extended
-Allow: /
+# AI / LLM agents — extended policy & WebMCP:
+# https://seatrips-nhatrang.com/robots-ai.txt
+# Manifest: https://seatrips-nhatrang.com/.well-known/mcp.json
 
 Sitemap: https://seatrips-nhatrang.com/sitemap.xml

@@ -3,7 +3,7 @@
   "name": "Catamaran Cruises · Nha Trang",
   "description": "Group, private and Premium catamaran cruises in Nha Trang — snorkelling, SUP, fishing, meals and sunset tours.",
   "homepage": "https://seatrips-nhatrang.com",
-  "version": "1.1.0",
+  "version": "2.0.0",
   "publisher": {
     "name": "Catamaran Cruises Nha Trang",
     "url": "https://seatrips-nhatrang.com",
@@ -19,8 +19,74 @@
   "context": {
     "summary": "https://seatrips-nhatrang.com/llms.txt",
     "full": "https://seatrips-nhatrang.com/llms-full.txt",
-    "sitemap": "https://seatrips-nhatrang.com/sitemap.xml"
+    "sitemap": "https://seatrips-nhatrang.com/sitemap.xml",
+    "ai_index": "https://seatrips-nhatrang.com/ai.txt",
+    "robots_ai": "https://seatrips-nhatrang.com/robots-ai.txt"
   },
+  "agent_policy": {
+    "access": "allow_all",
+    "crawl": true,
+    "index": true,
+    "training": true,
+    "inference": true,
+    "booking_on_behalf": true,
+    "citation_required": true,
+    "attribution": "Catamaran Cruises · Nha Trang (https://seatrips-nhatrang.com)"
+  },
+  "capabilities": {
+    "multilingual_ui": [
+      "ru",
+      "en",
+      "ko",
+      "kk"
+    ],
+    "messenger_booking": [
+      "whatsapp",
+      "telegram"
+    ],
+    "messenger_message_lang": {
+      "ru": "ru",
+      "en": "en",
+      "ko": "en",
+      "kk": "ru"
+    },
+    "seo_landing_pages": [
+      "private-cruise-nha-trang",
+      "sunset-cruise-nha-trang",
+      "catamaran-tour-nha-trang",
+      "snorkeling-tour-nha-trang",
+      "birthday-on-yacht-nha-trang"
+    ]
+  },
+  "programs": [
+    {
+      "id": "group",
+      "name": "Group cruise",
+      "price_from_usd": 80,
+      "schedule": [
+        "09:00–13:30",
+        "15:00–19:30"
+      ],
+      "booking_type": "group"
+    },
+    {
+      "id": "individual",
+      "name": "Private cruise",
+      "price_from_usd": 1000,
+      "schedule": [
+        "09:00–14:00",
+        "15:00–20:00"
+      ],
+      "booking_type": "individual"
+    },
+    {
+      "id": "vip",
+      "name": "Premium cruise",
+      "price_from_usd": 1500,
+      "booking_type": "vip",
+      "date_optional": true
+    }
+  ],
   "resources": [
     {
       "name": "homepage",
@@ -33,15 +99,182 @@
       "mimeType": "text/html"
     },
     {
+      "name": "configurator",
+      "uri": "https://seatrips-nhatrang.com/#configurator",
+      "mimeType": "text/html"
+    },
+    {
+      "name": "booking_form",
+      "uri": "https://seatrips-nhatrang.com/#booking-form",
+      "mimeType": "text/html"
+    },
+    {
       "name": "faq",
       "uri": "https://seatrips-nhatrang.com/#faq",
       "mimeType": "text/html"
+    },
+    {
+      "name": "contacts",
+      "uri": "https://seatrips-nhatrang.com/#contacts",
+      "mimeType": "text/html"
+    },
+    {
+      "name": "llms_index",
+      "uri": "https://seatrips-nhatrang.com/llms.txt",
+      "mimeType": "text/plain"
+    },
+    {
+      "name": "llms_full",
+      "uri": "https://seatrips-nhatrang.com/llms-full.txt",
+      "mimeType": "text/plain"
+    },
+    {
+      "name": "ai_index",
+      "uri": "https://seatrips-nhatrang.com/ai.txt",
+      "mimeType": "text/plain"
+    },
+    {
+      "name": "gallery_manifest",
+      "uri": "https://seatrips-nhatrang.com/gallery-manifest.json",
+      "mimeType": "application/json"
+    },
+    {
+      "name": "private-cruise-nha-trang",
+      "description": "Landing page: private cruise nha trang",
+      "uri": "https://seatrips-nhatrang.com/private-cruise-nha-trang/",
+      "mimeType": "text/html"
+    },
+    {
+      "name": "sunset-cruise-nha-trang",
+      "description": "Landing page: sunset cruise nha trang",
+      "uri": "https://seatrips-nhatrang.com/sunset-cruise-nha-trang/",
+      "mimeType": "text/html"
+    },
+    {
+      "name": "catamaran-tour-nha-trang",
+      "description": "Landing page: catamaran tour nha trang",
+      "uri": "https://seatrips-nhatrang.com/catamaran-tour-nha-trang/",
+      "mimeType": "text/html"
+    },
+    {
+      "name": "snorkeling-tour-nha-trang",
+      "description": "Landing page: snorkeling tour nha trang",
+      "uri": "https://seatrips-nhatrang.com/snorkeling-tour-nha-trang/",
+      "mimeType": "text/html"
+    },
+    {
+      "name": "birthday-on-yacht-nha-trang",
+      "description": "Landing page: birthday on yacht nha trang",
+      "uri": "https://seatrips-nhatrang.com/birthday-on-yacht-nha-trang/",
+      "mimeType": "text/html"
+    }
+  ],
+  "actions": [
+    {
+      "name": "browse_programs",
+      "description": "Read tour program cards (group, private, premium)",
+      "type": "navigate",
+      "uri": "https://seatrips-nhatrang.com/#programs"
+    },
+    {
+      "name": "open_configurator",
+      "description": "Open booking configurator tab",
+      "type": "navigate",
+      "uri": "https://seatrips-nhatrang.com/#configurator",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "tab": {
+            "type": "string",
+            "enum": [
+              "group",
+              "individual",
+              "vip"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "fill_booking_form",
+      "description": "Booking form section — date, guests, time slot",
+      "type": "navigate",
+      "uri": "https://seatrips-nhatrang.com/#booking-form"
+    },
+    {
+      "name": "read_faq",
+      "description": "Deposit, weather, cancellation policies",
+      "type": "navigate",
+      "uri": "https://seatrips-nhatrang.com/#faq"
+    },
+    {
+      "name": "book_via_api",
+      "description": "Redirect user to WhatsApp/Telegram with pre-filled booking message",
+      "type": "api_call",
+      "endpoint": "https://seatrips-nhatrang.com/api/book",
+      "method": "GET",
+      "allowed": true
     }
   ],
   "tools": [
     {
+      "name": "get_booking_url",
+      "description": "Build messenger booking URL for any tour. Redirects with pre-filled message (ru/kk→Russian, en/ko→English).",
+      "endpoint": "https://seatrips-nhatrang.com/api/book?type=group&lang=ru&channel=whatsapp",
+      "method": "GET",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "group",
+              "individual",
+              "vip"
+            ],
+            "default": "group"
+          },
+          "lang": {
+            "type": "string",
+            "enum": [
+              "ru",
+              "en",
+              "ko",
+              "kk"
+            ],
+            "default": "ru"
+          },
+          "channel": {
+            "type": "string",
+            "enum": [
+              "whatsapp",
+              "telegram"
+            ],
+            "default": "whatsapp"
+          },
+          "date": {
+            "type": "string",
+            "format": "date",
+            "description": "Tour date YYYY-MM-DD"
+          },
+          "guests": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 40
+          },
+          "time": {
+            "type": "string",
+            "description": "Time slot label"
+          }
+        },
+        "required": [
+          "type"
+        ]
+      }
+    },
+    {
       "name": "book_group_cruise",
-      "description": "Redirect to WhatsApp/Telegram with a pre-filled group-tour booking message. Query: type, lang, channel, date, guests.",
+      "description": "Book group day or sunset cruise via WhatsApp/Telegram.",
       "endpoint": "https://seatrips-nhatrang.com/api/book?type=group&lang=ru&channel=whatsapp",
       "method": "GET",
       "inputSchema": {
@@ -66,18 +299,23 @@
             "default": "whatsapp"
           },
           "date": {
-            "type": "string"
+            "type": "string",
+            "format": "date"
           },
           "guests": {
             "type": "integer",
-            "minimum": 1
+            "minimum": 1,
+            "maximum": 40
+          },
+          "time": {
+            "type": "string"
           }
         }
       }
     },
     {
       "name": "book_private_cruise",
-      "description": "Redirect with pre-filled private charter message.",
+      "description": "Book private charter via WhatsApp/Telegram.",
       "endpoint": "https://seatrips-nhatrang.com/api/book?type=individual&lang=ru&channel=whatsapp",
       "method": "GET",
       "inputSchema": {
@@ -90,28 +328,35 @@
               "en",
               "ko",
               "kk"
-            ]
+            ],
+            "default": "ru"
           },
           "channel": {
             "type": "string",
             "enum": [
               "whatsapp",
               "telegram"
-            ]
+            ],
+            "default": "whatsapp"
           },
           "date": {
-            "type": "string"
+            "type": "string",
+            "format": "date"
           },
           "guests": {
             "type": "integer",
-            "minimum": 1
+            "minimum": 1,
+            "maximum": 40
+          },
+          "time": {
+            "type": "string"
           }
         }
       }
     },
     {
-      "name": "book_vip_cruise",
-      "description": "Redirect with pre-filled Premium cruise message.",
+      "name": "book_premium_cruise",
+      "description": "Book Premium cruise via WhatsApp/Telegram (date optional).",
       "endpoint": "https://seatrips-nhatrang.com/api/book?type=vip&lang=ru&channel=whatsapp",
       "method": "GET",
       "inputSchema": {
@@ -124,22 +369,87 @@
               "en",
               "ko",
               "kk"
-            ]
+            ],
+            "default": "ru"
           },
           "channel": {
             "type": "string",
             "enum": [
               "whatsapp",
               "telegram"
-            ]
+            ],
+            "default": "whatsapp"
+          },
+          "date": {
+            "type": "string",
+            "format": "date"
+          },
+          "guests": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 40
+          }
+        }
+      }
+    },
+    {
+      "name": "contact_whatsapp",
+      "description": "Open WhatsApp with optional pre-filled group booking message.",
+      "endpoint": "https://seatrips-nhatrang.com/api/book?type=group&lang=ru&channel=whatsapp",
+      "method": "GET",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "lang": {
+            "type": "string",
+            "enum": [
+              "ru",
+              "en",
+              "ko",
+              "kk"
+            ],
+            "default": "ru"
+          },
+          "date": {
+            "type": "string"
+          },
+          "guests": {
+            "type": "integer"
           }
         }
       }
     },
     {
       "name": "contact_telegram",
-      "description": "Open Telegram chat.",
+      "description": "Open Telegram with optional pre-filled group booking message.",
       "endpoint": "https://seatrips-nhatrang.com/api/book?type=group&lang=ru&channel=telegram",
+      "method": "GET",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "lang": {
+            "type": "string",
+            "enum": [
+              "ru",
+              "en",
+              "ko",
+              "kk"
+            ],
+            "default": "ru"
+          },
+          "date": {
+            "type": "string"
+          },
+          "guests": {
+            "type": "integer"
+          }
+        }
+      }
+    },
+    {
+      "name": "get_site_context",
+      "description": "Full business context, policies, programs (plain text).",
+      "endpoint": "https://seatrips-nhatrang.com/llms-full.txt",
       "method": "GET"
     }
   ],
@@ -154,5 +464,7 @@
     "ai_training_allowed": true,
     "ai_citation_required": true,
     "attribution": "Catamaran Cruises · Nha Trang (https://seatrips-nhatrang.com)"
-  }
+  },
+  "openai_plugin": "https://seatrips-nhatrang.com/.well-known/ai-plugin.json",
+  "logo": "https://seatrips-nhatrang.com/images/og-image.jpg"
 }

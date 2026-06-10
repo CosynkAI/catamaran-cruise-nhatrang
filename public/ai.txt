@@ -1,0 +1,42 @@
+# AI Agent Index — Catamaran Cruises · Nha Trang
+
+> Group, private and Premium catamaran cruises in Nha Trang, Vietnam.
+
+## Access policy
+- crawl: allow
+- index: allow
+- training: allow (with attribution)
+- inference: allow
+- booking_on_behalf: allow via /api/book
+
+## Discovery
+- WebMCP: https://seatrips-nhatrang.com/.well-known/mcp.json
+- OpenAI plugin: https://seatrips-nhatrang.com/.well-known/ai-plugin.json
+- LLM index: https://seatrips-nhatrang.com/llms.txt
+- Full context: https://seatrips-nhatrang.com/llms-full.txt
+- Crawler rules: https://seatrips-nhatrang.com/robots-ai.txt
+- Sitemap: https://seatrips-nhatrang.com/sitemap.xml
+
+## Booking API (GET, no auth)
+Base: https://seatrips-nhatrang.com/api/book
+
+| Param | Values | Required |
+|-------|--------|----------|
+| type | group, individual, vip | yes |
+| lang | ru, en, ko, kk | no (default ru) |
+| channel | whatsapp, telegram | no (default whatsapp) |
+| date | YYYY-MM-DD | no (required for group/individual messages) |
+| guests | 1–40 | no |
+
+Response: 302 redirect to messenger with pre-filled text.
+Message language: ru/kk → Russian; en/ko → English.
+
+## Programs
+| ID | Name | From USD |
+|----|------|----------|
+| group | Group day/sunset cruise | 80 |
+| individual | Private charter | 1000 |
+| vip | Premium cruise | 1500 |
+
+## Contact
+Use tools in WebMCP manifest or /api/book?channel=whatsapp|telegram

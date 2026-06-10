@@ -19,6 +19,7 @@ export async function onRequestGet(context) {
     channel,
     date: q.get('date') ? q.get('date').slice(0, 32) : undefined,
     guests: q.get('guests') != null ? String(q.get('guests')).slice(0, 8) : undefined,
+    time: q.get('time') ? q.get('time').slice(0, 32) : undefined,
   });
 
   return new Response(null, {
