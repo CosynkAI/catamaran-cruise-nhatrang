@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { hreflangAlternates, pageUrl, SITE_LANGS } from '../lib/seo-urls.js';
 import { getSiteConfig, getBookingApiUrl } from '../lib/site-config.js';
 import { SEO_PAGES } from '../lib/seo-pages.js';
 import {
@@ -30,25 +31,24 @@ export function generateSeoFiles(env = process.env) {
   write(path.join(publicDir, 'ai.txt'), buildAiTxt(url));
   write(path.join(publicDir, 'llms-full.txt'), buildLlmsFullTxt(site, SEO_PAGES));
 
-  const hreflangLinks = ['ru', 'en', 'ko', 'kk', 'x-default']
-    .map((lang) => `    <xhtml:link rel="alternate" hreflang="${lang}" href="{loc}"/>`)
-    .join('\n');
+  const lastmod = new Date().toISOString().slice(0, 10);
 
-  const sitemapEntries = [
-    { loc: `${url}/`, priority: '1.0' },
-    ...SEO_PAGES.map((page) => ({
-      loc: `${url}/${page.slug}/`,
-      priority: '0.85',
-    })),
-  ]
-    .map(
-      ({ loc, priority }) => `  <url>
+  const sitemapPages = [{ slug: '', priority: '1.0' }, ...SEO_PAGES.map((page) => ({ slug: page.slug, priority: '0.85' }))];
+
+  const sitemapEntries = sitemapPages
+    .map(({ slug, priority }) => {
+      const loc = pageUrl(url, 'ru', slug);
+      const hreflang = hreflangAlternates(url, slug)
+        .map(({ lang, href }) => `    <xhtml:link rel="alternate" hreflang="${lang}" href="${href}"/>`)
+        .join('\n');
+      return `  <url>
     <loc>${loc}</loc>
+    <lastmod>${lastmod}</lastmod>
     <changefreq>weekly</changefreq>
     <priority>${priority}</priority>
-${hreflangLinks.replace(/\{loc\}/g, loc)}
-  </url>`
-    )
+${hreflang}
+  </url>`;
+    })
     .join('\n');
 
   write(
@@ -61,20 +61,35 @@ ${sitemapEntries}
 `
   );
 
+  const llmsPageNames = {
+    '': 'Home',
+    'private-cruise-nha-trang': 'Private cruise',
+    'sunset-cruise-nha-trang': 'Sunset cruise',
+    'catamaran-tour-nha-trang': 'Catamaran tour',
+    'snorkeling-tour-nha-trang': 'Snorkeling tour',
+    'birthday-on-yacht-nha-trang': 'Birthday on yacht',
+  };
+  const llmsSlugs = ['', ...SEO_PAGES.map((page) => page.slug)];
+  const llmsLangSections = SITE_LANGS.map((lang) => {
+    const lines = llmsSlugs
+      .map((slug) => `- [${llmsPageNames[slug]}](${pageUrl(url, lang, slug)})`)
+      .join('\n');
+    return `### ${lang}\n${lines}`;
+  }).join('\n\n');
+
   write(
     path.join(publicDir, 'llms.txt'),
     `# Catamaran Cruises · Nha Trang
 
 > Catamaran cruises in Nha Trang, Vietnam (group, private, Premium). Languages: ru, en, ko, kk.
+> Localized URLs: / (ru), /en/, /ko/, /kk/ — prerendered HTML per language.
 > AI agents: all actions allowed — see WebMCP manifest.
 
 ## Pages
-- [Home](${url}/)
-- [Private cruise](${url}/private-cruise-nha-trang/)
-- [Sunset cruise](${url}/sunset-cruise-nha-trang/)
-- [Catamaran tour](${url}/catamaran-tour-nha-trang/)
-- [Snorkeling tour](${url}/snorkeling-tour-nha-trang/)
-- [Birthday on yacht](${url}/birthday-on-yacht-nha-trang/)
+
+${llmsLangSections}
+
+## Anchors (any language)
 - [Programs](${url}/#programs)
 - [FAQ](${url}/#faq)
 

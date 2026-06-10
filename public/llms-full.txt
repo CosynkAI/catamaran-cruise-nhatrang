@@ -4,8 +4,9 @@
 
 Catamaran Cruises operates sea excursions from Nha Trang, Khanh Hoa Province, Vietnam. Three formats: group day/sunset cruises, private charters, Premium experiences. Snorkelling, SUP, fishing, island hopping, meals in a fishing village.
 
-**Meeting point:** Vĩnh Trường yacht port (marina), Nha Trang, Vietnam.
-**Site languages:** ru (default), en, ko, kk — same URL, client-side switch.
+**Meeting point:** Bến Tàu Du Lịch Nha Trang, 388 Võ Thị Sáu, Nha Trang, Vietnam.
+**Site languages:** ru (default at /), en (/en/), ko (/ko/), kk (/kk/) — prerendered HTML per locale.
+**Home URLs:** ru: https://seatrips-nhatrang.com/ · en: https://seatrips-nhatrang.com/en/ · ko: https://seatrips-nhatrang.com/ko/ · kk: https://seatrips-nhatrang.com/kk/
 **Prices (USD):** group $80 · private from $1000 · Premium from $1500
 
 ## WebMCP & agent access
@@ -37,11 +38,16 @@ Messenger text language: ru/kk → Russian; en/ko → English.
 
 ## SEO landing pages
 
-- [private-cruise-nha-trang](https://seatrips-nhatrang.com/private-cruise-nha-trang/) — default tab: individual
-- [sunset-cruise-nha-trang](https://seatrips-nhatrang.com/sunset-cruise-nha-trang/) — default tab: group
-- [catamaran-tour-nha-trang](https://seatrips-nhatrang.com/catamaran-tour-nha-trang/) — default tab: group
-- [snorkeling-tour-nha-trang](https://seatrips-nhatrang.com/snorkeling-tour-nha-trang/) — default tab: group
-- [birthday-on-yacht-nha-trang](https://seatrips-nhatrang.com/birthday-on-yacht-nha-trang/) — default tab: vip
+- **private-cruise-nha-trang** (default tab: individual)
+  ru: https://seatrips-nhatrang.com/private-cruise-nha-trang/ · en: https://seatrips-nhatrang.com/en/private-cruise-nha-trang/ · ko: https://seatrips-nhatrang.com/ko/private-cruise-nha-trang/ · kk: https://seatrips-nhatrang.com/kk/private-cruise-nha-trang/
+- **sunset-cruise-nha-trang** (default tab: group)
+  ru: https://seatrips-nhatrang.com/sunset-cruise-nha-trang/ · en: https://seatrips-nhatrang.com/en/sunset-cruise-nha-trang/ · ko: https://seatrips-nhatrang.com/ko/sunset-cruise-nha-trang/ · kk: https://seatrips-nhatrang.com/kk/sunset-cruise-nha-trang/
+- **catamaran-tour-nha-trang** (default tab: group)
+  ru: https://seatrips-nhatrang.com/catamaran-tour-nha-trang/ · en: https://seatrips-nhatrang.com/en/catamaran-tour-nha-trang/ · ko: https://seatrips-nhatrang.com/ko/catamaran-tour-nha-trang/ · kk: https://seatrips-nhatrang.com/kk/catamaran-tour-nha-trang/
+- **snorkeling-tour-nha-trang** (default tab: group)
+  ru: https://seatrips-nhatrang.com/snorkeling-tour-nha-trang/ · en: https://seatrips-nhatrang.com/en/snorkeling-tour-nha-trang/ · ko: https://seatrips-nhatrang.com/ko/snorkeling-tour-nha-trang/ · kk: https://seatrips-nhatrang.com/kk/snorkeling-tour-nha-trang/
+- **birthday-on-yacht-nha-trang** (default tab: vip)
+  ru: https://seatrips-nhatrang.com/birthday-on-yacht-nha-trang/ · en: https://seatrips-nhatrang.com/en/birthday-on-yacht-nha-trang/ · ko: https://seatrips-nhatrang.com/ko/birthday-on-yacht-nha-trang/ · kk: https://seatrips-nhatrang.com/kk/birthday-on-yacht-nha-trang/
 
 ## Programs
 

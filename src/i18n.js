@@ -1,4 +1,6 @@
+import { buildTravelAgencyProvider } from '@lib/business-schema.js';
 import { getBookingMessage, resolveMessageLang } from '@lib/booking-messages.js';
+import { detectLangFromPathname, pagePath, pageUrl as buildPageUrl } from '@lib/seo-urls.js';
 import { getCurrentPageSlug, getPageSeo } from '@lib/seo-pages.js';
 import { SITE } from './site.js';
 
@@ -59,17 +61,26 @@ export function getMessage(type) {
 }
 
 function getPageUrl() {
-  const slug = getCurrentPageSlug();
-  return slug ? `${SITE.url}/${slug}/` : `${SITE.url}/`;
+  return buildPageUrl(SITE.url, currentLang, getCurrentPageSlug());
+}
+
+function getLangPageUrl(lang) {
+  const resolved = !lang || lang === 'x-default' ? 'ru' : lang;
+  return buildPageUrl(SITE.url, resolved, getCurrentPageSlug());
+}
+
+function syncLangToUrl() {
+  const path = pagePath(currentLang, getCurrentPageSlug());
+  history.replaceState(null, '', path);
 }
 
 function updateSeoUrls() {
-  const pageUrl = getPageUrl();
-  document.querySelector('link[rel="canonical"]')?.setAttribute('href', pageUrl);
+  const canonical = getLangPageUrl(currentLang);
+  document.querySelector('link[rel="canonical"]')?.setAttribute('href', canonical);
   document.querySelectorAll('link[rel="alternate"][hreflang]').forEach((el) => {
-    el.setAttribute('href', pageUrl);
+    el.setAttribute('href', getLangPageUrl(el.getAttribute('hreflang')));
   });
-  document.querySelector('meta[property="og:url"]')?.setAttribute('content', pageUrl);
+  document.querySelector('meta[property="og:url"]')?.setAttribute('content', canonical);
   const ogImage = document.querySelector('meta[property="og:image"]');
   if (ogImage) ogImage.content = SITE.ogImage;
   const twImage = document.querySelector('meta[name="twitter:image"]');
@@ -182,15 +193,7 @@ function updateJsonLd() {
         bestRating: '5',
         worstRating: '1',
       },
-      provider: {
-        '@type': 'TravelAgency',
-        name: 'Catamaran Cruises · Nha Trang',
-        url: SITE.url,
-        telephone: `+${contacts.whatsapp}`,
-        email: contacts.email,
-        image: SITE.ogImage,
-        sameAs: [`https://t.me/${contacts.telegram}`, contacts.instagram],
-      },
+      provider: buildTravelAgencyProvider(contacts, SITE),
       itinerary: {
         '@type': 'ItemList',
         itemListElement: [
@@ -280,17 +283,30 @@ export async function setLang(lang) {
   currentLang = lang;
   localStorage.setItem(STORAGE_KEY, lang);
   applyTranslations({ animate: true });
+  syncLangToUrl();
 }
 
 export async function initI18n(onLangChange) {
+  const pathLang = detectLangFromPathname(window.location.pathname);
+  const bodyLang = document.body.dataset.defaultLang;
+  const urlLang = new URLSearchParams(window.location.search).get('lang');
   const saved = localStorage.getItem(STORAGE_KEY);
-  if (saved && SUPPORTED_LANGS.has(saved)) currentLang = saved;
+  if (pathLang && SUPPORTED_LANGS.has(pathLang)) {
+    currentLang = pathLang;
+  } else if (bodyLang && SUPPORTED_LANGS.has(bodyLang)) {
+    currentLang = bodyLang;
+  } else if (urlLang && SUPPORTED_LANGS.has(urlLang)) {
+    currentLang = urlLang;
+  } else if (saved && SUPPORTED_LANGS.has(saved)) {
+    currentLang = saved;
+  }
 
   await ensureLocale('ru');
   if (currentLang !== 'ru') await ensureLocale(currentLang);
   await ensureMessengerLocale(currentLang);
 
   applyTranslations();
+  if (urlLang && !pathLang) syncLangToUrl();
 
   document.querySelectorAll('[data-lang]').forEach((btn) => {
     btn.addEventListener('click', async () => {

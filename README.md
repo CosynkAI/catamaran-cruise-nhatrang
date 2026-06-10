@@ -12,7 +12,7 @@ npm run dev
 
 Откройте адрес из терминала (обычно http://localhost:5173).
 
-**Сборка:** `npm run build` → `dist/` (+ prerender SEO-страниц).
+**Сборка:** `npm run build` → `dist/` (24 prerender HTML: 6 страниц × 4 языка).
 
 **Preview:** `npm run preview`
 
@@ -167,7 +167,7 @@ FAQ
 
 #### Техническое SEO (было + актуально)
 
-- canonical, hreflang (ru/en/ko/kk)
+- canonical, hreflang (ru/en/ko/kk) — path-based: `/`, `/en/`, `/ko/`, `/kk/`
 - sitemap.xml, robots.txt
 - llms.txt, llms-full.txt
 - WebMCP / ai-plugin.json
@@ -177,40 +177,43 @@ FAQ
 
 ### P2 — отдельные посадочные + prerender (сделано)
 
-#### 5 SEO-страниц
+#### 6 страниц × 4 языка = 24 HTML
 
-Контент в `lib/seo-pages.js`, при сборке генерируются в `dist/{slug}/index.html` скриптом `scripts/prerender-seo-pages.mjs`.
+Контент в `lib/seo-pages.js` (посадочные) и `src/locales/*.js` (главная). При сборке `scripts/prerender-seo-pages.mjs` генерирует статический HTML для каждой локали.
 
-| URL | Фокус | Таб по умолчанию |
-|-----|-------|------------------|
-| `/private-cruise-nha-trang/` | private boat tour | individual ($390) |
-| `/sunset-cruise-nha-trang/` | sunset cruise | group ($69) |
-| `/catamaran-tour-nha-trang/` | catamaran tour | group ($69) |
-| `/snorkeling-tour-nha-trang/` | snorkeling tour | group ($69) |
-| `/birthday-on-yacht-nha-trang/` | birthday on yacht | vip ($900) |
+| URL (ru) | en | Фокус | Таб |
+|----------|-----|-------|-----|
+| `/` | `/en/` | главная | — |
+| `/private-cruise-nha-trang/` | `/en/private-cruise-nha-trang/` | private boat tour | individual |
+| `/sunset-cruise-nha-trang/` | `/en/sunset-cruise-nha-trang/` | sunset cruise | group |
+| `/catamaran-tour-nha-trang/` | `/en/catamaran-tour-nha-trang/` | catamaran tour | group |
+| `/snorkeling-tour-nha-trang/` | `/en/snorkeling-tour-nha-trang/` | snorkeling tour | group |
+| `/birthday-on-yacht-nha-trang/` | `/en/birthday-on-yacht-nha-trang/` | birthday on yacht | vip |
 
-На каждой странице в **статическом HTML** (без JS):
-- уникальные `<title>`, description, og/twitter
-- canonical и og:url на свой URL
-- уникальные H1 и lead в hero
-- schema с page-specific name/description/url
-- `data-page="{slug}"` и `data-default-tab` на `<body>`
+Аналогично `/ko/…` и `/kk/…`.
 
-При смене языка в браузере `i18n.js` подставляет переводы страницы из `seo-pages.js` (title, meta, hero).
+В **статическом HTML** каждой версии:
+- уникальные `<title>`, description, og/twitter, `lang`
+- canonical и hreflang (path-based)
+- H1 и lead в hero на языке страницы
+- schema с адресом (`lib/business-schema.js`)
+- `data-page`, `data-default-tab`, `data-default-lang` на `<body>`
+
+`i18n.js` читает язык из URL (`/en/…`) и `data-default-lang`; смена языка в UI ведёт на `/en/…`, `/ko/…`.
 
 #### Sitemap и индексация
 
-`sitemap.xml` — 6 URL (главная + 5 посадочных), hreflang на каждый.
+`sitemap.xml` — 6 записей (ru canonical), hreflang на `/`, `/en/`, `/ko/`, `/kk/` для каждой.
 
-`llms.txt` — ссылки на все посадочные.
+`llms.txt` / `llms-full.txt` — все локализованные URL.
 
-Vercel: статика `/slug/index.html` отдаётся раньше SPA-rewrite из `vercel.json`.
+Cloudflare Pages: статика `dist/{lang}/{slug}/index.html` отдаётся до SPA fallback (`public/_redirects`).
 
 #### Сборка
 
 ```bash
 npm run build
-# = vite build && node scripts/prerender-seo-pages.mjs
+# vite build && prerender (24 HTML) && verify-dist
 ```
 
 ---
@@ -241,7 +244,8 @@ catamaran-cruise-landing/
 │   └── seo-pages.js        # контент 5 посадочных × 4 языка
 ├── scripts/
 │   ├── generate-seo-files.mjs    # robots, sitemap, llms, mcp
-│   ├── prerender-seo-pages.mjs   # dist/{slug}/index.html
+│   ├── prerender-seo-pages.mjs   # 24 HTML (6×4 langs)
+│   ├── verify-dist.mjs           # проверка prerender
 │   ├── sync-gallery-media.mjs    # фото → public/images/media
 │   └── build-single-page.mjs     # один HTML для пересылки
 ├── public/
@@ -266,7 +270,7 @@ catamaran-cruise-landing/
 - FAQ с Schema.org
 - Контакты: Анастасия, Полина
 - i18n: ru, en, ko, kk
-- SEO: meta, hreflang, sitemap, 5 prerender-страниц
+- SEO: meta, hreflang (path-based), sitemap, 24 prerender-страницы, schema + адрес
 - API `/api/book` для AI-агентов
 
 ## Оценка маркетолога (до доработок → потенциал)

@@ -1,15 +1,44 @@
 # Catamaran Cruises · Nha Trang
 
 > Catamaran cruises in Nha Trang, Vietnam (group, private, Premium). Languages: ru, en, ko, kk.
+> Localized URLs: / (ru), /en/, /ko/, /kk/ — prerendered HTML per language.
 > AI agents: all actions allowed — see WebMCP manifest.
 
 ## Pages
+
+### ru
 - [Home](https://seatrips-nhatrang.com/)
 - [Private cruise](https://seatrips-nhatrang.com/private-cruise-nha-trang/)
 - [Sunset cruise](https://seatrips-nhatrang.com/sunset-cruise-nha-trang/)
 - [Catamaran tour](https://seatrips-nhatrang.com/catamaran-tour-nha-trang/)
 - [Snorkeling tour](https://seatrips-nhatrang.com/snorkeling-tour-nha-trang/)
 - [Birthday on yacht](https://seatrips-nhatrang.com/birthday-on-yacht-nha-trang/)
+
+### en
+- [Home](https://seatrips-nhatrang.com/en/)
+- [Private cruise](https://seatrips-nhatrang.com/en/private-cruise-nha-trang/)
+- [Sunset cruise](https://seatrips-nhatrang.com/en/sunset-cruise-nha-trang/)
+- [Catamaran tour](https://seatrips-nhatrang.com/en/catamaran-tour-nha-trang/)
+- [Snorkeling tour](https://seatrips-nhatrang.com/en/snorkeling-tour-nha-trang/)
+- [Birthday on yacht](https://seatrips-nhatrang.com/en/birthday-on-yacht-nha-trang/)
+
+### ko
+- [Home](https://seatrips-nhatrang.com/ko/)
+- [Private cruise](https://seatrips-nhatrang.com/ko/private-cruise-nha-trang/)
+- [Sunset cruise](https://seatrips-nhatrang.com/ko/sunset-cruise-nha-trang/)
+- [Catamaran tour](https://seatrips-nhatrang.com/ko/catamaran-tour-nha-trang/)
+- [Snorkeling tour](https://seatrips-nhatrang.com/ko/snorkeling-tour-nha-trang/)
+- [Birthday on yacht](https://seatrips-nhatrang.com/ko/birthday-on-yacht-nha-trang/)
+
+### kk
+- [Home](https://seatrips-nhatrang.com/kk/)
+- [Private cruise](https://seatrips-nhatrang.com/kk/private-cruise-nha-trang/)
+- [Sunset cruise](https://seatrips-nhatrang.com/kk/sunset-cruise-nha-trang/)
+- [Catamaran tour](https://seatrips-nhatrang.com/kk/catamaran-tour-nha-trang/)
+- [Snorkeling tour](https://seatrips-nhatrang.com/kk/snorkeling-tour-nha-trang/)
+- [Birthday on yacht](https://seatrips-nhatrang.com/kk/birthday-on-yacht-nha-trang/)
+
+## Anchors (any language)
 - [Programs](https://seatrips-nhatrang.com/#programs)
 - [FAQ](https://seatrips-nhatrang.com/#faq)
 
