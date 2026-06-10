@@ -35,21 +35,22 @@ export function generateSeoFiles(env = process.env) {
 
   const sitemapPages = [{ slug: '', priority: '1.0' }, ...SEO_PAGES.map((page) => ({ slug: page.slug, priority: '0.85' }))];
 
-  const sitemapEntries = sitemapPages
-    .map(({ slug, priority }) => {
-      const loc = pageUrl(url, 'ru', slug);
+  const sitemapEntries = SITE_LANGS.flatMap((lang) =>
+    sitemapPages.map(({ slug, priority }) => {
+      const loc = pageUrl(url, lang, slug);
       const hreflang = hreflangAlternates(url, slug)
-        .map(({ lang, href }) => `    <xhtml:link rel="alternate" hreflang="${lang}" href="${href}"/>`)
+        .map(({ lang: hrefLang, href }) => `    <xhtml:link rel="alternate" hreflang="${hrefLang}" href="${href}"/>`)
         .join('\n');
+      const langPriority = lang === 'ru' ? priority : String(Math.max(0.5, Number(priority) - 0.05));
       return `  <url>
     <loc>${loc}</loc>
     <lastmod>${lastmod}</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>${priority}</priority>
+    <priority>${langPriority}</priority>
 ${hreflang}
   </url>`;
     })
-    .join('\n');
+  ).join('\n');
 
   write(
     path.join(publicDir, 'sitemap.xml'),

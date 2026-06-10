@@ -2,6 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { buildTravelAgencyProvider } from '../lib/business-schema.js';
+import { getSeoBody } from '../lib/seo-body.js';
 import { getSiteConfig } from '../lib/site-config.js';
 import { hreflangAlternates, pagePath, pageUrl } from '../lib/seo-urls.js';
 import { SEO_PAGES } from '../lib/seo-pages.js';
@@ -100,6 +101,19 @@ function applyBodyAttrs(html, { lang, slug, defaultTab }) {
   });
 }
 
+function applySeoBody(html, slug, lang) {
+  const body = getSeoBody(slug, lang);
+  if (!body) return html;
+  let next = html.replace(
+    /(<h2 id="seo-content-title"[^>]*>)([\s\S]*?)(<\/h2>)/,
+    (_, open, _inner, close) => `${open}${escapeText(body.title)}${close}`
+  );
+  return next.replace(
+    /(<div id="seo-content-text"[^>]*>)([\s\S]*?)(<\/div>)/,
+    (_, open, _inner, close) => `${open}${body.html}${close}`
+  );
+}
+
 function prerenderVariant(baseHtml, { lang, slug, page, site }) {
   const seo = getSeo(lang, page);
   const canonicalUrl = pageUrl(site.url, lang, slug);
@@ -134,6 +148,7 @@ function prerenderVariant(baseHtml, { lang, slug, page, site }) {
     `$1${escapeText(seo.heroLead)}$3`
   );
   html = patchSchemaJson(html, seo, canonicalUrl, site);
+  html = applySeoBody(html, slug, lang);
   return html;
 }
 

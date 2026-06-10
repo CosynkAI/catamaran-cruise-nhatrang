@@ -40,12 +40,33 @@ DNS создастся автоматически (CNAME на `*.pages.dev`). П
 
 Редирект `www` → apex: `public/_redirects`.
 
-## 3. Проверка
+## 3. Проверка после деплоя
 
+**Базовые URL**
 - https://seatrips-nhatrang.com/
-- https://seatrips-nhatrang.com/sitemap.xml
+- https://seatrips-nhatrang.com/sitemap.xml (ожидается **24** `<url>`)
 - https://seatrips-nhatrang.com/api/book?type=group&lang=ru&channel=whatsapp
 - https://www.seatrips-nhatrang.com/ → редирект на apex
+
+**Локали (prerender HTML)**
+- https://seatrips-nhatrang.com/en/
+- https://seatrips-nhatrang.com/ko/
+- https://seatrips-nhatrang.com/kk/
+- https://seatrips-nhatrang.com/en/private-cruise-nha-trang/ (и остальные 4 посадочные × 3 языка)
+
+**На каждой локали в View Source**
+- `<html lang="…">` совпадает с URL
+- уникальные `<title>`, H1, блок `#seo-content`
+- `link rel="canonical"` на текущий path
+- `link rel="preload"` для woff2 (Manrope, Cormorant)
+
+**Производительность**
+- [PageSpeed Insights](https://pagespeed.web.dev/) для `/` и `/en/`
+- LCP: hero-poster; CLS: шрифты с preload
+
+**Индексация**
+- Search Console → sitemap → 24 URL
+- Запросить индексацию `/`, `/en/`, топовых посадочных
 
 ## 4. Локальный preview (опционально)
 

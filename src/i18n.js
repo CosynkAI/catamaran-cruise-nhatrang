@@ -1,4 +1,5 @@
 import { buildTravelAgencyProvider } from '@lib/business-schema.js';
+import { getSeoBody } from '@lib/seo-body.js';
 import { getBookingMessage, resolveMessageLang } from '@lib/booking-messages.js';
 import { detectLangFromPathname, pagePath, pageUrl as buildPageUrl } from '@lib/seo-urls.js';
 import { getCurrentPageSlug, getPageSeo } from '@lib/seo-pages.js';
@@ -116,6 +117,15 @@ function applyPageHero() {
   const lead = document.querySelector('.hero-lead');
   if (title) title.innerHTML = pageSeo.heroTitle;
   if (lead) lead.textContent = pageSeo.heroLead;
+}
+
+function applySeoBody() {
+  const body = getSeoBody(getCurrentPageSlug(), currentLang);
+  const title = document.getElementById('seo-content-title');
+  const text = document.getElementById('seo-content-text');
+  if (!body || !title || !text) return;
+  title.textContent = body.title;
+  text.innerHTML = body.html;
 }
 
 function updateMeta() {
@@ -264,6 +274,7 @@ export function applyTranslations({ animate = false } = {}) {
   }
 
   applyPageHero();
+  applySeoBody();
   updateMeta();
   updateJsonLd();
   updateLangButtons();
@@ -306,7 +317,7 @@ export async function initI18n(onLangChange) {
   await ensureMessengerLocale(currentLang);
 
   applyTranslations();
-  if (urlLang && !pathLang) syncLangToUrl();
+  if ((urlLang && !pathLang) || (!pathLang && currentLang !== 'ru')) syncLangToUrl();
 
   document.querySelectorAll('[data-lang]').forEach((btn) => {
     btn.addEventListener('click', async () => {

@@ -34,6 +34,31 @@ export default defineConfig(async ({ mode, command }) => {
           );
         },
       },
+      {
+        name: 'inject-font-preload',
+        apply: 'build',
+        transformIndexHtml: {
+          order: 'post',
+          handler(html, ctx) {
+            const bundle = ctx.bundle;
+            if (!bundle) return html;
+            const targets = [
+              'manrope-latin-400-normal',
+              'manrope-cyrillic-400-normal',
+              'cormorant-garamond-latin-700-normal',
+            ];
+            const preloads = Object.values(bundle)
+              .filter((item) => item.type === 'asset' && item.fileName?.endsWith('.woff2'))
+              .filter((item) => targets.some((t) => item.fileName.includes(t)))
+              .map(
+                (item) =>
+                  `    <link rel="preload" href="/${item.fileName}" as="font" type="font/woff2" crossorigin />`
+              )
+              .join('\n');
+            return html.replace('<!-- font-preloads -->', preloads);
+          },
+        },
+      },
     ],
     resolve: {
       alias: {

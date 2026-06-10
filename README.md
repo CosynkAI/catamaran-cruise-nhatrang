@@ -62,9 +62,9 @@ npm run dev
 
 | Формат | Цена |
 |--------|------|
-| Групповой | от **$69** |
-| Индивидуальный | от **$390** |
-| VIP | от **$900** |
+| Групповой | от **$80** |
+| Индивидуальный | от **$1000** |
+| Premium | от **$1500** |
 
 Где отображаются:
 - Hero — полоска `.hero-prices` (3 бейджа)
@@ -203,7 +203,7 @@ FAQ
 
 #### Sitemap и индексация
 
-`sitemap.xml` — 6 записей (ru canonical), hreflang на `/`, `/en/`, `/ko/`, `/kk/` для каждой.
+`sitemap.xml` — **24 URL** (6 страниц × 4 языка), на каждый — hreflang-альтернативы.
 
 `llms.txt` / `llms-full.txt` — все локализованные URL.
 
@@ -232,29 +232,27 @@ npm run build
 ```
 catamaran-cruise-landing/
 ├── src/
-│   ├── index.html          # разметка, секции, статический SEO (ru)
-│   ├── main.js             # конфигуратор, галерея, бронирование, page defaults
-│   ├── i18n.js             # переводы ru/en/ko/kk, meta, page-aware SEO
+│   ├── index.html          # разметка, секции, SEO-блок #seo-content
+│   ├── main.js             # конфигуратор, галерея, бронирование
+│   ├── i18n.js             # ru/en/ko/kk, path-based URL, meta, schema
 │   ├── site.js             # конфиг из env
-│   └── css/input.css       # стили (hero-prices, trust, booking-steps, …)
+│   ├── locales/            # переводы UI
+│   └── css/input.css
 ├── lib/
 │   ├── site-config.js      # URL, контакты, og
-│   ├── booking-messages.js # шаблоны WhatsApp/Telegram
-│   ├── booking-url.js
-│   └── seo-pages.js        # контент 5 посадочных × 4 языка
+│   ├── seo-pages.js        # 5 посадочных × 4 языка
+│   ├── seo-urls.js         # pagePath, hreflang, detectLang
+│   ├── seo-body.js         # SEO-тексты (главная + посадочные)
+│   ├── business-schema.js  # NAP + TravelAgency schema
+│   ├── booking-messages.js
+│   └── webmcp.js
 ├── scripts/
-│   ├── generate-seo-files.mjs    # robots, sitemap, llms, mcp
-│   ├── prerender-seo-pages.mjs   # 24 HTML (6×4 langs)
-│   ├── verify-dist.mjs           # проверка prerender
-│   ├── sync-gallery-media.mjs    # фото → public/images/media
-│   └── build-single-page.mjs     # один HTML для пересылки
-├── public/
-│   ├── videos/hero.mp4
-│   ├── gallery-manifest.json
-│   ├── sitemap.xml
-│   └── robots.txt
-├── api/book.js             # Vercel redirect в мессенджер
-└── vercel.json
+│   ├── generate-seo-files.mjs    # robots, sitemap (24 URL), llms, mcp
+│   ├── prerender-seo-pages.mjs   # 24 HTML
+│   └── verify-dist.mjs
+├── functions/api/book.js   # Cloudflare Pages — редирект в мессенджер
+├── public/                 # статика, sitemap, robots, _redirects
+└── wrangler.toml           # pages_build_output_dir = dist
 ```
 
 ## Реализовано (полный список)

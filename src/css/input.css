@@ -1202,6 +1202,22 @@
   }
 
   /* ── Sections ── */
+  .seo-content__title {
+    @apply mx-auto mb-4 max-w-3xl text-center text-xl font-semibold md:text-2xl;
+    color: var(--color-forest-shadow, #1e211e);
+    opacity: 0.88;
+  }
+
+  .seo-content__text {
+    @apply mx-auto max-w-3xl space-y-4 text-sm leading-relaxed md:text-base;
+    color: var(--color-forest-shadow, #1e211e);
+    opacity: 0.78;
+  }
+
+  .seo-content__text p {
+    margin: 0;
+  }
+
   .section-alt {
     background:
       radial-gradient(circle at 88% 18%, rgba(255, 209, 102, 0.12), transparent 25rem),
