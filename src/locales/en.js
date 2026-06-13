@@ -37,7 +37,7 @@ export default {
   "booking.3.title": "50% deposit paid",
   "booking.3.text": "Your booking is locked for your group",
   "booking.4.title": "You get instructions",
-  "booking.4.text": "Meeting point, what to bring and captain contacts",
+  "booking.4.text": "Meeting point, what to bring and manager contacts",
   "booking.5.title": "You sail",
   "booking.5.text": "We meet at Bến Tàu Du Lịch Nha Trang pier (388 Võ Thị Sáu) and head to sea",
   "trust.title": "Why guests trust us",

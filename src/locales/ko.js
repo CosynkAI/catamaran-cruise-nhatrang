@@ -37,7 +37,7 @@ export default {
   "booking.3.title": "50% 선금",
   "booking.3.text": "일행 전용으로 예약 확정",
   "booking.4.title": "안내 수령",
-  "booking.4.text": "집합 장소, 준비물, 선장 연락처",
+  "booking.4.text": "집합 장소, 준비물, 매니저 연락처",
   "booking.5.title": "출항",
   "booking.5.text": "Bến Tàu Du Lịch Nha Trang 선착장(388 Võ Thị Sáu)에서 만나 크루즈 시작",
   "trust.title": "신뢰할 수 있는 이유",
