@@ -81,6 +81,7 @@ export default {
   "form.previewLabel": "채팅 메시지:",
   "form.nextStep": "아래 WhatsApp 또는 Telegram을 누르면 이 텍스트가 채팅에 열립니다. 보내기만 누르세요",
   "form.dateRequired": "예약을 위해 투어 날짜를 선택해 주세요",
+  "form.dateUnavailable": "해당 날짜는 예약이 마감되었습니다 — 다른 날짜를 선택해 주세요",
   "form.dateOptional": "Premium은 날짜가 필수가 아닙니다 — 메시지에 원하시는 내용을 적어 주세요",
   "form.copyMessage": "메시지 복사",
   "form.copyDone": "복사되었습니다",

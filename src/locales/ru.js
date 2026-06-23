@@ -81,6 +81,7 @@ export default {
   "form.previewLabel": "Сообщение в чате:",
   "form.nextStep": "Нажмите WhatsApp или Telegram ниже — откроется чат с этим текстом, останется нажать «Отправить»",
   "form.dateRequired": "Укажите дату тура, чтобы сформировать заявку",
+  "form.dateUnavailable": "На эту дату мест нет — выберите другую дату",
   "form.dateOptional": "Для Premium дата не обязательна — опишите пожелания в сообщении",
   "form.copyMessage": "Скопировать текст",
   "form.copyDone": "Текст скопирован",

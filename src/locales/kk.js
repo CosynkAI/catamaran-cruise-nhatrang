@@ -81,6 +81,7 @@ export default {
   "form.previewLabel": "Чаттағы хабарлама:",
   "form.nextStep": "Төмендегі WhatsApp немесе Telegram батырмасын басыңыз — чат осы мәтінмен ашылады, «Жіберу» қалды",
   "form.dateRequired": "Өтінімді қалыптастыру үшін тур күнін көрсетіңіз",
+  "form.dateUnavailable": "Бұл күнге орын жоқ — басқа күнді таңдаңыз",
   "form.dateOptional": "Premium үшін күн міндетті емес — тілектеріңізді хабарламада жазыңыз",
   "form.copyMessage": "Мәтінді көшіру",
   "form.copyDone": "Көшірілді",

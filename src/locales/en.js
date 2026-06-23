@@ -81,6 +81,7 @@ export default {
   "form.previewLabel": "Message in chat:",
   "form.nextStep": "Tap WhatsApp or Telegram below — the chat opens with this text; just tap Send",
   "form.dateRequired": "Please select a tour date to continue",
+  "form.dateUnavailable": "This date is fully booked — please choose another date",
   "form.dateOptional": "For Premium, date is optional — describe your wishes in the message",
   "form.copyMessage": "Copy message",
   "form.copyDone": "Message copied",

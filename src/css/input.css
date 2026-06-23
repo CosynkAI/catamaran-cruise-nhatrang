@@ -7,8 +7,7 @@
 @import '@fontsource/cormorant-garamond/latin-700.css';
 @import '@fontsource/cormorant-garamond/cyrillic-700.css';
 @import "tailwindcss";
-@import "../../more.css";
-@import "../../more2.css";
+@import "./design-tokens.css";
 
 @layer base {
   html {

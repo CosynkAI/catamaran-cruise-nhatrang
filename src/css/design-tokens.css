@@ -1,3 +1,44 @@
+/* design-tokens.css — merged from more.css + more2.css */
+/* Tailwind v4 @theme layer */
+
+@theme {
+  /* ── Brand colors ── */
+  --color-amber-canvas: #fff6ea;
+  --color-pale-ochre: #ffffff;
+  --color-forest-shadow: #123044;
+  --color-deep-earth: #006d87;
+  --color-sunken-gold: #008fa8;
+  --color-midnight-truffle: #082433;
+  --color-coral: #ff6b45;
+  --color-sunset: #f28a3a;
+  --color-turquoise: #28c8b8;
+  --color-gold: #ffd166;
+  --color-sea-foam: #e4fbf6;
+  --color-sand: #f4dfc2;
+
+  /* ── Typography ── */
+  --font-pp-neue-montreal: 'Manrope', 'Outfit', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-display-serif: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+  --text-caption: 15px;
+  --leading-caption: 1.45;
+  --text-body: 18px;
+  --leading-body: 1.6;
+  --text-subheading: 28px;
+  --leading-subheading: 1.25;
+  --text-heading: 48px;
+  --leading-heading: 1.12;
+  --text-heading-lg: 86px;
+  --leading-heading-lg: 1.05;
+  --text-display: clamp(3rem, 9vw, 6.25rem);
+  --leading-display: 1;
+
+  /* ── Spacing & radii ── */
+  --spacing-32: 32px;
+  --radius-md: 18px;
+  --radius-full: 50px;
+}
+
+/* ── CSS custom properties (were in more2.css :root) ── */
 :root {
   --color-amber-canvas: #fff6ea;
   --color-pale-ochre: #ffffff;
