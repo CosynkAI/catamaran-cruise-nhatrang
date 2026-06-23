@@ -18,7 +18,7 @@
   --gradient-cta: linear-gradient(135deg, #ff6b45 0%, #f28a3a 60%, #ffd166 100%);
   --gradient-ocean-card: linear-gradient(145deg, #006d87 0%, #008fa8 54%, #28c8b8 100%);
   --gradient-sun-card: linear-gradient(135deg, rgba(255, 209, 102, 0.28), rgba(255, 107, 69, 0.12));
-  --font-pp-neue-montreal: 'Manrope', 'Outfit', ui-sans-serif, system-ui, sans-serif;
+  --font-pp-neue-montreal: 'Manrope', 'Outfit', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --text-caption: 15px;
   --leading-caption: 1.45;
   --text-body: 18px;

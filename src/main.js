@@ -11,12 +11,13 @@ const GALLERY_PER_PAGE = 6;
 const DATE_DISPLAY_LOCALES = { ru: 'ru-RU', en: 'en-US', ko: 'ko-KR', kk: 'ru-RU' };
 const SCROLL_RESTORE_KEY = 'site-scroll-restore';
 let highlightMessengerTimer;
+let pastHero = false;
 
 const TIME_OPTIONS = {
   group: {
     ru: [
       { value: '09:00–13:30', label: 'Дневной (09:00 – 13:30)' },
-      { value: '15:00–19:30', label: 'Закатный Sunset (15:00 – 19:30)' }
+      { value: '15:00–19:30', label: 'Закатный (15:00 – 19:30)' }
     ],
     en: [
       { value: '09:00–13:30', label: 'Day Cruise (09:00 – 13:30)' },
@@ -28,13 +29,13 @@ const TIME_OPTIONS = {
     ],
     kk: [
       { value: '09:00–13:30', label: 'Күндізгі (09:00 – 13:30)' },
-      { value: '15:00–19:30', label: 'Закат Sunset (15:00 – 19:30)' }
+      { value: '15:00–19:30', label: 'Закат (15:00 – 19:30)' }
     ]
   },
   individual: {
     ru: [
       { value: '09:00–14:00', label: 'Дневной (09:00 – 14:00)' },
-      { value: '15:00–20:00', label: 'Закатный Sunset (15:00 – 20:00)' }
+      { value: '15:00–20:00', label: 'Закатный (15:00 – 20:00)' }
     ],
     en: [
       { value: '09:00–14:00', label: 'Day Cruise (09:00 – 14:00)' },
@@ -46,7 +47,7 @@ const TIME_OPTIONS = {
     ],
     kk: [
       { value: '09:00–14:00', label: 'Күндізгі (09:00 – 14:00)' },
-      { value: '15:00–20:00', label: 'Закат Sunset (15:00 – 20:00)' }
+      { value: '15:00–20:00', label: 'Закат (15:00 – 20:00)' }
     ]
   }
 };
@@ -150,12 +151,21 @@ function scrollToActiveMessenger() {
   highlightActiveMessenger();
 }
 
+function updateFloatingWhatsapp() {
+  const el = document.getElementById('floating-whatsapp');
+  if (!el) return;
+  const show = pastHero && !isBookingReady() && isMobileViewport();
+  el.classList.toggle('is-visible', show);
+  el.toggleAttribute('hidden', !show);
+}
+
 function updateStickyCta() {
   const browse = document.getElementById('sticky-cta-browse');
   const ready = document.getElementById('sticky-cta-ready');
   const readyState = isBookingReady();
   browse?.toggleAttribute('hidden', readyState);
   ready?.toggleAttribute('hidden', !readyState);
+  updateFloatingWhatsapp();
 }
 
 function hapticTap() {
@@ -635,7 +645,11 @@ async function initGalleryCarousel() {
   const pages = chunkGalleryItems(items, GALLERY_PER_PAGE);
   let pageIndex = 0;
 
-  const altText = (globalIndex) => `${t('gallery.altPhoto')} ${globalIndex + 1}`;
+  const altText = (globalIndex) => {
+    const key = `gallery.alt${(globalIndex % 10) + 1}`;
+    const label = t(key);
+    return label === key ? `${t('gallery.altPhoto')} ${globalIndex + 1}` : label;
+  };
 
   let syncDots = () => {};
 
@@ -808,6 +822,7 @@ function closeMobileMenu() {
   document.body.classList.remove('menu-open');
   document.getElementById('lang-dropdown')?.classList.remove('is-open');
   document.getElementById('lang-menu')?.setAttribute('hidden', '');
+  updateFloatingWhatsapp();
 }
 
 function initMobileNav() {
@@ -819,6 +834,7 @@ function initMobileNav() {
     menu?.classList.add('is-open');
     toggle?.setAttribute('aria-expanded', 'true');
     document.body.classList.add('menu-open');
+    updateFloatingWhatsapp();
   };
 
   toggle?.addEventListener('click', () => {
@@ -837,11 +853,15 @@ function initStickyCta() {
 
   const observer = new IntersectionObserver(
     ([entry]) => {
-      bar.classList.toggle('is-visible', !entry.isIntersecting);
+      pastHero = !entry.isIntersecting;
+      bar.classList.toggle('is-visible', pastHero);
+      updateFloatingWhatsapp();
     },
     { threshold: 0 }
   );
   observer.observe(hero);
+
+  window.addEventListener('resize', updateFloatingWhatsapp, { passive: true });
 }
 
 function shouldLoadHeroVideo() {
@@ -992,6 +1012,8 @@ function initWhenVisible(sectionId, initFn) {
 
 function registerServiceWorker() {
   if (!('serviceWorker' in navigator)) return;
+  const { hostname } = window.location;
+  if (hostname === 'localhost' || hostname === '127.0.0.1') return;
   navigator.serviceWorker.register('/sw.js').catch(() => {});
 }
 

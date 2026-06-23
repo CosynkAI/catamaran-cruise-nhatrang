@@ -39,7 +39,7 @@ const MAP_LANG = { ru: 'ru', en: 'en', ko: 'ko', kk: 'ru' };
 
 function getMapEmbed(lang) {
   const hl = MAP_LANG[lang] ?? 'ru';
-  return `https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d778.77!2d109.1043328!3d12.2620948!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31706128699425c7%3A0xe6e90d3f6adbeb06!2zQsOqbiBUw6AuIER1IExp4bujaCBOaGEgVHJhbmc!5e0!3m2!1s${hl}!2svn!4v1749480000000`;
+  return `https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.387!2d109.196731!3d12.238795!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31706128699425c7%3A0xe6e90d3f6adbeb06!2zQsOqbiBUw6AuIER1IExp4bujaCBOaGEgVHJhbmc!5e0!3m2!1s${hl}!2svn!4v1749480000000`;
 }
 
 export function t(key) {

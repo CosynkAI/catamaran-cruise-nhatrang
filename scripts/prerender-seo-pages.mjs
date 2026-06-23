@@ -6,6 +6,7 @@ import { getSeoBody } from '../lib/seo-body.js';
 import { getSiteConfig } from '../lib/site-config.js';
 import { hreflangAlternates, pagePath, pageUrl } from '../lib/seo-urls.js';
 import { SEO_PAGES } from '../lib/seo-pages.js';
+import { REVIEWS_I18N } from '../lib/reviews-i18n.js';
 import ru from '../src/locales/ru.js';
 import en from '../src/locales/en.js';
 import ko from '../src/locales/ko.js';
@@ -30,11 +31,65 @@ function escapeText(value) {
 
 function setMeta(html, selector, content) {
   const re = new RegExp(`(${selector} content=")[^"]*(")`, 'i');
-  return html.replace(re, `$1${escapeAttr(content)}$2`);
+  return html.replace(re, (_, open, close) => `${open}${escapeAttr(content)}${close}`);
 }
 
 function setTagText(html, pattern, value) {
   return html.replace(pattern, value);
+}
+
+function buildLocaleDict(lang) {
+  const base = HOME_LOCALES[lang];
+  const reviews = REVIEWS_I18N[lang] ?? REVIEWS_I18N.ru;
+  return { ...base, ...reviews };
+}
+
+function applyDataI18n(html, dict) {
+  let next = html.replace(
+    /(<([a-z][a-z0-9]*)[^>]*\sdata-i18n="([^"]+)"[^>]*>)([^<]*)(<\/\2>)/gi,
+    (match, open, _tag, key, _content, close) => {
+      const val = dict[key];
+      if (val === undefined) return match;
+      return `${open}${escapeText(val)}${close}`;
+    }
+  );
+
+  next = next.replace(
+    /(<([a-z][a-z0-9]*)[^>]*\sdata-i18n-html="([^"]+)"[^>]*>)([\s\S]*?)(<\/\2>)/gi,
+    (match, open, _tag, key, _content, close) => {
+      const val = dict[key];
+      if (val === undefined) return match;
+      return `${open}${val}${close}`;
+    }
+  );
+
+  next = next.replace(
+    /(<[^>]*\sdata-i18n-aria="([^"]+)"[^>]*)(>)/gi,
+    (match, open, key, close) => {
+      const val = dict[key];
+      if (val === undefined) return match;
+      const cleaned = open.replace(/\saria-label="[^"]*"/gi, '');
+      return `${cleaned} aria-label="${escapeAttr(val)}"${close}`;
+    }
+  );
+
+  next = next.replace(
+    /(<[^>]*\sdata-i18n-title="([^"]+)"[^>]*)(>)/gi,
+    (match, open, key, close) => {
+      const val = dict[key];
+      if (val === undefined) return match;
+      const cleaned = open.replace(/\stitle="[^"]*"/gi, '');
+      return `${cleaned} title="${escapeAttr(val)}"${close}`;
+    }
+  );
+
+  return next;
+}
+
+function applyMapEmbed(html, lang) {
+  const hl = lang === 'kk' ? 'ru' : lang;
+  const embed = `https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.387!2d109.196731!3d12.238795!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31706128699425c7%3A0xe6e90d3f6adbeb06!2zQsOqbiBUw6AuIER1IExp4bujaCBOaGEgVHJhbmc!5e0!3m2!1s${hl}!2svn!4v1749480000000`;
+  return html.replace(/data-src="https:\/\/www\.google\.com\/maps\/embed[^"]*"/, `data-src="${embed}"`);
 }
 
 function homeSeo(lang) {
@@ -149,6 +204,8 @@ function prerenderVariant(baseHtml, { lang, slug, page, site }) {
   );
   html = patchSchemaJson(html, seo, canonicalUrl, site);
   html = applySeoBody(html, slug, lang);
+  html = applyDataI18n(html, buildLocaleDict(lang));
+  html = applyMapEmbed(html, lang);
   return html;
 }
 

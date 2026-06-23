@@ -115,11 +115,11 @@
     </svg>
 
     <header class="site-header sticky top-0 z-50 flex min-w-0 items-center justify-between gap-2 py-3 md:gap-3 md:px-8">
-      <a href="#" class="logo-text min-w-0 shrink truncate" data-i18n="logo">Круизы · Нячанг</a>
+      <a href="#hero" class="logo-text min-w-0 shrink truncate" data-scroll="hero" data-i18n="logo">Круизы · Нячанг</a>
       <nav class="hidden items-center gap-1 md:flex" data-i18n-aria="nav.main" aria-label="Основная навигация">
         <a class="nav-link" href="#programs" data-i18n="nav.programs">Программы</a>
         <a class="nav-link" href="#gallery" data-i18n="nav.gallery">Галерея</a>
-        <a class="nav-link" href="#faq">FAQ</a>
+        <a class="nav-link" href="#faq" data-i18n="nav.faq">FAQ</a>
       </nav>
       <div class="flex items-center gap-2">
         <div class="lang-dropdown" id="lang-dropdown">
@@ -144,7 +144,7 @@
       <a class="nav-link text-lg" href="#gallery" data-i18n="nav.gallery">Галерея</a>
       <a class="nav-link text-lg" href="#booking-form" data-scroll="booking-form" data-i18n="nav.booking">Бронирование</a>
       <a class="nav-link text-lg" href="#contacts" data-i18n="nav.contacts">Контакты</a>
-      <a class="nav-link text-lg" href="#faq">FAQ</a>
+      <a class="nav-link text-lg" href="#faq" data-i18n="nav.faq">FAQ</a>
       <a class="btn-cta mt-8 w-full" href="#configurator" data-scroll="configurator" data-i18n="nav.book">Забронировать</a>
     </nav>
 
@@ -167,7 +167,7 @@
             <span data-i18n="hero.dayTour">дневной тур</span>
           </div>
           <div class="hero-highlight">
-            <strong>Sunset</strong>
+            <strong data-i18n="hero.sunsetBadge">Закат</strong>
             <span data-i18n="hero.sunset">закат в море</span>
           </div>
           <div class="hero-highlight">
@@ -213,7 +213,7 @@
           </div>
           <div class="mt-5 flex flex-wrap gap-2">
             <span class="time-chip">09:00 – 13:30</span>
-            <span class="time-chip time-chip--sunset">15:00 – 19:30 Sunset</span>
+            <span class="time-chip time-chip--sunset" data-i18n="programs.groupSunset">15:00 – 19:30 Закат</span>
           </div>
           <ul class="mt-6 space-y-3">
             <li class="feature-item"><span class="feature-emoji" aria-hidden="true">🌊</span><span data-i18n="group.f1">Южные острова, снорклинг, SUP и рыбалка</span></li>
@@ -236,7 +236,7 @@
           </div>
           <div class="mt-5 flex flex-wrap gap-2">
             <span class="time-chip">09:00 – 14:00</span>
-            <span class="time-chip time-chip--sunset">15:00 – 20:00 Sunset</span>
+            <span class="time-chip time-chip--sunset" data-i18n="programs.privateSunset">15:00 – 20:00 Закат</span>
           </div>
           <ul class="mt-6 space-y-3">
             <li class="feature-item"><span class="feature-emoji" aria-hidden="true">🚐</span><span data-i18n="private.f1">Индивидуальный трансфер до катамарана</span></li>
@@ -406,7 +406,7 @@
           </div>
           <button type="button" class="gallery-carousel__nav gallery-carousel__nav--next" id="gallery-next" aria-controls="gallery-viewport" data-i18n-aria="gallery.next">›</button>
         </div>
-        <div class="carousel-dots" id="gallery-dots" role="tablist" aria-label="Gallery pages"></div>
+        <div class="carousel-dots" id="gallery-dots" role="tablist" data-i18n-aria="gallery.pagesAria" aria-label="Страницы галереи"></div>
         <p class="gallery-carousel__counter" id="gallery-counter"></p>
         <p class="gallery-carousel__hint" data-i18n="gallery.swipeHint">Листайте влево и вправо</p>
       </div>
@@ -423,207 +423,207 @@
           <div class="review-card__head">
             <span class="review-card__flag" aria-hidden="true">🇷🇺</span>
             <div>
-              <p class="review-card__name" data-i18n="reviews.r1.name"></p>
-              <p class="review-stars" aria-label="5 stars">★★★★★</p>
+              <p class="review-card__name" data-i18n="reviews.r1.name">Настя</p>
+              <p class="review-stars" data-i18n-aria="reviews.starsAria" aria-label="5 звёзд">★★★★★</p>
             </div>
           </div>
-          <p class="review-card__text" data-i18n="reviews.r1.text"></p>
+          <p class="review-card__text" data-i18n="reviews.r1.text">Поездка нам очень понравилась. Всё было на высшем уровне, отличная организация и приятный экипаж. Благодаря нашей сопровождающей Полине, поездка получилась очень интересной и весёлой.</p>
         </article>
         <article class="review-card">
           <div class="review-card__head">
             <span class="review-card__flag" aria-hidden="true">🇷🇺</span>
             <div>
-              <p class="review-card__name" data-i18n="reviews.r2.name"></p>
-              <p class="review-stars" aria-label="5 stars">★★★★★</p>
+              <p class="review-card__name" data-i18n="reviews.r2.name">Гость 1</p>
+              <p class="review-stars" data-i18n-aria="reviews.starsAria" aria-label="5 звёзд">★★★★★</p>
             </div>
           </div>
-          <p class="review-card__text" data-i18n="reviews.r2.text"></p>
+          <p class="review-card__text" data-i18n="reviews.r2.text">Были на морском круизе 06.06.2026 — нам очень всё понравилось, родители были в приятном шоке и от моря, и от островов. Замечательная гид Полина рассказывала много интересного, всем помогала, возилась со всеми — большая молодец. Спасибо большое!</p>
         </article>
         <article class="review-card">
           <div class="review-card__head">
             <span class="review-card__flag" aria-hidden="true">🇷🇺</span>
             <div>
-              <p class="review-card__name" data-i18n="reviews.r3.name"></p>
-              <p class="review-stars" aria-label="5 stars">★★★★★</p>
+              <p class="review-card__name" data-i18n="reviews.r3.name">Гость 2</p>
+              <p class="review-stars" data-i18n-aria="reviews.starsAria" aria-label="5 звёзд">★★★★★</p>
             </div>
           </div>
-          <p class="review-card__text" data-i18n="reviews.r3.text"></p>
+          <p class="review-card__text" data-i18n="reviews.r3.text">Экскурсия «морская прогулка» прошла отлично. Гид Полина очень классная! Очень интересные факты рассказала, отвечала на интересующие вопросы! Спасибо!</p>
         </article>
         <article class="review-card">
           <div class="review-card__head">
             <span class="review-card__flag" aria-hidden="true">🇷🇺</span>
             <div>
-              <p class="review-card__name" data-i18n="reviews.r4.name"></p>
-              <p class="review-stars" aria-label="5 stars">★★★★★</p>
+              <p class="review-card__name" data-i18n="reviews.r4.name">Гость 3</p>
+              <p class="review-stars" data-i18n-aria="reviews.starsAria" aria-label="5 звёзд">★★★★★</p>
             </div>
           </div>
-          <p class="review-card__text" data-i18n="reviews.r4.text"></p>
+          <p class="review-card__text" data-i18n="reviews.r4.text">Сегодня были на прогулке нашей весёлой компанией! Впечатления крутые! Всем рекомендуем! Отдельное спасибо Анастасии!</p>
         </article>
         <article class="review-card">
           <div class="review-card__head">
             <span class="review-card__flag" aria-hidden="true">🇷🇺</span>
             <div>
-              <p class="review-card__name" data-i18n="reviews.r5.name"></p>
-              <p class="review-stars" aria-label="5 stars">★★★★★</p>
+              <p class="review-card__name" data-i18n="reviews.r5.name">Гость 4</p>
+              <p class="review-stars" data-i18n-aria="reviews.starsAria" aria-label="5 звёзд">★★★★★</p>
             </div>
           </div>
-          <p class="review-card__text" data-i18n="reviews.r5.text"></p>
+          <p class="review-card__text" data-i18n="reviews.r5.text">Если вы хотите потрясающе и индивидуально провести отдых на яхте, где включены и еда, и алкоголь с развлечениями — вам точно сюда. Команда полностью работает под вас, гид расскажет всё о местном колорите, хорошая музыка, красивые виды и отличный ужин! Очень советуем, русским 100%!</p>
         </article>
         <article class="review-card">
           <div class="review-card__head">
             <span class="review-card__flag" aria-hidden="true">🇷🇺</span>
             <div>
-              <p class="review-card__name" data-i18n="reviews.r6.name"></p>
-              <p class="review-stars" aria-label="5 stars">★★★★★</p>
+              <p class="review-card__name" data-i18n="reviews.r6.name">Гость 5</p>
+              <p class="review-stars" data-i18n-aria="reviews.starsAria" aria-label="5 звёзд">★★★★★</p>
             </div>
           </div>
-          <p class="review-card__text" data-i18n="reviews.r6.text"></p>
+          <p class="review-card__text" data-i18n="reviews.r6.text">Искал возможность на день рождения поучаствовать в морской прогулке. Нашёл в Instagram этих ребят — свободных мест не оказалось, но организаторы вернулись с обратной связью на следующее утро и сообщили, что люди согласились уступить дату. Супер стол, супер выбор напитков, супер программа — всё в достатке, очень красиво и классные фотографии. Гиду Анастасии отдельное спасибо!</p>
         </article>
         <article class="review-card">
           <div class="review-card__head">
             <span class="review-card__flag" aria-hidden="true">🇷🇺</span>
             <div>
-              <p class="review-card__name" data-i18n="reviews.r7.name"></p>
-              <p class="review-stars" aria-label="5 stars">★★★★★</p>
+              <p class="review-card__name" data-i18n="reviews.r7.name">Гость 6</p>
+              <p class="review-stars" data-i18n-aria="reviews.starsAria" aria-label="5 звёзд">★★★★★</p>
             </div>
           </div>
-          <p class="review-card__text" data-i18n="reviews.r7.text"></p>
+          <p class="review-card__text" data-i18n="reviews.r7.text">Анастасия — офигенная! Очень внимательная и приятная.</p>
         </article>
         <article class="review-card">
           <div class="review-card__head">
             <span class="review-card__flag" aria-hidden="true">🇷🇺</span>
             <div>
-              <p class="review-card__name" data-i18n="reviews.r8.name"></p>
-              <p class="review-stars" aria-label="5 stars">★★★★★</p>
+              <p class="review-card__name" data-i18n="reviews.r8.name">Гость 7</p>
+              <p class="review-stars" data-i18n-aria="reviews.starsAria" aria-label="5 звёзд">★★★★★</p>
             </div>
           </div>
-          <p class="review-card__text" data-i18n="reviews.r8.text"></p>
+          <p class="review-card__text" data-i18n="reviews.r8.text">Всё замечательно! Катамаран, еда, команда — всё отлично! Очень рекомендую!</p>
         </article>
         <article class="review-card">
           <div class="review-card__head">
             <span class="review-card__flag" aria-hidden="true">🇷🇺</span>
             <div>
-              <p class="review-card__name" data-i18n="reviews.r9.name"></p>
-              <p class="review-stars" aria-label="5 stars">★★★★★</p>
+              <p class="review-card__name" data-i18n="reviews.r9.name">Гость 8</p>
+              <p class="review-stars" data-i18n-aria="reviews.starsAria" aria-label="5 звёзд">★★★★★</p>
             </div>
           </div>
-          <p class="review-card__text" data-i18n="reviews.r9.text"></p>
+          <p class="review-card__text" data-i18n="reviews.r9.text">Отличная экскурсия, гид Полина — очаровательна! Катамаран чистенький, приятно поплавали, остановки на снорклинг, рыбалку и купание. Экипаж приготовил вкусный обед. Остались довольны!</p>
         </article>
         <article class="review-card">
           <div class="review-card__head">
             <span class="review-card__flag" aria-hidden="true">🇷🇺</span>
             <div>
-              <p class="review-card__name" data-i18n="reviews.r10.name"></p>
-              <p class="review-stars" aria-label="5 stars">★★★★★</p>
+              <p class="review-card__name" data-i18n="reviews.r10.name">Гость 9</p>
+              <p class="review-stars" data-i18n-aria="reviews.starsAria" aria-label="5 звёзд">★★★★★</p>
             </div>
           </div>
-          <p class="review-card__text" data-i18n="reviews.r10.text"></p>
+          <p class="review-card__text" data-i18n="reviews.r10.text">Очень понравилась данная экскурсия! Гид Полина — очень позитивная девушка, подробно рассказала о Вьетнаме! Останавливались на купание, затем в рыбацкой деревне можно выбрать любую живность и тебе тут же её приготовят! Очень вкусно! Спасибо за столь замечательную экскурсию!</p>
         </article>
         <article class="review-card">
           <div class="review-card__head">
             <span class="review-card__flag" aria-hidden="true">🇷🇺</span>
             <div>
-              <p class="review-card__name" data-i18n="reviews.r11.name"></p>
-              <p class="review-stars" aria-label="5 stars">★★★★★</p>
+              <p class="review-card__name" data-i18n="reviews.r11.name">Гость 10</p>
+              <p class="review-stars" data-i18n-aria="reviews.starsAria" aria-label="5 звёзд">★★★★★</p>
             </div>
           </div>
-          <p class="review-card__text" data-i18n="reviews.r11.text"></p>
+          <p class="review-card__text" data-i18n="reviews.r11.text">Благодарю Анастасию за замечательную экскурсию на катамаранах — мы порыбачили и окунулись в море посмотреть рыбёшек, также заехали в рыбацкую деревню! Сервис на высшем уровне! Буду снова и снова возвращаться к вам.</p>
         </article>
         <article class="review-card">
           <div class="review-card__head">
             <span class="review-card__flag" aria-hidden="true">🇷🇺</span>
             <div>
-              <p class="review-card__name" data-i18n="reviews.r12.name"></p>
-              <p class="review-stars" aria-label="5 stars">★★★★★</p>
+              <p class="review-card__name" data-i18n="reviews.r12.name">Гость 11</p>
+              <p class="review-stars" data-i18n-aria="reviews.starsAria" aria-label="5 звёзд">★★★★★</p>
             </div>
           </div>
-          <p class="review-card__text" data-i18n="reviews.r12.text"></p>
+          <p class="review-card__text" data-i18n="reviews.r12.text">Брали прогулку на катамаране с 15:00 до 19:00. Понравилась атмосфера. Купались, загорали, рыбачили. Поймали рыбу и каракатиц. Анастасия очень располагает к себе. Всё рассказала, показала. Рекомендую.</p>
         </article>
         <article class="review-card">
           <div class="review-card__head">
             <span class="review-card__flag" aria-hidden="true">🇷🇺</span>
             <div>
-              <p class="review-card__name" data-i18n="reviews.r13.name"></p>
-              <p class="review-stars" aria-label="5 stars">★★★★★</p>
+              <p class="review-card__name" data-i18n="reviews.r13.name">Гость 12, Н. Новгород</p>
+              <p class="review-stars" data-i18n-aria="reviews.starsAria" aria-label="5 звёзд">★★★★★</p>
             </div>
           </div>
-          <p class="review-card__text" data-i18n="reviews.r13.text"></p>
+          <p class="review-card__text" data-i18n="reviews.r13.text">Очень понравилась морская прогулка! Спасибо Полине за профессионализм и прекрасную экскурсию. С любовью из России, Нижний Новгород.</p>
         </article>
         <article class="review-card">
           <div class="review-card__head">
             <span class="review-card__flag" aria-hidden="true">🇷🇺</span>
             <div>
-              <p class="review-card__name" data-i18n="reviews.r14.name"></p>
-              <p class="review-stars" aria-label="5 stars">★★★★★</p>
+              <p class="review-card__name" data-i18n="reviews.r14.name">Гость 13</p>
+              <p class="review-stars" data-i18n-aria="reviews.starsAria" aria-label="5 звёзд">★★★★★</p>
             </div>
           </div>
-          <p class="review-card__text" data-i18n="reviews.r14.text"></p>
+          <p class="review-card__text" data-i18n="reviews.r14.text">Это была лучшая прогулка на яхте! Большое спасибо экипажу и отдельное спасибо Анастасии! Вы сделали не только наш день, но и наш отпуск! В восторге всей семьёй! Вернёмся обязательно и снова поедем с вами кататься!</p>
         </article>
         <article class="review-card">
           <div class="review-card__head">
             <span class="review-card__flag" aria-hidden="true">🇷🇺</span>
             <div>
-              <p class="review-card__name" data-i18n="reviews.r15.name"></p>
-              <p class="review-stars" aria-label="5 stars">★★★★★</p>
+              <p class="review-card__name" data-i18n="reviews.r15.name">Гость 14</p>
+              <p class="review-stars" data-i18n-aria="reviews.starsAria" aria-label="5 звёзд">★★★★★</p>
             </div>
           </div>
-          <p class="review-card__text" data-i18n="reviews.r15.text"></p>
+          <p class="review-card__text" data-i18n="reviews.r15.text">Недавно побывали на прогулке на катамаране — остались в полном восторге! Чистый воздух, красивые виды и спокойная атмосфера на воде. Катамаран удобный и просторный. Отдельно хочется отметить гида Полину — очень внимательная, дружелюбная и увлечённая. Благодаря ей поездка получилась не только красивой, но и познавательной. Обязательно порекомендуем друзьям!</p>
         </article>
         <article class="review-card">
           <div class="review-card__head">
             <span class="review-card__flag" aria-hidden="true">🇷🇺</span>
             <div>
-              <p class="review-card__name" data-i18n="reviews.r16.name"></p>
-              <p class="review-stars" aria-label="5 stars">★★★★★</p>
+              <p class="review-card__name" data-i18n="reviews.r16.name">Гость 15</p>
+              <p class="review-stars" data-i18n-aria="reviews.starsAria" aria-label="5 звёзд">★★★★★</p>
             </div>
           </div>
-          <p class="review-card__text" data-i18n="reviews.r16.text"></p>
+          <p class="review-card__text" data-i18n="reviews.r16.text">Хочу выразить огромную благодарность за эту экскурсию — она была просто лучшей! Прекрасная атмосфера, всё организовано легко и комфортно. Отдельное спасибо Анастасии за создание такой замечательной программы. Трансфер был удобный, мы даже прыгали с яхты — эмоции невероятные! Ужин был безумно вкусный. Даже несмотря на дождливую погоду, всё прошло идеально. Спасибо большое!</p>
         </article>
         <article class="review-card">
           <div class="review-card__head">
             <span class="review-card__flag" aria-hidden="true">🇷🇺</span>
             <div>
-              <p class="review-card__name" data-i18n="reviews.r17.name"></p>
-              <p class="review-stars" aria-label="5 stars">★★★★★</p>
+              <p class="review-card__name" data-i18n="reviews.r17.name">Гость 16</p>
+              <p class="review-stars" data-i18n-aria="reviews.starsAria" aria-label="5 звёзд">★★★★★</p>
             </div>
           </div>
-          <p class="review-card__text" data-i18n="reviews.r17.text"></p>
+          <p class="review-card__text" data-i18n="reviews.r17.text">Это незабываемое путешествие! Море эмоций! Вкусный обед! Огромное спасибо гиду Анастасии за хорошее настроение и позитив! Рекомендую!</p>
         </article>
         <article class="review-card">
           <div class="review-card__head">
             <span class="review-card__flag" aria-hidden="true">🇷🇺</span>
             <div>
-              <p class="review-card__name" data-i18n="reviews.r18.name"></p>
-              <p class="review-stars" aria-label="5 stars">★★★★★</p>
+              <p class="review-card__name" data-i18n="reviews.r18.name">Гость 17</p>
+              <p class="review-stars" data-i18n-aria="reviews.starsAria" aria-label="5 звёзд">★★★★★</p>
             </div>
           </div>
-          <p class="review-card__text" data-i18n="reviews.r18.text"></p>
+          <p class="review-card__text" data-i18n="reviews.r18.text">Поездка — супер. Гид Анастасия — настоящий мастер своего дела. Дети в восторге!</p>
         </article>
         <article class="review-card">
           <div class="review-card__head">
             <span class="review-card__flag" aria-hidden="true">🇷🇺</span>
             <div>
-              <p class="review-card__name" data-i18n="reviews.r19.name"></p>
-              <p class="review-stars" aria-label="5 stars">★★★★★</p>
+              <p class="review-card__name" data-i18n="reviews.r19.name">Гость 18</p>
+              <p class="review-stars" data-i18n-aria="reviews.starsAria" aria-label="5 звёзд">★★★★★</p>
             </div>
           </div>
-          <p class="review-card__text" data-i18n="reviews.r19.text"></p>
+          <p class="review-card__text" data-i18n="reviews.r19.text">Прогулка на катамаране превзошла все ожидания! Вас возят на неплохом катамаране по красивым местам, вкусно кормят и поят. Наш гид Анастасия — невероятно приятная и внимательная. Фотограф Александр сделал шикарные снимки. Спасибо вьетнамской команде и капитану за этот незабываемый день!</p>
         </article>
         <article class="review-card">
           <div class="review-card__head">
             <span class="review-card__flag" aria-hidden="true">🇷🇺</span>
             <div>
-              <p class="review-card__name" data-i18n="reviews.r20.name"></p>
-              <p class="review-stars" aria-label="5 stars">★★★★★</p>
+              <p class="review-card__name" data-i18n="reviews.r20.name">Гость 19</p>
+              <p class="review-stars" data-i18n-aria="reviews.starsAria" aria-label="5 звёзд">★★★★★</p>
             </div>
           </div>
-          <p class="review-card__text" data-i18n="reviews.r20.text"></p>
+          <p class="review-card__text" data-i18n="reviews.r20.text">Сегодня состоялась водная прогулка — прошло всё на высшем уровне, экипаж отличный, Полина — гид, просто замечательная. Кухня классная, остались с хорошими впечатлениями и настроением, всем рекомендую!</p>
         </article>
             </div>
           </div>
           <button type="button" class="reviews-carousel__nav reviews-carousel__nav--next" id="reviews-next" aria-controls="reviews-viewport" data-i18n-aria="gallery.next">›</button>
         </div>
-        <div class="carousel-dots" id="reviews-dots" role="tablist" aria-label="Review pages"></div>
+        <div class="carousel-dots" id="reviews-dots" role="tablist" data-i18n-aria="reviews.pagesAria" aria-label="Страницы отзывов"></div>
         <p class="reviews-carousel__counter" id="reviews-counter"></p>
         <p class="reviews-carousel__hint" data-i18n="gallery.swipeHint">Листайте влево и вправо</p>
       </div>
@@ -745,7 +745,7 @@
         </p>
         <div class="map-wrap" id="map-wrap">
           <button type="button" class="map-placeholder" id="map-load-btn" data-i18n="footer.mapLoad">Показать карту</button>
-          <iframe id="map-frame" class="map-frame--hidden" data-i18n-title="footer.mapTitle" title="Карта — Bến Tàu Du Lịch Nha Trang" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="about:blank" data-src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d778.77!2d109.1043328!3d12.2620948!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31706128699425c7%3A0xe6e90d3f6adbeb06!2zQsOqbiBUw6AuIER1IExp4bujaCBOaGEgVHJhbmc!5e0!3m2!1sru!2svn!4v1749480000000" allowfullscreen></iframe>
+          <iframe id="map-frame" class="map-frame--hidden" data-i18n-title="footer.mapTitle" title="Карта — Bến Tàu Du Lịch Nha Trang" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="about:blank" data-src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.387!2d109.196731!3d12.238795!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31706128699425c7%3A0xe6e90d3f6adbeb06!2zQsOqbiBUw6AuIER1IExp4bujaCBOaGEgVHJhbmc!5e0!3m2!1sru!2svn!4v1749480000000" allowfullscreen></iframe>
         </div>
         <div class="messenger-row mt-8 max-w-lg">
           <a class="btn-messenger" data-messenger data-messenger-type="group" data-channel="whatsapp"><svg class="btn-messenger__icon" aria-hidden="true"><use href="#icon-whatsapp"/></svg>WhatsApp</a>
@@ -755,6 +755,19 @@
         <p class="footer-credit mt-2 text-sm font-light opacity-50" data-i18n-html="footer.credit">Сайт сделан руками <a class="footer-credit__link" href="https://t.me/eviniko" target="_blank" rel="noopener noreferrer">@eviniko</a></p>
       </div>
     </footer>
+
+    <a
+      id="floating-whatsapp"
+      class="floating-whatsapp"
+      href="#"
+      data-messenger
+      data-channel="whatsapp"
+      data-i18n-aria="floating.whatsapp"
+      aria-label="Написать в WhatsApp"
+      hidden
+    >
+      <svg class="floating-whatsapp__icon" aria-hidden="true"><use href="#icon-whatsapp"/></svg>
+    </a>
 
     <div id="sticky-cta" class="sticky-cta">
       <div class="sticky-cta__browse" id="sticky-cta-browse">

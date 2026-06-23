@@ -11,6 +11,10 @@ const expected = langs.flatMap((lang) =>
   slugs.map((slug) => path.join(dist, pagePath(lang, slug).replace(/^\//, ''), 'index.html'))
 );
 
+const META_DESC_MIN = 120;
+const META_DESC_MAX = 160;
+const META_DESC_RE = /<meta\s+name="description"\s+content="([^"]*)"/i;
+
 const missing = expected.filter((file) => !fs.existsSync(file));
 
 if (missing.length) {
@@ -19,4 +23,25 @@ if (missing.length) {
   process.exit(1);
 }
 
-console.log(`[verify-dist] ok: ${expected.length} prerendered pages`);
+const badMeta = [];
+for (const file of expected) {
+  const html = fs.readFileSync(file, 'utf8');
+  const match = html.match(META_DESC_RE);
+  const rel = path.relative(dist, file);
+  if (!match) {
+    badMeta.push({ rel, reason: 'missing meta description' });
+    continue;
+  }
+  const len = match[1].length;
+  if (len < META_DESC_MIN || len > META_DESC_MAX) {
+    badMeta.push({ rel, reason: `description length ${len} (expected ${META_DESC_MIN}–${META_DESC_MAX})` });
+  }
+}
+
+if (badMeta.length) {
+  console.error('[verify-dist] invalid meta descriptions:');
+  badMeta.forEach(({ rel, reason }) => console.error(`  - ${rel}: ${reason}`));
+  process.exit(1);
+}
+
+console.log(`[verify-dist] ok: ${expected.length} prerendered pages, meta descriptions valid`);
