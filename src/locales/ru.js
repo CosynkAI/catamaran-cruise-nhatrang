@@ -152,5 +152,9 @@ export default {
   "contacts.subtitle": "Наши организаторы круизов ответят на все вопросы и помогут забронировать тур",
   "contacts.role.anastasia": "Организатор круизов",
   "contacts.role.polina": "Организатор круизов",
+  "contacts.name.anastasia": "Анастасия",
+  "contacts.name.polina": "Полина",
+  "contacts.initial.anastasia": "А",
+  "contacts.initial.polina": "П",
   "contacts.direct": "Свяжитесь напрямую для быстрого бронирования и консультации по деталям.",
 };

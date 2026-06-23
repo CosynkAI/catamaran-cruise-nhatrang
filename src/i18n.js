@@ -1,6 +1,7 @@
 import { buildTravelAgencyProvider } from '@lib/business-schema.js';
 import { getSeoBody } from '@lib/seo-body.js';
 import { getBookingMessage, resolveMessageLang } from '@lib/booking-messages.js';
+import { REVIEWS_I18N } from '@lib/reviews-i18n.js';
 import { detectLangFromPathname, pagePath, pageUrl as buildPageUrl } from '@lib/seo-urls.js';
 import { getCurrentPageSlug, getPageSeo } from '@lib/seo-pages.js';
 import { SITE } from './site.js';
@@ -26,7 +27,10 @@ export async function ensureLocale(lang) {
   if (!SUPPORTED_LANGS.has(lang)) return loadedLocales.ru ?? {};
   if (!loadedLocales[lang]) {
     const mod = await localeLoaders[lang]();
-    loadedLocales[lang] = mod.default;
+    loadedLocales[lang] = {
+      ...mod.default,
+      ...(REVIEWS_I18N[lang] ?? REVIEWS_I18N.ru),
+    };
   }
   return loadedLocales[lang];
 }

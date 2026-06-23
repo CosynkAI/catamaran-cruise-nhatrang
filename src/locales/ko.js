@@ -151,5 +151,9 @@ export default {
   "contacts.subtitle": "크루즈 담당자가 귀하의 모든 질문에 답변하고 예약을 도와드립니다",
   "contacts.role.anastasia": "크루즈 플래너",
   "contacts.role.polina": "크루즈 플래너",
+  "contacts.name.anastasia": "Anastasia",
+  "contacts.name.polina": "Polina",
+  "contacts.initial.anastasia": "A",
+  "contacts.initial.polina": "P",
   "contacts.direct": "빠른 예약과 상담을 위해 직접 연락해 주세요.",
 };

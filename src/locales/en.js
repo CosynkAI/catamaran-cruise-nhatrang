@@ -152,5 +152,9 @@ export default {
   "contacts.subtitle": "Our cruise organizers will answer all your questions and help you book a tour",
   "contacts.role.anastasia": "Cruise Organizer",
   "contacts.role.polina": "Cruise Organizer",
+  "contacts.name.anastasia": "Anastasia",
+  "contacts.name.polina": "Polina",
+  "contacts.initial.anastasia": "A",
+  "contacts.initial.polina": "P",
   "contacts.direct": "Contact directly for fast booking and trip details.",
 };

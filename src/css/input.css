@@ -1446,9 +1446,9 @@
   .mobile-menu {
     @apply fixed inset-0 z-40 flex flex-col px-6 pt-24 transition-transform duration-300 md:hidden;
     background:
-      radial-gradient(circle at 84% 12%, rgba(255, 209, 102, 0.22), transparent 18rem),
-      radial-gradient(circle at 12% 82%, rgba(40, 200, 184, 0.2), transparent 18rem),
-      rgba(255, 246, 234, 0.96);
+      radial-gradient(circle at 84% 12%, rgba(40, 200, 184, 0.35), transparent 18rem),
+      radial-gradient(circle at 12% 82%, rgba(0, 111, 135, 0.4), transparent 18rem),
+      linear-gradient(145deg, #006d87 0%, #008fa8 62%, #28c8b8 100%);
     backdrop-filter: blur(18px);
     transform: translateX(100%);
   }

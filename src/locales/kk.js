@@ -151,5 +151,9 @@ export default {
   "contacts.subtitle": "Біздің круиз ұйымдастырушыларымыз барлық сұраққа жауап беріп, турды брондауға көмектеседі",
   "contacts.role.anastasia": "Круиз ұйымдастырушысы",
   "contacts.role.polina": "Круиз ұйымдастырушысы",
+  "contacts.name.anastasia": "Анастасия",
+  "contacts.name.polina": "Полина",
+  "contacts.initial.anastasia": "А",
+  "contacts.initial.polina": "П",
   "contacts.direct": "Жылдам брондау және кеңес үшін тікелей жазыңыз.",
 };
