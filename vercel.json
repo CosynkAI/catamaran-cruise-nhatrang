@@ -1,0 +1,9 @@
+{
+  "redirects": [
+    {
+      "source": "/:path*",
+      "destination": "https://seatrips-nhatrang.com/:path*",
+      "permanent": true
+    }
+  ]
+}
