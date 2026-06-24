@@ -160,20 +160,20 @@
         <h1 id="hero-title" class="hero-title" data-i18n-html="hero.title">Частные и групповые круизы на&nbsp;катамаране в&nbsp;Нячанге</h1>
         <p class="hero-lead" data-i18n="hero.lead">Закаты, острова, снорклинг и премиальный отдых без толп туристов — для пар, семей и компаний.</p>
         <div class="hero-prices" aria-label="Стартовые цены">
-          <span class="hero-price" data-i18n="hero.priceGroup">Групповой $80</span>
-          <span class="hero-price" data-i18n="hero.pricePrivate">Индивидуальный от $1000</span>
+          <span class="hero-price hero-price--group" data-i18n="hero.priceGroup">Групповой $80</span>
+          <span class="hero-price hero-price--private" data-i18n="hero.pricePrivate">Индивидуальный от $1000</span>
           <span class="hero-price hero-price--vip" data-i18n="hero.priceVip">VIP от $1500</span>
         </div>
         <div class="hero-highlights" data-i18n-aria="hero.highlights" aria-label="Что включено">
-          <div class="hero-highlight">
+          <div class="hero-highlight hero-highlight--day">
             <strong>09:00</strong>
             <span data-i18n="hero.dayTour">дневной тур</span>
           </div>
-          <div class="hero-highlight">
+          <div class="hero-highlight hero-highlight--sunset">
             <strong data-i18n="hero.sunsetBadge">Закат</strong>
             <span data-i18n="hero.sunset">закат в море</span>
           </div>
-          <div class="hero-highlight">
+          <div class="hero-highlight hero-highlight--activity">
             <strong data-i18n="hero.fishing">Рыбалка</strong>
             <span data-i18n="hero.fishingSub">активность в море</span>
           </div>
@@ -203,16 +203,24 @@
       </div>
     </section>
 
+    <div class="section-divider" aria-hidden="true"></div>
+
     <section id="programs" class="section-wrap pt-0">
       <h2 id="programs-title" class="section-title" data-i18n="programs.title">Туры, которые продают настроение</h2>
       <p class="section-subtitle" data-i18n="programs.subtitle">Катамаран-круизы в Нячанге: групповые и частные морские туры, закатные круизы, туры со снорклингом и на яхте без толп.</p>
 
       <div class="mt-10 grid grid-cols-1 gap-7 lg:grid-cols-2">
-        <article id="card-group" class="content-card scroll-mt-28">
-          <div class="min-w-0">
-            <h3 class="text-subheading font-extrabold" data-i18n="group.title">👥 Групповой круиз</h3>
-            <p class="card-price" data-i18n="group.price">$80</p>
-            <p class="mt-1 text-caption font-bold opacity-70" data-i18n="group.subtitle">Для тех, кто хочет увидеть острова Нячанга и провести день в море</p>
+        <article id="card-group" class="content-card content-card--group scroll-mt-28">
+          <div class="program-card__head">
+            <span class="program-card__icon program-card__icon--group" aria-hidden="true">
+              <svg class="program-card__icon-svg"><use href="#icon-ship"/></svg>
+            </span>
+            <div class="min-w-0">
+              <p class="program-card__tier" data-i18n="programs.tierGroup">Старт</p>
+              <h3 class="text-subheading font-extrabold" data-i18n="group.title">👥 Групповой круиз</h3>
+              <p class="card-price card-price--group" data-i18n="group.price">$80</p>
+              <p class="mt-1 text-caption font-bold opacity-70" data-i18n="group.subtitle">Для тех, кто хочет увидеть острова Нячанга и провести день в море</p>
+            </div>
           </div>
           <div class="mt-5 flex flex-wrap gap-2">
             <span class="time-chip">09:00 – 13:30</span>
@@ -230,12 +238,18 @@
           </div>
         </article>
 
-        <article id="card-individual" class="content-card content-card--premium relative scroll-mt-28">
+        <article id="card-individual" class="content-card content-card--private relative scroll-mt-28">
           <span class="card-badge" data-i18n="private.badge">Выбор для компаний</span>
-          <div class="min-w-0">
-            <h3 class="text-subheading font-extrabold" data-i18n="private.title">⛵️ Индивидуальный круиз</h3>
-            <p class="card-price" data-i18n="private.price">от $1000</p>
-            <p class="mt-1 text-caption font-bold opacity-70" data-i18n="private.subtitle">Только ваша компания и никакой посторонней суеты</p>
+          <div class="program-card__head">
+            <span class="program-card__icon program-card__icon--private" aria-hidden="true">
+              <svg class="program-card__icon-svg"><use href="#icon-ship"/></svg>
+            </span>
+            <div class="min-w-0">
+              <p class="program-card__tier" data-i18n="programs.tierPrivate">Комфорт</p>
+              <h3 class="text-subheading font-extrabold" data-i18n="private.title">⛵️ Индивидуальный круиз</h3>
+              <p class="card-price card-price--private" data-i18n="private.price">от $1000</p>
+              <p class="mt-1 text-caption font-bold opacity-70" data-i18n="private.subtitle">Только ваша компания и никакой посторонней суеты</p>
+            </div>
           </div>
           <div class="mt-5 flex flex-wrap gap-2">
             <span class="time-chip">09:00 – 14:00</span>
@@ -256,23 +270,41 @@
       </div>
 
       <article id="card-vip" class="vip-block mt-8 scroll-mt-28">
-        <div class="flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
-          <div>
-            <h3 class="text-subheading font-extrabold" data-i18n="vip.title">PREMIUM CRUISE</h3>
-            <p class="card-price card-price--vip" data-i18n="vip.price">от $1500</p>
-            <p class="vip-block__subtitle mt-2 max-w-2xl text-base font-semibold" data-i18n="vip.subtitle">Море. Острова. Только ваши правила.</p>
-            <p class="vip-block__text mt-2 max-w-2xl text-base font-light" data-i18n="vip.text">
-              Персональный маршрут, премиальные морепродукты, расширенный бар, съёмка с дрона и дополнительное время в море. Всё организовано под ваш запрос и формат отдыха.
-            </p>
-          </div>
-          <div class="messenger-row mt-0 shrink-0">
-            <a class="btn-messenger" data-messenger data-messenger-type="vip" data-channel="whatsapp"><svg class="btn-messenger__icon" aria-hidden="true"><use href="#icon-whatsapp"/></svg>WhatsApp</a>
-            <a class="btn-messenger" data-messenger data-messenger-type="vip" data-channel="telegram"><svg class="btn-messenger__icon" aria-hidden="true"><use href="#icon-telegram"/></svg>Telegram</a>
+        <div class="program-card__head program-card__head--vip">
+          <span class="program-card__icon program-card__icon--vip" aria-hidden="true">
+            <svg class="program-card__icon-svg"><use href="#icon-ship"/></svg>
+          </span>
+          <div class="min-w-0 flex-1">
+            <p class="program-card__tier program-card__tier--vip" data-i18n="programs.tierVip">Premium</p>
+            <div class="flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
+              <div>
+                <h3 class="text-subheading font-extrabold" data-i18n="vip.title">PREMIUM CRUISE</h3>
+                <p class="card-price card-price--vip" data-i18n="vip.price">от $1500</p>
+                <p class="vip-block__subtitle mt-2 max-w-2xl text-base font-semibold" data-i18n="vip.subtitle">Море. Острова. Только ваши правила.</p>
+                <p class="vip-block__text mt-2 max-w-2xl text-base font-light" data-i18n="vip.text">
+                  Персональный маршрут, премиальные морепродукты, расширенный бар, съёмка с дрона и дополнительное время в море. Всё организовано под ваш запрос и формат отдыха.
+                </p>
+              </div>
+              <div class="messenger-row mt-0 shrink-0">
+                <a class="btn-messenger" data-messenger data-messenger-type="vip" data-channel="whatsapp"><svg class="btn-messenger__icon" aria-hidden="true"><use href="#icon-whatsapp"/></svg>WhatsApp</a>
+                <a class="btn-messenger" data-messenger data-messenger-type="vip" data-channel="telegram"><svg class="btn-messenger__icon" aria-hidden="true"><use href="#icon-telegram"/></svg>Telegram</a>
+              </div>
+            </div>
           </div>
         </div>
       </article>
       <p class="price-note mt-8 text-center" data-i18n="price.note">Финальная стоимость зависит от даты и состава группы</p>
     </section>
+
+    <aside class="section-cta" aria-label="Бронирование">
+      <p class="section-cta__text" data-i18n="cta.afterPrograms.text">Выберите формат и напишите нам — ответим в течение часа</p>
+      <div class="section-cta__actions">
+        <a class="btn-cta" href="#configurator" data-scroll="configurator" data-i18n="cta.book">Забронировать круиз</a>
+        <a class="btn-messenger" data-messenger data-channel="whatsapp"><svg class="btn-messenger__icon" aria-hidden="true"><use href="#icon-whatsapp"/></svg><span data-i18n="cta.whatsapp">Написать в WhatsApp</span></a>
+      </div>
+    </aside>
+
+    <div class="section-divider" aria-hidden="true"></div>
 
     <section id="trust" class="section-wrap section-alt" aria-labelledby="trust-title">
       <h2 id="trust-title" class="section-title" data-i18n="trust.title">Почему нам доверяют</h2>
@@ -285,6 +317,8 @@
         <li class="trust-item"><span class="trust-item__icon" aria-hidden="true">✓</span><span data-i18n="trust.6">Прозрачные условия: депозит 50%, перенос при плохой погоде</span></li>
       </ul>
     </section>
+
+    <div class="section-divider" aria-hidden="true"></div>
 
     <section id="booking-steps" class="section-wrap" aria-labelledby="booking-title">
       <h2 id="booking-title" class="section-title" data-i18n="booking.title">Что происходит после брони</h2>
@@ -317,7 +351,17 @@
       </ol>
     </section>
 
-    <section id="configurator" class="section-wrap pt-0">
+    <aside class="section-cta" aria-label="Бронирование">
+      <p class="section-cta__text" data-i18n="cta.afterBooking.text">Готовы выйти в море? Проверьте дату и забронируйте за минуту</p>
+      <div class="section-cta__actions">
+        <a class="btn-cta" href="#booking-form" data-scroll="booking-form" data-i18n="cta.checkDates">Проверить даты</a>
+        <a class="btn-messenger" data-messenger data-channel="whatsapp"><svg class="btn-messenger__icon" aria-hidden="true"><use href="#icon-whatsapp"/></svg><span data-i18n="cta.whatsapp">Написать в WhatsApp</span></a>
+      </div>
+    </aside>
+
+    <div class="section-divider" aria-hidden="true"></div>
+
+    <section id="configurator" class="section-wrap section-alt pt-0">
       <h2 id="config-title" class="section-title" data-i18n="config.title">Выберите свой день на море</h2>
       <p class="section-subtitle" data-i18n="config.subtitle">Романтические свидания, дни рождения, свадьбы, частные мероприятия и незабываемые встречи с близкими.</p>
       <div id="booking-form" class="booking-form">
@@ -367,7 +411,7 @@
       </div>
       <p class="scroll-tabs__hint" data-i18n="config.tabsHint">← листайте форматы тура</p>
       <div id="panel-group" class="config-panel" role="tabpanel" aria-labelledby="tab-group" tabindex="0">
-        <p class="config-panel__price" data-i18n="group.price">$80</p>
+        <p class="config-panel__price config-panel__price--group" data-i18n="group.price">$80</p>
         <p class="config-panel__text" data-i18n="group.subtitle">Для тех, кто хочет увидеть острова Нячанга и провести день в море</p>
         <div class="config-panel__actions">
           <div class="messenger-row messenger-row--config">
@@ -378,7 +422,7 @@
         </div>
       </div>
       <div id="panel-individual" class="config-panel" role="tabpanel" aria-labelledby="tab-individual" tabindex="0" hidden>
-        <p class="config-panel__price" data-i18n="private.price">от $1000</p>
+        <p class="config-panel__price config-panel__price--private" data-i18n="private.price">от $1000</p>
         <p class="config-panel__text" data-i18n="private.subtitle">Только ваша компания и никакой посторонней суеты</p>
         <div class="config-panel__actions">
           <div class="messenger-row messenger-row--config">
@@ -401,7 +445,9 @@
       </div>
     </section>
 
-    <section id="gallery" class="section-wrap section-alt">
+    <div class="section-divider" aria-hidden="true"></div>
+
+    <section id="gallery" class="section-wrap">
       <h2 id="gallery-title" class="section-title" data-i18n="gallery.title">Так выглядит вкус отпуска</h2>
       <p class="section-subtitle" data-i18n="gallery.subtitle">Солнце на коже, еда на столе, прозрачная вода и закат, который хочется снять на видео.</p>
       <div class="gallery-carousel" id="gallery-carousel" tabindex="0">
@@ -417,6 +463,8 @@
         <p class="gallery-carousel__hint" data-i18n="gallery.swipeHint">Листайте влево и вправо</p>
       </div>
     </section>
+
+    <div class="section-divider" aria-hidden="true"></div>
 
     <section id="reviews" class="section-wrap" aria-labelledby="reviews-title">
       <h2 id="reviews-title" class="section-title" data-i18n="reviews.title">Отзывы гостей</h2>
@@ -635,21 +683,31 @@
       </div>
     </section>
 
+    <aside class="section-cta" aria-label="Бронирование">
+      <p class="section-cta__text" data-i18n="cta.afterReviews.text">Гости в восторге — проверьте свободные даты на ваш круиз</p>
+      <div class="section-cta__actions">
+        <a class="btn-cta" href="#booking-form" data-scroll="booking-form" data-i18n="cta.checkDates">Проверить даты</a>
+        <a class="btn-messenger" data-messenger data-channel="whatsapp"><svg class="btn-messenger__icon" aria-hidden="true"><use href="#icon-whatsapp"/></svg><span data-i18n="cta.whatsapp">Написать в WhatsApp</span></a>
+      </div>
+    </aside>
+
+    <div class="section-divider" aria-hidden="true"></div>
+
     <section id="seo-content" class="seo-content seo-content--semantic" aria-hidden="true">
       <h2 id="seo-content-title" class="seo-content__title">Катамаран-круизы и морские туры в Нячанге</h2>
       <div id="seo-content-text" class="seo-content__text"><p>Catamaran cruise Nha Trang — это групповые и частные морские туры с причала Bến Tàu Du Lịch Nha Trang. Мы проводим <strong>sunset cruise</strong> на закате, дневной <strong>catamaran tour</strong> с островами и <strong>snorkeling tour</strong> в прозрачной воде залива. Групповой формат от $80 — идеален для пар и небольших компаний; <strong>private boat tour</strong> от $1000 — только ваша команда, бар, морепродукты и маршрут под вас.</p><p>На борту: снорклинг, SUP, рыбалка, обед в рыбацкой деревне, музыка и команда с опытом более 1000 гостей за сезон. Бронирование через WhatsApp или Telegram — укажите дату, число гостей и формат (группа, индивидуальный или Premium от $1500). Круизы на русском, английском, корейском и казахском.</p></div>
     </section>
 
-    <section id="faq" class="section-wrap">
+    <section id="faq" class="section-wrap section-alt">
       <h2 id="faq-title" class="section-title" data-i18n="faq.title">Всё, что нужно знать перед выходом в море</h2>
-      <div class="mt-10 space-y-3">
+      <div class="faq-list">
         <details class="faq-item content-card" open>
           <summary class="faq-trigger flex w-full cursor-pointer items-center justify-between gap-4 text-left">
             <span data-i18n="faq.q1">Как забронировать</span>
             <span class="faq-icon text-xl leading-none transition-transform" aria-hidden="true">+</span>
           </summary>
           <div class="faq-panel">
-            <p class="pt-4" data-i18n-html="faq.a1">
+            <p data-i18n-html="faq.a1">
               Для подтверждения брони требуется <strong>предоплата 50%</strong>. Мы резервируем катамаран и дату именно под вашу компанию, поэтому бронирование подтверждается после внесения депозита. <strong>Оставшаяся сумма оплачивается в день прогулки.</strong> После бронирования мы отправим все детали и будем на связи до самого круиза.
             </p>
           </div>
@@ -660,7 +718,7 @@
             <span class="faq-icon text-xl leading-none transition-transform" aria-hidden="true">+</span>
           </summary>
           <div class="faq-panel">
-            <p class="pt-4" data-i18n-html="faq.a2">Безопасность гостей для нас всегда на первом месте. Если порт закрыт или выход в море запрещён из-за погодных условий, мы предложим перенос на другую дату или полный возврат предоплаты.</p>
+            <p data-i18n-html="faq.a2">Безопасность гостей для нас всегда на первом месте. Если порт закрыт или выход в море запрещён из-за погодных условий, мы предложим перенос на другую дату или полный возврат предоплаты.</p>
           </div>
         </details>
         <details class="faq-item content-card">
@@ -669,7 +727,7 @@
             <span class="faq-icon text-xl leading-none transition-transform" aria-hidden="true">+</span>
           </summary>
           <div class="faq-panel">
-            <p class="pt-4" data-i18n-html="faq.a3">Полный возврат предоплаты возможен при отмене не позднее чем за <strong>72 часа</strong> до начала круиза. В случае болезни в день прогулки возврат возможен при наличии медицинского подтверждения. При отмене менее чем за 72 часа без уважительной причины предоплата не возвращается, так как катамаран и дата были зарезервированы специально для вашей компании.</p>
+            <p data-i18n-html="faq.a3">Полный возврат предоплаты возможен при отмене не позднее чем за <strong>72 часа</strong> до начала круиза. В случае болезни в день прогулки возврат возможен при наличии медицинского подтверждения. При отмене менее чем за 72 часа без уважительной причины предоплата не возвращается, так как катамаран и дата были зарезервированы специально для вашей компании.</p>
           </div>
         </details>
         <details class="faq-item content-card">
@@ -678,11 +736,13 @@
             <span class="faq-icon text-xl leading-none transition-transform" aria-hidden="true">+</span>
           </summary>
           <div class="faq-panel">
-            <p class="pt-4" data-i18n-html="faq.a4">Купальник, солнцезащитный крем и головной убор. Полотенца, SUP-борды, оборудование для снорклинга и всё необходимое уже находится на борту и включено в стоимость прогулки.</p>
+            <p data-i18n-html="faq.a4">Купальник, солнцезащитный крем и головной убор. Полотенца, SUP-борды, оборудование для снорклинга и всё необходимое уже находится на борту и включено в стоимость прогулки.</p>
           </div>
         </details>
       </div>
     </section>
+
+    <div class="section-divider" aria-hidden="true"></div>
 
     <section id="contacts" class="section-wrap" aria-labelledby="contacts-title">
       <h2 id="contacts-title" class="section-title text-center" data-i18n="contacts.title">Контакты</h2>
