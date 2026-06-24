@@ -5,6 +5,7 @@ export function initGalleryLightbox(t) {
   const root = document.getElementById('gallery-lightbox');
   const img = document.getElementById('gallery-lightbox-img');
   const caption = document.getElementById('gallery-lightbox-caption');
+  const counter = document.getElementById('gallery-lightbox-counter');
   const closeBtn = document.getElementById('gallery-lightbox-close');
   const prevBtn = document.getElementById('gallery-lightbox-prev');
   const nextBtn = document.getElementById('gallery-lightbox-next');
@@ -13,6 +14,19 @@ export function initGalleryLightbox(t) {
   let slides = [];
   let index = 0;
   let lastFocus = null;
+  let scrollY = 0;
+
+  const lockScroll = () => {
+    scrollY = window.scrollY;
+    document.body.classList.add('lightbox-open');
+    document.body.style.top = `-${scrollY}px`;
+  };
+
+  const unlockScroll = () => {
+    document.body.classList.remove('lightbox-open');
+    document.body.style.top = '';
+    window.scrollTo(0, scrollY);
+  };
 
   const render = () => {
     const slide = slides[index];
@@ -23,14 +37,20 @@ export function initGalleryLightbox(t) {
     img.sizes = '100vw';
     img.alt = slide.alt;
     caption.textContent = slide.alt;
+    if (counter) {
+      counter.textContent = t('gallery.counter')
+        .replace('{current}', String(index + 1))
+        .replace('{total}', String(slides.length));
+    }
     root.setAttribute('aria-label', slide.alt);
     prevBtn?.toggleAttribute('hidden', slides.length <= 1);
     nextBtn?.toggleAttribute('hidden', slides.length <= 1);
+    counter?.toggleAttribute('hidden', slides.length <= 1);
   };
 
   const close = () => {
     root.hidden = true;
-    document.body.classList.remove('lightbox-open');
+    unlockScroll();
     img.removeAttribute('src');
     img.removeAttribute('srcset');
     lastFocus?.focus?.();
@@ -50,7 +70,7 @@ export function initGalleryLightbox(t) {
     lastFocus = document.activeElement;
     render();
     root.hidden = false;
-    document.body.classList.add('lightbox-open');
+    lockScroll();
     closeBtn?.focus();
   };
 
@@ -71,5 +91,7 @@ export function initGalleryLightbox(t) {
   prevBtn?.setAttribute('aria-label', t('gallery.prev'));
   nextBtn?.setAttribute('aria-label', t('gallery.next'));
 
-  return { open };
+  return { open, refreshLabels: () => {
+    if (!root.hidden) render();
+  } };
 }

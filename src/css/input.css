@@ -862,7 +862,7 @@
 
   body.theme-sea .content-card .opacity-70,
   body.theme-sea .step-card .opacity-70 {
-    color: rgba(18, 48, 68, 0.82);
+    color: rgba(18, 48, 68, 0.88);
     opacity: 1;
   }
 
@@ -965,36 +965,43 @@
     font-weight: 800;
     letter-spacing: 0.08em;
     color: #ffd166;
-    background-image: linear-gradient(
-      105deg,
-      #8a6b1a 0%,
-      #c9a227 15%,
-      #ffd166 30%,
-      #fffef0 45%,
-      #ffd166 60%,
-      #daa520 75%,
-      #8a6b1a 100%
-    );
-    background-size: 200% auto;
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    filter: drop-shadow(0 0 6px rgba(255, 209, 102, 0.45));
-    animation: vip-gold-shine 2.5s linear infinite;
   }
 
-  .tab-btn[data-tab="vip"]:hover .vip-gold-text,
-  .tab-btn[data-tab="vip"].is-active .vip-gold-text {
-    filter: drop-shadow(0 0 10px rgba(255, 209, 102, 0.65));
-    animation-duration: 1.8s;
-  }
-
-  @supports not (background-clip: text) {
+  @supports ((-webkit-background-clip: text) or (background-clip: text)) {
     .vip-gold-text {
-      -webkit-text-fill-color: #ffd166;
-      color: #ffd166;
+      background-image: linear-gradient(
+        105deg,
+        #8a6b1a 0%,
+        #c9a227 15%,
+        #ffd166 30%,
+        #fffef0 45%,
+        #ffd166 60%,
+        #daa520 75%,
+        #8a6b1a 100%
+      );
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+      filter: drop-shadow(0 0 6px rgba(255, 209, 102, 0.45));
+      animation: vip-gold-shine 2.5s linear infinite;
+    }
+
+    .tab-btn[data-tab="vip"]:hover .vip-gold-text,
+    .tab-btn[data-tab="vip"].is-active .vip-gold-text {
+      filter: drop-shadow(0 0 10px rgba(255, 209, 102, 0.65));
+      animation-duration: 1.8s;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .vip-gold-text {
+      animation: none;
       background: none;
-      filter: drop-shadow(0 0 8px rgba(255, 209, 102, 0.55));
+      -webkit-text-fill-color: currentColor;
+      color: #ffd166;
+      filter: none;
     }
   }
 
@@ -1020,7 +1027,7 @@
   .feature-item {
     @apply flex items-center gap-3.5;
     font-size: 1.0625rem;
-    color: rgba(18, 48, 68, 0.88);
+    color: rgba(18, 48, 68, 0.94);
   }
 
   .icon {
@@ -1103,7 +1110,7 @@
     background: rgba(255, 255, 255, 0.92);
     border: 1px solid rgba(255, 255, 255, 0.7);
     box-shadow: 0 1rem 2.5rem rgba(8, 36, 51, 0.08);
-    color: rgba(18, 48, 68, 0.88);
+    color: rgba(18, 48, 68, 0.94);
     font-weight: 600;
     line-height: 1.45;
   }
@@ -1146,7 +1153,7 @@
 
   .booking-step__text {
     @apply mt-1 text-sm font-medium leading-relaxed;
-    color: rgba(18, 48, 68, 0.88);
+    color: rgba(18, 48, 68, 0.94);
   }
 
   /* ── Messenger rows ── */
@@ -1351,6 +1358,11 @@
 
   body.lightbox-open {
     overflow: hidden;
+    position: fixed;
+    width: 100%;
+    left: 0;
+    right: 0;
+    touch-action: none;
   }
 
   .gallery-lightbox__figure {
@@ -1367,8 +1379,20 @@
     color: rgba(255, 255, 255, 0.92);
   }
 
+  .gallery-lightbox__counter {
+    @apply text-sm font-semibold tracking-wide;
+    color: rgba(255, 255, 255, 0.72);
+  }
+
+  .gallery-lightbox__icon {
+    width: 1.35rem;
+    height: 1.35rem;
+    fill: currentColor;
+    stroke: currentColor;
+  }
+
   .gallery-lightbox__close {
-    @apply absolute right-4 top-4 z-10 flex h-11 w-11 items-center justify-center rounded-full text-2xl font-light text-white transition-colors;
+    @apply absolute right-4 top-4 z-10 flex h-11 w-11 items-center justify-center rounded-full text-white transition-colors;
     background: rgba(255, 255, 255, 0.12);
     border: 1px solid rgba(255, 255, 255, 0.22);
     touch-action: manipulation;
@@ -1379,7 +1403,7 @@
   }
 
   .gallery-lightbox__nav {
-    @apply absolute top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full text-3xl font-light text-white transition-colors;
+    @apply absolute top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full text-white transition-colors;
     background: rgba(255, 255, 255, 0.12);
     border: 1px solid rgba(255, 255, 255, 0.22);
     touch-action: manipulation;
@@ -1701,7 +1725,7 @@
   }
 
   .booking-form__date-wrap {
-    @apply relative block;
+    @apply relative block cursor-pointer;
   }
 
   .booking-form__input--date {

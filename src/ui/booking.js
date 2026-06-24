@@ -286,6 +286,19 @@ export function initBookingForm(currentLang, t, refreshUi) {
   if (dateEl) {
     dateEl.min = new Date().toISOString().slice(0, 10);
     dateEl.required = bookingState.type !== 'vip';
+    const dateWrap = dateEl.closest('.booking-form__date-wrap');
+    const openDatePicker = () => {
+      if (typeof dateEl.showPicker === 'function') {
+        try {
+          dateEl.showPicker();
+          return;
+        } catch {
+          /* fall through */
+        }
+      }
+      dateEl.focus();
+    };
+    dateWrap?.addEventListener('click', () => openDatePicker());
     dateEl.addEventListener('change', async () => {
       bookingState.date = dateEl.value;
       await handleDateChange(t, refreshUi);
