@@ -15,6 +15,26 @@ export function initGalleryLightbox(t) {
   let index = 0;
   let lastFocus = null;
   let scrollY = 0;
+  let touchStartX = 0;
+  let touchStartY = 0;
+
+  const onTouchStart = (e) => {
+    if (root.hidden) return;
+    const touch = e.changedTouches[0];
+    if (!touch) return;
+    touchStartX = touch.clientX;
+    touchStartY = touch.clientY;
+  };
+
+  const onTouchEnd = (e) => {
+    if (root.hidden) return;
+    const touch = e.changedTouches[0];
+    if (!touch) return;
+    const dx = touch.clientX - touchStartX;
+    const dy = touch.clientY - touchStartY;
+    if (Math.abs(dx) < 48 || Math.abs(dx) < Math.abs(dy)) return;
+    step(dx < 0 ? 1 : -1);
+  };
 
   const lockScroll = () => {
     scrollY = window.scrollY;
@@ -80,6 +100,8 @@ export function initGalleryLightbox(t) {
   root.addEventListener('click', (e) => {
     if (e.target === root) close();
   });
+  root.addEventListener('touchstart', onTouchStart, { passive: true });
+  root.addEventListener('touchend', onTouchEnd, { passive: true });
   document.addEventListener('keydown', (e) => {
     if (root.hidden) return;
     if (e.key === 'Escape') close();
