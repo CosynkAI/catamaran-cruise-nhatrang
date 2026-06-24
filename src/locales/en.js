@@ -122,6 +122,8 @@ export default {
   "gallery.next": "Next slide",
   "gallery.counter": "{current} / {total}",
   "gallery.swipeHint": "Swipe left or right",
+  "gallery.openLightbox": "Open full size",
+  "gallery.lightboxClose": "Close",
   "gallery.pagesAria": "Gallery pages",
   "gallery.altPhoto": "Cruise photo",
   "gallery.altVideo": "Cruise video",

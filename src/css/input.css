@@ -410,7 +410,7 @@
 
   .config-panel {
     @apply mt-6 rounded-3xl p-6 sm:p-7;
-    background: rgba(255, 255, 255, 0.72);
+    background: rgba(255, 255, 255, 0.88);
     border: 1px solid rgba(255, 255, 255, 0.8);
     box-shadow: 0 1.2rem 3rem rgba(8, 36, 51, 0.08);
     backdrop-filter: blur(16px);
@@ -433,7 +433,7 @@
 
   .config-panel__text {
     @apply mt-2 font-medium leading-relaxed;
-    color: rgba(18, 48, 68, 0.82);
+    color: rgba(18, 48, 68, 0.94);
     font-size: 1.0625rem;
   }
 
@@ -810,8 +810,8 @@
   /* ── Cards ── */
   .content-card {
     @apply relative overflow-hidden rounded-3xl p-6 sm:p-7;
-    background: rgba(255, 255, 255, 0.78);
-    border: 1px solid rgba(255, 255, 255, 0.78);
+    background: rgba(255, 255, 255, 0.88);
+    border: 1px solid rgba(255, 255, 255, 0.86);
     box-shadow: 0 1.5rem 4rem rgba(8, 36, 51, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.86);
     backdrop-filter: blur(18px) saturate(1.08);
     transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
@@ -857,18 +857,18 @@
   body.theme-sea .content-card .faq-trigger,
   body.theme-sea .content-card .faq-panel p,
   body.theme-sea .step-card p {
-    color: rgba(18, 48, 68, 0.88);
+    color: rgba(18, 48, 68, 0.94);
   }
 
   body.theme-sea .content-card .opacity-70,
   body.theme-sea .step-card .opacity-70 {
-    color: rgba(18, 48, 68, 0.72);
+    color: rgba(18, 48, 68, 0.82);
     opacity: 1;
   }
 
   .step-card {
     @apply rounded-3xl p-6;
-    background: rgba(255, 255, 255, 0.68);
+    background: rgba(255, 255, 255, 0.84);
     border: 1px solid rgba(255, 255, 255, 0.74);
     box-shadow: 0 1.1rem 3rem rgba(0, 109, 135, 0.08);
     backdrop-filter: blur(16px);
@@ -1125,8 +1125,8 @@
 
   .booking-step {
     @apply relative rounded-3xl p-5;
-    background: rgba(255, 255, 255, 0.78);
-    border: 1px solid rgba(255, 255, 255, 0.78);
+    background: rgba(255, 255, 255, 0.88);
+    border: 1px solid rgba(255, 255, 255, 0.86);
     box-shadow: 0 1.2rem 3rem rgba(8, 36, 51, 0.08);
     backdrop-filter: blur(14px);
   }
@@ -1146,7 +1146,7 @@
 
   .booking-step__text {
     @apply mt-1 text-sm font-medium leading-relaxed;
-    color: rgba(18, 48, 68, 0.75);
+    color: rgba(18, 48, 68, 0.88);
   }
 
   /* ── Messenger rows ── */
@@ -1328,6 +1328,78 @@
 
   .gallery-carousel__img.is-loaded {
     @apply opacity-100;
+  }
+
+  .gallery-carousel__img--zoomable {
+    cursor: zoom-in;
+  }
+
+  .gallery-carousel__img--zoomable:focus-visible {
+    outline: 2px solid var(--color-coral);
+    outline-offset: 2px;
+  }
+
+  .gallery-lightbox {
+    @apply fixed inset-0 z-[60] flex items-center justify-center p-4 sm:p-8;
+    background: rgba(8, 36, 51, 0.92);
+    backdrop-filter: blur(10px);
+  }
+
+  .gallery-lightbox[hidden] {
+    display: none;
+  }
+
+  body.lightbox-open {
+    overflow: hidden;
+  }
+
+  .gallery-lightbox__figure {
+    @apply relative mx-auto flex max-h-[85vh] max-w-5xl flex-col items-center gap-3;
+  }
+
+  .gallery-lightbox__img {
+    @apply max-h-[78vh] w-auto max-w-full rounded-2xl object-contain;
+    box-shadow: 0 2rem 4rem rgba(0, 0, 0, 0.45);
+  }
+
+  .gallery-lightbox__caption {
+    @apply max-w-2xl text-center text-sm font-medium leading-relaxed sm:text-base;
+    color: rgba(255, 255, 255, 0.92);
+  }
+
+  .gallery-lightbox__close {
+    @apply absolute right-4 top-4 z-10 flex h-11 w-11 items-center justify-center rounded-full text-2xl font-light text-white transition-colors;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    touch-action: manipulation;
+  }
+
+  .gallery-lightbox__close:hover {
+    background: rgba(255, 255, 255, 0.22);
+  }
+
+  .gallery-lightbox__nav {
+    @apply absolute top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full text-3xl font-light text-white transition-colors;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    touch-action: manipulation;
+  }
+
+  .gallery-lightbox__nav:hover {
+    background: rgba(255, 255, 255, 0.22);
+  }
+
+  .gallery-lightbox__nav--prev {
+    left: max(0.75rem, env(safe-area-inset-left, 0px));
+  }
+
+  .gallery-lightbox__nav--next {
+    right: max(0.75rem, env(safe-area-inset-right, 0px));
+  }
+
+  .gallery-lightbox__nav[hidden],
+  .gallery-lightbox__close[hidden] {
+    display: none;
   }
 
   .gallery-carousel__nav {
@@ -1591,7 +1663,7 @@
 
   .review-card__text {
     @apply mt-4 text-base leading-relaxed;
-    color: rgba(18, 48, 68, 0.82);
+    color: rgba(18, 48, 68, 0.94);
   }
 
   .booking-form {
@@ -1625,6 +1697,57 @@
     border-color: rgba(255, 255, 255, 0.25);
     background: rgba(255, 255, 255, 0.95);
     color: var(--color-forest-shadow);
+    color-scheme: light;
+  }
+
+  .booking-form__date-wrap {
+    @apply relative block;
+  }
+
+  .booking-form__input--date {
+    min-height: 3rem;
+    padding-right: 2.75rem;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+  }
+
+  .booking-form__input--date::-webkit-calendar-picker-indicator {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    opacity: 0;
+    cursor: pointer;
+  }
+
+  .booking-form__date-wrap::after {
+    content: '';
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    width: 1.125rem;
+    height: 1.125rem;
+    transform: translateY(-50%);
+    pointer-events: none;
+    opacity: 0.72;
+    background: currentColor;
+    color: var(--color-deep-earth);
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='4' width='18' height='18' rx='2' ry='2'/%3E%3Cline x1='16' y1='2' x2='16' y2='6'/%3E%3Cline x1='8' y1='2' x2='8' y2='6'/%3E%3Cline x1='3' y1='10' x2='21' y2='10'/%3E%3C/svg%3E") center / contain no-repeat;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='4' width='18' height='18' rx='2' ry='2'/%3E%3Cline x1='16' y1='2' x2='16' y2='6'/%3E%3Cline x1='8' y1='2' x2='8' y2='6'/%3E%3Cline x1='3' y1='10' x2='21' y2='10'/%3E%3C/svg%3E") center / contain no-repeat;
+  }
+
+  .booking-form__input--date:focus {
+    border-color: rgba(40, 200, 184, 0.75);
+    box-shadow: 0 0 0 3px rgba(40, 200, 184, 0.22);
+    outline: none;
+  }
+
+  .booking-form__input--date:invalid {
+    color: rgba(18, 48, 68, 0.55);
   }
 
   .booking-form__hint {
@@ -1749,8 +1872,12 @@
   }
 
   .booking-form__date-display {
-    @apply text-sm font-semibold;
-    color: rgba(255, 255, 255, 0.75);
+    @apply mt-1.5 text-sm font-semibold;
+    color: rgba(255, 255, 255, 0.88);
+  }
+
+  .booking-form__date-display:empty {
+    display: none;
   }
 
   .guest-stepper {

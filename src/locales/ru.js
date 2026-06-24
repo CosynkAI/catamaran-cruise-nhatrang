@@ -122,6 +122,8 @@ export default {
   "gallery.next": "Следующее фото",
   "gallery.counter": "{current} / {total}",
   "gallery.swipeHint": "Листайте влево и вправо",
+  "gallery.openLightbox": "Открыть в полном размере",
+  "gallery.lightboxClose": "Закрыть",
   "gallery.pagesAria": "Страницы галереи",
   "gallery.altPhoto": "Фото круиза",
   "gallery.altVideo": "Видео круиза",

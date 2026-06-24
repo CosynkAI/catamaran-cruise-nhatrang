@@ -327,7 +327,9 @@
         <div class="booking-form__fields">
           <label class="booking-form__field" id="field-date-wrap">
             <span class="booking-form__label" data-i18n="form.date">Дата тура</span>
-            <input type="date" class="booking-form__input" id="booking-date" name="date" />
+            <span class="booking-form__date-wrap">
+              <input type="date" class="booking-form__input booking-form__input--date" id="booking-date" name="date" />
+            </span>
             <span class="booking-form__date-display" id="booking-date-display" aria-live="polite"></span>
           </label>
           <label class="booking-form__field" id="field-guests-wrap">
@@ -756,6 +758,16 @@
         <p class="footer-credit mt-2 text-sm font-light opacity-50" data-i18n-html="footer.credit">Сайт сделан руками <a class="footer-credit__link" href="https://t.me/eviniko" target="_blank" rel="noopener noreferrer">@eviniko</a></p>
       </div>
     </footer>
+
+    <div id="gallery-lightbox" class="gallery-lightbox" hidden role="dialog" aria-modal="true">
+      <button type="button" class="gallery-lightbox__close" id="gallery-lightbox-close" data-i18n-aria="gallery.lightboxClose" aria-label="Закрыть">×</button>
+      <button type="button" class="gallery-lightbox__nav gallery-lightbox__nav--prev" id="gallery-lightbox-prev" data-i18n-aria="gallery.prev" aria-label="Предыдущее фото">‹</button>
+      <figure class="gallery-lightbox__figure">
+        <img class="gallery-lightbox__img" id="gallery-lightbox-img" alt="" />
+        <figcaption class="gallery-lightbox__caption" id="gallery-lightbox-caption"></figcaption>
+      </figure>
+      <button type="button" class="gallery-lightbox__nav gallery-lightbox__nav--next" id="gallery-lightbox-next" data-i18n-aria="gallery.next" aria-label="Следующее фото">›</button>
+    </div>
 
     <a
       id="floating-whatsapp"

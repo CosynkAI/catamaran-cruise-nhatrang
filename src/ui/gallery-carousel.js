@@ -3,6 +3,7 @@
  * Fetches /gallery-manifest.json, builds pages of GALLERY_PER_PAGE items.
  */
 import { createCarousel } from './carousel.js';
+import { initGalleryLightbox } from './gallery-lightbox.js';
 
 const GALLERY_PER_PAGE = 6;
 
@@ -37,11 +38,34 @@ export async function initGalleryCarousel(t) {
   if (!items.length) return null;
 
   const pages = chunkItems(items, GALLERY_PER_PAGE);
+  const lightbox = initGalleryLightbox(t);
 
   const altText = (globalIndex) => {
     const key = `gallery.alt${(globalIndex % 10) + 1}`;
     const label = t(key);
     return label === key ? `${t('gallery.altPhoto')} ${globalIndex + 1}` : label;
+  };
+
+  const slides = items.map((item, globalIndex) => ({
+    src: item.src,
+    srcset: item.srcset,
+    alt: altText(globalIndex),
+  }));
+
+  const bindLightbox = (img, globalIndex) => {
+    if (!lightbox) return;
+    img.classList.add('gallery-carousel__img--zoomable');
+    img.tabIndex = 0;
+    img.setAttribute('role', 'button');
+    img.setAttribute('aria-label', `${slides[globalIndex]?.alt}. ${t('gallery.openLightbox')}`);
+    const open = () => lightbox.open(slides, globalIndex);
+    img.addEventListener('click', open);
+    img.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        open();
+      }
+    });
   };
 
   const buildPage = (pageItems, pageNum) => {
@@ -65,6 +89,7 @@ export async function initGalleryCarousel(t) {
       img.decoding = 'async';
       img.addEventListener('load', () => img.classList.add('is-loaded'));
       if (img.complete) img.classList.add('is-loaded');
+      bindLightbox(img, globalIndex);
       cell.append(img);
       page.append(cell);
     });

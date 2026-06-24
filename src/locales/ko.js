@@ -122,6 +122,8 @@ export default {
   "gallery.next": "다음",
   "gallery.counter": "{current} / {total}",
   "gallery.swipeHint": "좌우로 밀어서 보기",
+  "gallery.openLightbox": "크게 보기",
+  "gallery.lightboxClose": "닫기",
   "gallery.pagesAria": "갤러리 페이지",
   "gallery.altPhoto": "크루즈 사진",
   "gallery.altVideo": "크루즈 영상",

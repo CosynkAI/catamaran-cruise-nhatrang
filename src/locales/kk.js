@@ -121,6 +121,8 @@ export default {
   "gallery.next": "Келесі",
   "gallery.counter": "{current} / {total}",
   "gallery.swipeHint": "Солға немесе оңға сырғытыңыз",
+  "gallery.openLightbox": "Толық көру",
+  "gallery.lightboxClose": "Жабу",
   "gallery.pagesAria": "Галерея беттері",
   "gallery.altPhoto": "Круиз фотосы",
   "gallery.altVideo": "Круиз видеосы",

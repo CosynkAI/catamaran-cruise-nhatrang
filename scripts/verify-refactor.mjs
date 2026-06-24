@@ -12,6 +12,7 @@ function check(condition, message) {
 const uiModules = [
   'carousel.js',
   'gallery-carousel.js',
+  'gallery-lightbox.js',
   'reviews-carousel.js',
   'booking.js',
   'video.js',
