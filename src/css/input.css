@@ -689,6 +689,12 @@
     line-height: var(--leading-subheading);
     text-wrap: balance;
     letter-spacing: -0.01em;
+    overflow-wrap: break-word;
+  }
+
+  .content-card .text-subheading,
+  .vip-block .text-subheading {
+    hyphens: auto;
   }
 
   .text-caption {
@@ -868,7 +874,7 @@
 
   /* ── Cards ── */
   .content-card {
-    @apply relative overflow-hidden rounded-3xl p-6 sm:p-7;
+    @apply relative rounded-3xl p-6 sm:p-7;
     background: rgba(255, 255, 255, 0.88);
     border: 1px solid rgba(255, 255, 255, 0.86);
     box-shadow: 0 1.5rem 4rem rgba(8, 36, 51, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.86);
@@ -1164,7 +1170,12 @@
   }
 
   .program-card__head {
-    @apply flex items-start gap-4;
+    @apply flex min-w-0 items-start gap-4;
+  }
+
+  .program-card__head > .min-w-0 {
+    flex: 1 1 0%;
+    overflow-wrap: break-word;
   }
 
   .program-card__head--vip {
@@ -1268,7 +1279,7 @@
   }
 
   .trust-badge {
-    @apply flex items-center gap-3 rounded-2xl p-4;
+    @apply flex min-w-0 items-center gap-3 rounded-2xl p-4;
     background: rgba(255, 255, 255, 0.94);
     border: 1px solid rgba(255, 255, 255, 0.78);
     box-shadow: 0 0.85rem 2.2rem rgba(8, 36, 51, 0.1);
@@ -1314,15 +1325,17 @@
   .trust-badge__text strong {
     @apply text-base font-extrabold;
     color: var(--color-midnight-truffle);
+    overflow-wrap: anywhere;
   }
 
   .trust-badge__text span {
     @apply mt-0.5 text-xs font-semibold;
     color: rgba(18, 48, 68, 0.78);
+    overflow-wrap: anywhere;
   }
 
   .trust-item {
-    @apply flex items-start gap-3 rounded-3xl p-5;
+    @apply flex min-w-0 items-start gap-3 rounded-3xl p-5;
     background: rgba(255, 255, 255, 0.92);
     border: 1px solid rgba(255, 255, 255, 0.7);
     box-shadow: 0 1rem 2.5rem rgba(8, 36, 51, 0.08);
@@ -1337,6 +1350,12 @@
     color: #fff;
     background: linear-gradient(145deg, #008fa8, #28c8b8);
     box-shadow: 0 0.4rem 1rem rgba(0, 109, 135, 0.2);
+  }
+
+  .trust-item > span:not(.trust-item__icon) {
+    min-width: 0;
+    flex: 1 1 0%;
+    overflow-wrap: break-word;
   }
 
   .booking-steps {
@@ -1544,25 +1563,30 @@
   .section-surface {
     position: relative;
     isolation: isolate;
-    margin-inline: -1.25rem;
-    padding-inline: 1.25rem;
+  }
+
+  .section-surface::before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    inset-block: 0;
+    inset-inline: -1.25rem;
+    pointer-events: none;
   }
 
   @media (min-width: 640px) {
-    .section-surface {
-      margin-inline: -1.5rem;
-      padding-inline: 1.5rem;
+    .section-surface::before {
+      inset-inline: -1.5rem;
     }
   }
 
   @media (min-width: 768px) {
-    .section-surface {
-      margin-inline: -2.5rem;
-      padding-inline: 2.5rem;
+    .section-surface::before {
+      inset-inline: -2.5rem;
     }
   }
 
-  .section-surface--light {
+  .section-surface--light::before {
     background-color: rgba(255, 255, 255, 0.42);
     background-image:
       radial-gradient(circle at 12% 0%, rgba(255, 255, 255, 0.55), transparent 42%),
@@ -1570,7 +1594,7 @@
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35);
   }
 
-  .section-surface--shade {
+  .section-surface--shade::before {
     background-color: rgba(8, 36, 51, 0.08);
     background-image:
       radial-gradient(circle at 88% 12%, rgba(255, 209, 102, 0.14), transparent 38%),
@@ -1578,7 +1602,7 @@
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
   }
 
-  body.theme-sea .section-surface--light {
+  body.theme-sea .section-surface--light::before {
     background-color: rgba(255, 255, 255, 0.08);
     background-image:
       radial-gradient(circle at 14% 0%, rgba(255, 255, 255, 0.18), transparent 44%),
@@ -1586,7 +1610,7 @@
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14);
   }
 
-  body.theme-sea .section-surface--shade {
+  body.theme-sea .section-surface--shade::before {
     background-color: rgba(4, 18, 30, 0.36);
     background-image:
       radial-gradient(circle at 88% 10%, rgba(255, 209, 102, 0.1), transparent 40%),
@@ -1624,22 +1648,29 @@
   }
 
   body.theme-sea .section-cta {
-    margin-inline: -1.25rem;
-    padding-inline: 1.25rem;
+    position: relative;
+    isolation: isolate;
+  }
+
+  body.theme-sea .section-cta::before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    inset-block: 0;
+    inset-inline: -1.25rem;
+    pointer-events: none;
     background: linear-gradient(180deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.02) 100%);
   }
 
   @media (min-width: 640px) {
-    body.theme-sea .section-cta {
-      margin-inline: -1.5rem;
-      padding-inline: 1.5rem;
+    body.theme-sea .section-cta::before {
+      inset-inline: -1.5rem;
     }
   }
 
   @media (min-width: 768px) {
-    body.theme-sea .section-cta {
-      margin-inline: -2.5rem;
-      padding-inline: 2.5rem;
+    body.theme-sea .section-cta::before {
+      inset-inline: -2.5rem;
     }
   }
 
