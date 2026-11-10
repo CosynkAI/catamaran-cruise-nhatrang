@@ -193,13 +193,17 @@ function updateJsonLd() {
   script.textContent = JSON.stringify(
     {
       '@context': 'https://schema.org',
-      '@type': 'TouristTrip',
+      '@type': 'Product',
       name: meta.schemaName,
       description: meta.schemaDescription,
       url: getPageUrl(),
       image: SITE.ogImage,
+      brand: {
+        '@type': 'Brand',
+        name: 'Catamaran Cruises · Nha Trang',
+      },
       inLanguage: ['ru', 'en', 'ko', 'kk'],
-      touristType: ['Tourists', 'Families', 'Expats', 'Couples'],
+      category: 'Boat Tour / Catamaran Cruise',
       aggregateRating: {
         '@type': 'AggregateRating',
         ratingValue: '4.96',

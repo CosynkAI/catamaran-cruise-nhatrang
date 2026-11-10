@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>404 — Страница не найдена | Catamaran Cruises · Nha Trang</title>
+    <meta name="robots" content="noindex, follow" />
+    <meta name="theme-color" content="#082433" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <style>
+      :root {
+        --color-bg: #082433;
+        --color-card: #123044;
+        --color-card-border: rgba(255, 255, 255, 0.12);
+        --color-text: #fff6ea;
+        --color-text-muted: rgba(255, 246, 234, 0.72);
+        --color-accent: #28c8b8;
+        --color-accent-hover: #1ea89b;
+        --color-gold: #ffd166;
+        --font: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        min-height: 100vh;
+        background-color: var(--color-bg);
+        background-image:
+          radial-gradient(ellipse at 50% 0%, rgba(40, 200, 184, 0.15) 0%, transparent 60%),
+          radial-gradient(ellipse at 80% 100%, rgba(0, 109, 135, 0.25) 0%, transparent 70%);
+        color: var(--color-text);
+        font-family: var(--font);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+        text-align: center;
+        -webkit-font-smoothing: antialiased;
+      }
+      .card {
+        background: var(--color-card);
+        border: 1px solid var(--color-card-border);
+        border-radius: 24px;
+        padding: 48px 32px;
+        max-width: 560px;
+        width: 100%;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+        backdrop-filter: blur(12px);
+      }
+      .code-badge {
+        display: inline-block;
+        font-size: 14px;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--color-gold);
+        background: rgba(255, 209, 102, 0.12);
+        padding: 6px 16px;
+        border-radius: 999px;
+        margin-bottom: 20px;
+      }
+      h1 {
+        font-size: clamp(32px, 5vw, 44px);
+        font-weight: 800;
+        line-height: 1.15;
+        margin-bottom: 16px;
+        letter-spacing: -0.02em;
+      }
+      p {
+        font-size: 16px;
+        line-height: 1.6;
+        color: var(--color-text-muted);
+        margin-bottom: 8px;
+      }
+      p.en {
+        font-size: 14px;
+        opacity: 0.8;
+        margin-bottom: 28px;
+      }
+      .actions {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        margin-top: 8px;
+      }
+      @media (min-width: 480px) {
+        .actions {
+          flex-direction: row;
+          justify-content: center;
+        }
+      }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 14px 24px;
+        border-radius: 999px;
+        font-size: 15px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.2s ease;
+        cursor: pointer;
+      }
+      .btn-primary {
+        background: var(--color-accent);
+        color: #082433;
+      }
+      .btn-primary:hover {
+        background: var(--color-accent-hover);
+        transform: translateY(-1px);
+      }
+      .btn-ghost {
+        background: rgba(255, 255, 255, 0.08);
+        color: var(--color-text);
+        border: 1px solid var(--color-card-border);
+      }
+      .btn-ghost:hover {
+        background: rgba(255, 255, 255, 0.14);
+        transform: translateY(-1px);
+      }
+      .footer {
+        margin-top: 32px;
+        font-size: 13px;
+        color: rgba(255, 246, 234, 0.5);
+      }
+      .footer a {
+        color: var(--color-accent);
+        text-decoration: none;
+      }
+      .footer a:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="card">
+      <span class="code-badge">Ошибка 404</span>
+      <h1>Курс в открытое море</h1>
+      <p>Запрашиваемая страница не найдена или была перемещена.</p>
+      <p class="en">The page you are looking for doesn't exist or has been moved.</p>
+      <div class="actions">
+        <a href="/" class="btn btn-primary">На главную</a>
+        <a href="/en/" class="btn btn-ghost">English version</a>
+      </div>
+    </main>
+    <footer class="footer">
+      <p>Catamaran Cruises · Nha Trang · <a href="https://wa.me/84364389764">WhatsApp</a> · <a href="https://t.me/Nastasia8963">Telegram</a></p>
+    </footer>
+  </body>
+</html>

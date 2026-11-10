@@ -160,9 +160,10 @@ FAQ
 
 #### Schema.org
 
-- `@type`: `TouristTrip`
+- `@type`: `Product` (соответствует требованиям Google Review Snippet & Product rich results)
+- `brand`: `Catamaran Cruises · Nha Trang`
 - `offers`: `AggregateOffer` с `lowPrice: 89`, `highPrice: 1490`, `offerCount: 3`
-- `aggregateRating`: 4.9 / 127 отзывов
+- `aggregateRating`: 4.96 / 127 отзывов
 - FAQ schema генерируется из `i18n` при смене языка
 
 #### Техническое SEO (было + актуально)
