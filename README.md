@@ -62,9 +62,9 @@ npm run dev
 
 | Формат | Цена |
 |--------|------|
-| Групповой | от **$80** |
-| Индивидуальный | от **$1000** |
-| Premium | от **$1500** |
+| Групповой | от **$89** |
+| Индивидуальный | от **$1,090** |
+| Premium | от **$1,490** |
 
 Где отображаются:
 - Hero — полоска `.hero-prices` (3 бейджа)
@@ -161,7 +161,7 @@ FAQ
 #### Schema.org
 
 - `@type`: `TouristTrip`
-- `offers`: `AggregateOffer` с `lowPrice: 69`, `highPrice: 900`, `offerCount: 3`
+- `offers`: `AggregateOffer` с `lowPrice: 89`, `highPrice: 1490`, `offerCount: 3`
 - `aggregateRating`: 4.9 / 127 отзывов
 - FAQ schema генерируется из `i18n` при смене языка
 

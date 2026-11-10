@@ -7,7 +7,7 @@ Catamaran Cruises operates sea excursions from Nha Trang, Khanh Hoa Province, Vi
 **Meeting point:** Bến Tàu Du Lịch Nha Trang, 388 Võ Thị Sáu, Nha Trang, Vietnam.
 **Site languages:** ru (default at /), en (/en/), ko (/ko/), kk (/kk/) — prerendered HTML per locale.
 **Home URLs:** ru: https://seatrips-nhatrang.com/ · en: https://seatrips-nhatrang.com/en/ · ko: https://seatrips-nhatrang.com/ko/ · kk: https://seatrips-nhatrang.com/kk/
-**Prices (USD):** group $80 · private from $1000 · Premium from $1500
+**Prices (USD):** group $89 · private from $1,090 · Premium from $1,490
 
 ## WebMCP & agent access
 
@@ -51,13 +51,13 @@ Messenger text language: ru/kk → Russian; en/ko → English.
 
 ## Programs
 
-### Group — $80
+### Group — $89
 09:00–13:30 or 15:00–19:30 · islands, snorkelling, SUP, fishing, meals, crew
 
-### Private — from $1000
+### Private — from $1,090
 09:00–14:00 or 15:00–20:00 · private transfer, open bar, seafood menu, custom route
 
-### Premium — from $1500
+### Premium — from $1,490
 Personal route, premium seafood, drone video, extra sea time; date optional in booking
 
 ## Booking & payments

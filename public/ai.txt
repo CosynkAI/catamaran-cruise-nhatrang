@@ -34,9 +34,9 @@ Message language: ru/kk → Russian; en/ko → English.
 ## Programs
 | ID | Name | From USD |
 |----|------|----------|
-| group | Group day/sunset cruise | 80 |
-| individual | Private charter | 1000 |
-| vip | Premium cruise | 1500 |
+| group | Group day/sunset cruise | 89 |
+| individual | Private charter | 1090 |
+| vip | Premium cruise | 1490 |
 
 ## Contact
 Use tools in WebMCP manifest or /api/book?channel=whatsapp|telegram

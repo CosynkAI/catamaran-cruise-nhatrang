@@ -62,7 +62,7 @@
     {
       "id": "group",
       "name": "Group cruise",
-      "price_from_usd": 80,
+      "price_from_usd": 89,
       "schedule": [
         "09:00–13:30",
         "15:00–19:30"
@@ -72,7 +72,7 @@
     {
       "id": "individual",
       "name": "Private cruise",
-      "price_from_usd": 1000,
+      "price_from_usd": 1090,
       "schedule": [
         "09:00–14:00",
         "15:00–20:00"
@@ -82,7 +82,7 @@
     {
       "id": "vip",
       "name": "Premium cruise",
-      "price_from_usd": 1500,
+      "price_from_usd": 1490,
       "booking_type": "vip",
       "date_optional": true
     }

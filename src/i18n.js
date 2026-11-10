@@ -220,8 +220,8 @@ function updateJsonLd() {
       offers: {
         '@type': 'AggregateOffer',
         priceCurrency: 'USD',
-        lowPrice: '80',
-        highPrice: '1500',
+        lowPrice: '89',
+        highPrice: '1490',
         offerCount: '3',
       },
       paymentAccepted: 'Cash, Credit Card, Rubles, Vietnamese Dong',
